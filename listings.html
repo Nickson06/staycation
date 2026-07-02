@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>StayHub | Find Your Perfect Stay</title>
+
+<meta
+name="description"
+content="Book Hotels, Villas, Apartments and Luxury Stays across Kenya.">
+
+<link rel="icon" href="images/favicon.png">
+
+<link rel="stylesheet"
+href="css/listings.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- =========================
+     PAGE LOADER
+========================= -->
+
+<div id="loader">
+
+<div class="spinner"></div>
+
+<p>
+
+Loading StayHub...
+
+</p>
+
+</div>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+<div class="logo">
+
+<a href="index.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>StayHub</span>
+
+</a>
+
+</div>
+
+<nav>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a
+href="listings.html"
+class="active">
+
+Stays
+
+</a>
+
+<a href="experiences.html">
+
+Experiences
+
+</a>
+
+<a href="host.html">
+
+Become a Host
+
+</a>
+
+<a href="wishlist.html">
+
+<i class="fa-regular fa-heart"></i>
+
+Wishlist
+
+</a>
+
+<a href="login.html">
+
+Login
+
+</a>
+
+</nav>
+
+<div class="nav-actions">
+
+<button
+id="themeToggle"
+class="theme-toggle">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+<div
+class="mobile-menu"
+onclick="toggleMenu()">
+
+<i class="fa-solid fa-bars"></i>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="listing-hero">
+
+<div class="overlay"></div>
+
+<div class="hero-content">
+
+<span class="hero-badge">
+
+🏡 Kenya's #1 Vacation Marketplace
+
+</span>
+
+<h1>
+
+Find Your Perfect Stay
+
+</h1>
+
+<p>
+
+Luxury Hotels • Villas • Apartments • Lodges • Beach Houses • Camping
+
+</p>
+
+<!-- SEARCH -->
+
+<div class="search-bar">
+
+<div class="search-item">
+
+<label>
+
+Destination
+
+</label>
+
+<input
+id="destinationSearch"
+type="text"
+placeholder="Search destination...">
+
+</div>
+
+<div class="divider"></div>
+
+<div class="search-item">
+
+<label>
+
+Check In
+
+</label>
+
+<input
+id="checkIn"
+type="date">
+
+</div>
+
+<div class="divider"></div>
+
+<div class="search-item">
+
+<label>
+
+Check Out
+
+</label>
+
+<input
+id="checkOut"
+type="date">
+
+</div>
+
+<div class="divider"></div>
+
+<div class="search-item">
+
+<label>
+
+Guests
+
+</label>
+
+<select id="guests">
+
+<option>1 Guest</option>
+
+<option>2 Guests</option>
+
+<option>3 Guests</option>
+
+<option>4 Guests</option>
+
+<option>5 Guests</option>
+
+<option>6+ Guests</option>
+
+</select>
+
+</div>
+
+<button
+class="search-btn"
+onclick="searchListings()">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+</button>
+
+</div>
+
+<div class="hero-stats">
+
+<div>
+
+<h2>
+
+1,200+
+
+</h2>
+
+<p>
+
+Verified Stays
+
+</p>
+
+</div>
+
+<div>
+
+<h2>
+
+38K+
+
+</h2>
+
+<p>
+
+Happy Guests
+
+</p>
+
+</div>
+
+<div>
+
+<h2>
+
+47
+
+</h2>
+
+<p>
+
+Destinations
+
+</p>
+
+</div>
+
+<div>
+
+<h2>
+
+4.9★
+
+</h2>
+
+<p>
+
+Average Rating
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     DESTINATIONS
+========================= -->
+
+<section class="destination-section">
+
+<div class="section-header">
+
+<h2>
+
+Popular Destinations
+
+</h2>
+
+<p>
+
+Browse Kenya's most visited locations.
+
+</p>
+
+</div>
+
+<div class="destination-scroll">
+
+<button
+class="chip active"
+onclick="filterDestination('All')">
+
+🌍 All
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Watamu')">
+
+🏖 Watamu
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Diani')">
+
+🌊 Diani
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Nairobi')">
+
+🏙 Nairobi
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Naivasha')">
+
+🚤 Naivasha
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Kisumu')">
+
+🌅 Kisumu
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Mombasa')">
+
+⚓ Mombasa
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Lamu')">
+
+🕌 Lamu
+
+</button>
+
+<button
+class="chip"
+onclick="filterDestination('Maasai Mara')">
+
+🦁 Maasai Mara
+
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================
+     FILTER BAR
+========================= -->
+
+<section class="filter-section">
+
+<div class="filter-container">
+
+<div class="filter-left">
+
+<button
+class="filter-btn active"
+onclick="filterCategory('All')">
+
+All
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Hotel')">
+
+🏨 Hotels
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Apartment')">
+
+🏢 Apartments
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Villa')">
+
+🏡 Villas
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Safari Lodge')">
+
+🦓 Safari Lodges
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Luxury Camp')">
+
+⛺ Luxury Camps
+
+</button>
+
+<button
+class="filter-btn"
+onclick="filterCategory('Beach')">
+
+🌴 Beachfront
+
+</button>
+
+</div>
+
+<div class="filter-right">
+
+<select
+id="sortListings"
+onchange="sortListings()">
+
+<option value="recommended">
+
+Recommended
+
+</option>
+
+<option value="priceLow">
+
+Price: Low → High
+
+</option>
+
+<option value="priceHigh">
+
+Price: High → Low
+
+</option>
+
+<option value="rating">
+
+Highest Rated
+
+</option>
+
+<option value="newest">
+
+Newest
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     RESULTS HEADER
+========================= -->
+
+<section class="results-header">
+
+<div>
+
+<h2>
+
+Explore Amazing Places
+
+</h2>
+
+<p id="resultsCount">
+
+Showing 0 Premium Stays
+
+</p>
+
+</div>
+
+<div class="results-actions">
+
+<button
+class="map-btn"
+onclick="openMap()">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+View Map
+
+</button>
+
+<button
+class="compare-btn"
+onclick="openCompare()">
+
+<i class="fa-solid fa-code-compare"></i>
+
+Compare
+
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================
+     LISTINGS
+========================= -->
+
+<section class="listing-section">
+
+<div
+id="listingGrid"
+class="listing-grid">
+
+<!-- JavaScript renders listings -->
+
+</div>
+
+</section>
+
+<!-- =========================
+     EMPTY STATE
+========================= -->
+
+<section
+id="emptyState"
+class="empty-state"
+style="display:none;">
+
+<i class="fa-solid fa-house-circle-xmark"></i>
+
+<h2>
+
+No stays found
+
+</h2>
+
+<p>
+
+Try changing your search or filters.
+
+</p>
+
+<button
+onclick="resetFilters()">
+
+Reset Filters
+
+</button>
+
+</section>
+
+<!-- =========================
+     PAGINATION
+========================= -->
+
+<section class="pagination-section">
+
+<button
+id="prevPage"
+onclick="previousPage()">
+
+<i class="fa-solid fa-chevron-left"></i>
+
+</button>
+
+<div
+id="paginationNumbers"
+class="pagination-numbers">
+
+<!-- JavaScript -->
+
+</div>
+
+<button
+id="nextPage"
+onclick="nextPage()">
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</button>
+
+</section>
+
+<!-- =========================
+     QUICK STATS
+========================= -->
+
+<section class="listing-stats">
+
+<div class="stat-card">
+
+<i class="fa-solid fa-hotel"></i>
+
+<h3>
+
+500+
+
+</h3>
+
+<p>
+
+Hotels
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-house"></i>
+
+<h3>
+
+320+
+
+</h3>
+
+<p>
+
+Apartments
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-water"></i>
+
+<h3>
+
+180+
+
+</h3>
+
+<p>
+
+Beach Villas
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-tree"></i>
+
+<h3>
+
+95+
+
+</h3>
+
+<p>
+
+Safari Lodges
+
+</p>
+
+</div>
+
+</section>
+
+<!-- =========================
+     RECENTLY VIEWED
+========================= -->
+
+<section class="recent-section">
+
+<div class="section-header">
+
+<div>
+
+<h2>
+
+Recently Viewed
+
+</h2>
+
+<p>
+
+Continue exploring your recently viewed properties.
+
+</p>
+
+</div>
+
+<a href="#">
+
+View History
+
+</a>
+
+</div>
+
+<div
+id="recentGrid"
+class="listing-grid">
+
+<!-- JavaScript -->
+
+</div>
+
+</section>
+
+<!-- =========================
+     RECOMMENDED
+========================= -->
+
+<section class="recommended-section">
+
+<div class="section-header">
+
+<div>
+
+<h2>
+
+Recommended For You
+
+</h2>
+
+<p>
+
+Personalised based on your interests.
+
+</p>
+
+</div>
+
+</div>
+
+<div
+id="recommendedGrid"
+class="listing-grid">
+
+<!-- JavaScript -->
+
+</div>
+
+</section>
+
+<!-- =========================
+     TRENDING DESTINATIONS
+========================= -->
+
+<section class="trending-section">
+
+<div class="section-header">
+
+<h2>
+
+Trending Destinations
+
+</h2>
+
+<p>
+
+Places travellers are booking most this month.
+
+</p>
+
+</div>
+
+<div class="trending-grid">
+
+<div
+class="trend-card"
+onclick="filterDestination('Watamu')">
+
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80">
+
+<div class="trend-overlay">
+
+<h3>
+
+Watamu
+
+</h3>
+
+<p>
+
+146 Properties
+
+</p>
+
+</div>
+
+</div>
+
+<div
+class="trend-card"
+onclick="filterDestination('Diani')">
+
+<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80">
+
+<div class="trend-overlay">
+
+<h3>
+
+Diani
+
+</h3>
+
+<p>
+
+208 Properties
+
+</p>
+
+</div>
+
+</div>
+
+<div
+class="trend-card"
+onclick="filterDestination('Naivasha')">
+
+<img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80">
+
+<div class="trend-overlay">
+
+<h3>
+
+Naivasha
+
+</h3>
+
+<p>
+
+91 Properties
+
+</p>
+
+</div>
+
+</div>
+
+<div
+class="trend-card"
+onclick="filterDestination('Maasai Mara')">
+
+<img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=900&q=80">
+
+<div class="trend-overlay">
+
+<h3>
+
+Maasai Mara
+
+</h3>
+
+<p>
+
+64 Luxury Camps
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     EXCLUSIVE DEALS
+========================= -->
+
+<section class="deal-banner">
+
+<div class="deal-content">
+
+<span>
+
+🔥 LIMITED OFFER
+
+</span>
+
+<h2>
+
+Save up to 30% on selected stays
+
+</h2>
+
+<p>
+
+Book before midnight and unlock exclusive discounts.
+
+</p>
+
+<button onclick="viewDeals()">
+
+Explore Deals
+
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================
+     NEWSLETTER
+========================= -->
+
+<section class="newsletter">
+
+<div class="newsletter-content">
+
+<h2>
+
+Stay Updated
+
+</h2>
+
+<p>
+
+Get exclusive offers, travel inspiration and hidden gems delivered straight to your inbox.
+
+</p>
+
+<div class="newsletter-form">
+
+<input
+id="newsletterEmail"
+type="email"
+placeholder="Enter your email">
+
+<button
+onclick="subscribeNewsletter()">
+
+Subscribe
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<h3>
+
+StayHub
+
+</h3>
+
+<p>
+
+Discover premium hotels, villas, apartments and unforgettable experiences across Kenya.
+
+</p>
+
+<div class="footer-social">
+
+<i class="fab fa-facebook"></i>
+
+<i class="fab fa-instagram"></i>
+
+<i class="fab fa-x-twitter"></i>
+
+<i class="fab fa-linkedin"></i>
+
+<i class="fab fa-youtube"></i>
+
+</div>
+
+</div>
+
+<div>
+
+<h4>
+
+Explore
+
+</h4>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="listings.html">
+
+Stays
+
+</a>
+
+<a href="experiences.html">
+
+Experiences
+
+</a>
+
+<a href="wishlist.html">
+
+Wishlist
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Hosting
+
+</h4>
+
+<a href="host.html">
+
+Become a Host
+
+</a>
+
+<a href="#">
+
+Host Resources
+
+</a>
+
+<a href="#">
+
+Community
+
+</a>
+
+<a href="#">
+
+Support
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Company
+
+</h4>
+
+<a href="#">
+
+About Us
+
+</a>
+
+<a href="#">
+
+Privacy Policy
+
+</a>
+
+<a href="#">
+
+Terms & Conditions
+
+</a>
+
+<a href="#">
+
+Contact
+
+</a>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+<p>
+
+© 2026 StayHub Kenya. All Rights Reserved.
+
+</p>
+
+<p>
+
+Made with ❤️ in Kenya
+
+</p>
+
+</div>
+
+</footer>
+
+<!-- =========================================
+     PROPERTY DETAILS MODAL
+========================================= -->
+
+<div id="propertyModal" class="modal">
+
+    <div class="modal-content property-modal">
+
+        <span class="close"
+        onclick="closeProperty()">
+
+            &times;
+
+        </span>
+
+        <div id="propertyContent">
+
+            <!-- Loaded by JavaScript -->
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+     BOOKING MODAL
+========================================= -->
+
+<div id="bookingModal" class="modal">
+
+    <div class="modal-content booking-modal">
+
+        <span class="close"
+        onclick="closeBooking()">
+
+            &times;
+
+        </span>
+
+        <h2>
+
+            Complete Booking
+
+        </h2>
+
+        <form id="bookingForm">
+
+            <input
+            type="text"
+            placeholder="Full Name"
+            required>
+
+            <input
+            type="email"
+            placeholder="Email Address"
+            required>
+
+            <input
+            type="tel"
+            placeholder="Phone Number"
+            required>
+
+            <input
+            id="bookingCheckIn"
+            type="date"
+            required>
+
+            <input
+            id="bookingCheckOut"
+            type="date"
+            required>
+
+            <select>
+
+                <option>M-Pesa</option>
+
+                <option>Visa</option>
+
+                <option>Mastercard</option>
+
+            </select>
+
+            <button type="submit">
+
+                Confirm Booking
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+     MAP MODAL
+========================================= -->
+
+<div id="mapModal" class="modal">
+
+    <div class="modal-content map-modal">
+
+        <span
+        class="close"
+        onclick="closeMap()">
+
+            &times;
+
+        </span>
+
+        <h2>
+
+            Property Location
+
+        </h2>
+
+        <div id="mapContainer">
+
+            Google Maps will appear here.
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+     COMPARE DRAWER
+========================================= -->
+
+<div id="compareDrawer"
+class="compare-drawer">
+
+    <div class="compare-header">
+
+        <h3>
+
+            Compare Properties
+
+        </h3>
+
+        <button
+        onclick="closeCompare()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <div id="compareItems">
+
+    </div>
+
+</div>
+
+<!-- =========================================
+     AI ASSISTANT
+========================================= -->
+
+<button
+class="assistant-btn"
+onclick="toggleAssistant()">
+
+<i class="fa-solid fa-robot"></i>
+
+</button>
+
+<div
+id="chatWidget"
+class="chat-widget">
+
+<div class="chat-header">
+
+<span>
+
+🤖 StayHub AI
+
+</span>
+
+<button
+onclick="toggleAssistant()">
+
+✕
+
+</button>
+
+</div>
+
+<div
+id="chatMessages"
+class="chat-body">
+
+<div class="bot-message">
+
+👋 Hello!
+
+Need help finding the perfect stay?
+
+</div>
+
+</div>
+
+<div class="chat-footer">
+
+<input
+id="chatInput"
+type="text"
+placeholder="Ask StayHub AI...">
+
+<button
+onclick="sendMessage()">
+
+Send
+
+</button>
+
+</div>
+
+</div>
+
+<!-- =========================================
+     FLOATING FILTER
+========================================= -->
+
+<button
+class="floating-filter"
+onclick="openFilters()">
+
+<i class="fa-solid fa-sliders"></i>
+
+</button>
+
+<!-- =========================================
+     TOAST
+========================================= -->
+
+<div
+id="toast"
+class="toast">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<span id="toastText">
+
+Success
+
+</span>
+
+</div>
+
+<!-- =========================================
+     COOKIE BANNER
+========================================= -->
+
+<div
+id="cookieBanner"
+class="cookie-banner">
+
+<p>
+
+🍪 We use cookies to improve your StayHub experience.
+
+</p>
+
+<div class="cookie-actions">
+
+<button
+onclick="acceptCookies()">
+
+Accept
+
+</button>
+
+<button
+onclick="declineCookies()">
+
+Decline
+
+</button>
+
+</div>
+
+</div>
+
+<!-- =========================================
+     LISTING LOADER
+========================================= -->
+
+<div
+id="listingLoader"
+class="listing-loader">
+
+<div class="spinner"></div>
+
+<p>
+
+Loading amazing stays...
+
+</p>
+
+</div>
+
+<!-- =========================================
+     BACK TO TOP
+========================================= -->
+
+<button
+id="backTop"
+class="back-top"
+onclick="scrollTopPage()">
+
+<i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script src="js/theme.js"></script>
+
+<script src="js/listings.js"></script>
+
+</body>
+
+</html>
