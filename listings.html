@@ -103,9 +103,7 @@ Login
 
 </a>
 
-<div
-id="mobileMenuButton"
-class="mobile-menu">
+<div class="mobile-menu" onclick="toggleMobileMenu()">
     <i class="fa-solid fa-bars"></i>
 </div>
 
@@ -1369,23 +1367,39 @@ PAGINATION
 
 <section class="pagination">
 
-    <button
-    id="prevPage"
-    class="page-btn">
+    <button class="page-btn active">
 
-        <i class="fa-solid fa-chevron-left"></i>
+        1
 
     </button>
 
-    <div id="paginationNumbers"></div>
+    <button class="page-btn">
 
-    <button
-    id="nextPage"
-    class="page-btn">
+        2
+
+    </button>
+
+    <button class="page-btn">
+
+        3
+
+    </button>
+
+    <button class="page-btn">
+
+        4
+
+    </button>
+
+    <button class="page-btn">
 
         <i class="fa-solid fa-chevron-right"></i>
 
     </button>
+
+</section>
+
+</div>
 
 </section>
 
@@ -1580,32 +1594,28 @@ BOOKING MODAL
         <form id="bookingForm">
 
             <input
-id="bookingName"
-type="text"
-placeholder="Full Name"
-required>
+            type="text"
+            placeholder="Full Name"
+            required>
 
-<input
-id="bookingEmail"
-type="email"
-placeholder="Email Address"
-required>
+            <input
+            type="email"
+            placeholder="Email Address"
+            required>
 
-<input
-id="bookingPhone"
-type="tel"
-placeholder="Phone Number"
-required>
+            <input
+            type="tel"
+            placeholder="Phone Number"
+            required>
 
-<input
-id="bookingCheckIn"
-type="date"
-required>
+            <input
+            type="date"
+            required>
 
-<input
-id="bookingCheckOut"
-type="date"
-required>
+            <input
+            type="date"
+            required>
+
             <button type="submit">
 
                 Confirm Booking
