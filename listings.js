@@ -1,536 +1,835 @@
-/*=========================================================
-                STAYHUB PRO V6
-                 LISTINGS.JS
-=========================================================*/
+// =========================================
+// STAYHUB LISTINGS
+// Part 1 - Core Engine
+// =========================================
 
-/*=========================================================
-                    PROPERTY DATABASE
-=========================================================*/
+// Make sure properties.js is loaded BEFORE listings.js
 
-const listings = [
-
-{
-    id:1,
-    name:"Coral Bay Resort",
-    location:"Watamu",
-    county:"Kilifi",
-    category:"Hotel",
-    price:8500,
-    rating:4.9,
-    reviews:241,
-    guests:4,
-    beds:2,
-    bathrooms:2,
-    favourite:true,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1501117716987-c8e1ecb2106e?auto=format&fit=crop&w=1200&q=80",
-    amenities:["WiFi","Pool","Parking","Breakfast"],
-    description:"Luxury beachfront resort overlooking Watamu Beach."
-},
-
-{
-    id:2,
-    name:"Diani Ocean Villa",
-    location:"Diani",
-    county:"Kwale",
-    category:"Villa",
-    price:12000,
-    rating:4.8,
-    reviews:183,
-    guests:6,
-    beds:3,
-    bathrooms:3,
-    favourite:true,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-    amenities:["WiFi","Pool","Kitchen","Ocean View"],
-    description:"Private luxury villa a few steps from Diani Beach."
-},
-
-{
-    id:3,
-    name:"Nairobi City Suites",
-    location:"Nairobi",
-    county:"Nairobi",
-    category:"Hotel",
-    price:7200,
-    rating:4.7,
-    reviews:390,
-    guests:2,
-    beds:1,
-    bathrooms:1,
-    favourite:false,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
-    amenities:["WiFi","Gym","Restaurant","Parking"],
-    description:"Modern hotel located in Nairobi CBD."
-},
-
-{
-    id:4,
-    name:"Kisumu Sunset Apartment",
-    location:"Kisumu",
-    county:"Kisumu",
-    category:"Apartment",
-    price:6200,
-    rating:4.8,
-    reviews:165,
-    guests:4,
-    beds:2,
-    bathrooms:2,
-    favourite:true,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
-    amenities:["WiFi","Kitchen","Parking","Lake View"],
-    description:"Beautiful apartment overlooking Lake Victoria."
-},
-
-{
-    id:5,
-    name:"Naivasha Safari Lodge",
-    location:"Naivasha",
-    county:"Nakuru",
-    category:"Safari Lodge",
-    price:5600,
-    rating:4.9,
-    reviews:142,
-    guests:4,
-    beds:2,
-    bathrooms:2,
-    favourite:false,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80",
-    amenities:["Pool","Restaurant","Parking","Game Drives"],
-    description:"Relaxing lodge near Lake Naivasha."
-},
-
-{
-    id:6,
-    name:"Maasai Mara Luxury Camp",
-    location:"Maasai Mara",
-    county:"Narok",
-    category:"Luxury Camp",
-    price:18500,
-    rating:5.0,
-    reviews:281,
-    guests:2,
-    beds:1,
-    bathrooms:1,
-    favourite:true,
-    verified:true,
-    instantBook:false,
-    image:"https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80",
-    amenities:["Safari","Campfire","Guide","Restaurant"],
-    description:"Luxury tented camp inside Maasai Mara."
-},
-
-{
-    id:7,
-    name:"Mombasa Beach Hotel",
-    location:"Mombasa",
-    county:"Mombasa",
-    category:"Hotel",
-    price:9100,
-    rating:4.6,
-    reviews:174,
-    guests:4,
-    beds:2,
-    bathrooms:2,
-    favourite:false,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
-    amenities:["Beach","Restaurant","Pool","WiFi"],
-    description:"Luxury beachfront hotel."
-},
-
-{
-    id:8,
-    name:"Lamu Heritage Villa",
-    location:"Lamu",
-    county:"Lamu",
-    category:"Villa",
-    price:14500,
-    rating:4.9,
-    reviews:111,
-    guests:8,
-    beds:4,
-    bathrooms:4,
-    favourite:true,
-    verified:true,
-    instantBook:true,
-    image:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-    amenities:["Chef","Pool","Kitchen","Ocean View"],
-    description:"Traditional Swahili villa with modern luxury."
-}
-
-];
-
-/*=========================================================
-                GLOBAL VARIABLES
-=========================================================*/
-
-let filteredListings = [...listings];
+let filteredProperties = [...properties];
 
 let currentPage = 1;
 
-let currentCategory = "All";
+const propertiesPerPage = 12;
 
-let currentDestination = "All";
+let selectedProperty = null;
 
-let currentProperty = null;
-
-const listingsPerPage = 9;
-
-/*=========================================================
-                INITIALIZATION
-=========================================================*/
+let wishlist =
+JSON.parse(localStorage.getItem("stayhubWishlist")) || [];
 
 
-/* ===========================================================
-   PAGINATION
-=========================================================== */
+// =========================================
+// FILTER STATE
+// =========================================
 
-function renderPagination() {
+const filters = {
 
-    const section = document.querySelector(".pagination-section");
+    search: "",
 
-    if (!section) return;
+    destination: "All",
 
-    const totalPages = Math.ceil(filteredListings.length / listingsPerPage);
+    category: "All",
 
-    let html = "";
+    maxPrice: Infinity,
 
-    html += `
-        <button
-            onclick="changePage(${currentPage - 1})"
-            ${currentPage === 1 ? "disabled" : ""}>
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
-    `;
+    minRating: 0,
 
-    for (let i = 1; i <= totalPages; i++) {
+    guests: 0,
 
-        html += `
-            <button
-                class="${i === currentPage ? "active" : ""}"
-                onclick="changePage(${i})">
-                ${i}
-            </button>
-        `;
+    amenities: []
 
-    }
+};
 
-    html += `
-        <button
-            onclick="changePage(${currentPage + 1})"
-            ${currentPage === totalPages ? "disabled" : ""}>
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-    `;
 
-    section.innerHTML = html;
+
+// =========================================
+// FORMAT PRICE
+// =========================================
+
+function formatPrice(price){
+
+    return "KES " + price.toLocaleString();
 
 }
 
-function changePage(page) {
 
-    const totalPages = Math.ceil(filteredListings.length / listingsPerPage);
 
-    if (page < 1 || page > totalPages) return;
+// =========================================
+// CREATE PROPERTY CARD
+// =========================================
 
-    currentPage = page;
+function createPropertyCard(property){
 
-    renderListings();
+    const liked =
+    wishlist.includes(property.id);
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    return `
+
+<div class="property-card">
+
+<div class="property-image">
+
+<img
+src="${property.gallery[0]}"
+alt="${property.name}">
+
+${property.discount > 0 ?
+
+`<span class="discount-badge">
+
+-${property.discount}%
+
+</span>`
+
+:
+
+""}
+
+<button
+class="wishlist-btn"
+onclick="toggleWishlist(${property.id})">
+
+<i class="${liked ?
+
+'fa-solid'
+
+:
+
+'fa-regular'}
+
+fa-heart"></i>
+
+</button>
+
+</div>
+
+
+
+<div class="property-info">
+
+<div class="property-rating">
+
+⭐ ${property.rating}
+
+<span>
+
+(${property.reviews} reviews)
+
+</span>
+
+</div>
+
+
+<h3>
+
+${property.name}
+
+</h3>
+
+
+<p class="location">
+
+<i class="fa-solid fa-location-dot"></i>
+
+${property.location}, ${property.county}
+
+</p>
+
+
+
+<div class="property-meta">
+
+<span>
+
+🛏 ${property.bedrooms} Bedrooms
+
+</span>
+
+<span>
+
+🛁 ${property.bathrooms} Baths
+
+</span>
+
+<span>
+
+👥 ${property.guests} Guests
+
+</span>
+
+</div>
+
+
+
+<div class="property-amenities">
+
+${property.amenities
+
+.slice(0,3)
+
+.map(item=>`<span>${item}</span>`)
+
+.join("")}
+
+</div>
+
+
+
+<div class="property-footer">
+
+<div>
+
+<h3>
+
+${formatPrice(property.price)}
+
+</h3>
+
+<p>
+
+per night
+
+</p>
+
+</div>
+
+
+
+<div class="property-buttons">
+
+<button
+
+class="details-btn"
+
+onclick="viewProperty(${property.id})">
+
+Details
+
+</button>
+
+<button
+
+class="book-btn"
+
+onclick="bookProperty(${property.id})">
+
+Book Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
 
 }
 
-/* ===========================================================
-   SEARCH
-=========================================================== */
 
-function searchListings() {
 
-    const destination =
-        document.getElementById("destinationSearch")?.value
-        .trim()
-        .toLowerCase() || "";
+// =========================================
+// RENDER PROPERTIES
+// =========================================
 
-    filteredListings = listings.filter(property => {
+function renderProperties(){
+
+const listingGrid =
+
+document.getElementById("listingGrid");
+
+if(!listingGrid) return;
+
+
+
+const start =
+
+(currentPage-1)*propertiesPerPage;
+
+
+
+const end =
+
+start + propertiesPerPage;
+
+
+
+const pageItems =
+
+filteredProperties.slice(start,end);
+
+
+
+listingGrid.innerHTML =
+
+pageItems
+
+.map(createPropertyCard)
+
+.join("");
+
+
+
+updateResults();
+
+renderPagination();
+
+}
+
+
+
+// =========================================
+// RESULTS
+// =========================================
+
+function updateResults(){
+
+const results =
+
+document.getElementById("resultsCount");
+
+if(!results) return;
+
+results.textContent =
+
+`Showing ${filteredProperties.length} premium stays`;
+
+}
+
+
+
+// =========================================
+// PAGINATION
+// =========================================
+
+function renderPagination(){
+
+const container =
+
+document.getElementById("paginationNumbers");
+
+if(!container) return;
+
+
+
+const totalPages =
+
+Math.ceil(
+
+filteredProperties.length /
+
+propertiesPerPage
+
+);
+
+
+
+let html = "";
+
+
+
+for(
+
+let page=1;
+
+page<=totalPages;
+
+page++
+
+){
+
+html += `
+
+<button
+
+class="page-btn
+
+${page===currentPage ?
+
+'active'
+
+:
+
+''}"
+
+onclick="goToPage(${page})">
+
+${page}
+
+</button>
+
+`;
+
+}
+
+
+
+container.innerHTML = html;
+
+}
+
+
+
+// =========================================
+// CHANGE PAGE
+// =========================================
+
+function goToPage(page){
+
+currentPage = page;
+
+renderProperties();
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+
+
+// =========================================
+// PREVIOUS PAGE
+// =========================================
+
+function previousPage(){
+
+if(currentPage>1){
+
+currentPage--;
+
+renderProperties();
+
+}
+
+}
+
+
+
+// =========================================
+// NEXT PAGE
+// =========================================
+
+function nextPage(){
+
+const total =
+
+Math.ceil(
+
+filteredProperties.length /
+
+propertiesPerPage
+
+);
+
+if(currentPage<total){
+
+currentPage++;
+
+renderProperties();
+
+}
+
+}
+// =========================================
+// APPLY FILTERS
+// =========================================
+
+function applyFilters() {
+
+    filteredProperties = properties.filter(property => {
+
+        const matchesSearch =
+            property.name.toLowerCase().includes(filters.search) ||
+            property.location.toLowerCase().includes(filters.search) ||
+            property.county.toLowerCase().includes(filters.search);
+
+        const matchesDestination =
+            filters.destination === "All" ||
+            property.location === filters.destination;
+
+        const matchesCategory =
+            filters.category === "All" ||
+            property.category === filters.category;
+
+        const matchesPrice =
+            property.price <= filters.maxPrice;
+
+        const matchesRating =
+            property.rating >= filters.minRating;
+
+        const matchesGuests =
+            property.guests >= filters.guests;
+
+        const matchesAmenities =
+            filters.amenities.every(item =>
+                property.amenities.includes(item)
+            );
 
         return (
-            property.name.toLowerCase().includes(destination) ||
-            property.location.toLowerCase().includes(destination) ||
-            property.county.toLowerCase().includes(destination) ||
-            property.category.toLowerCase().includes(destination)
+            matchesSearch &&
+            matchesDestination &&
+            matchesCategory &&
+            matchesPrice &&
+            matchesRating &&
+            matchesGuests &&
+            matchesAmenities
         );
 
     });
 
     currentPage = 1;
 
-    renderListings();
+    renderProperties();
 
 }
 
-/* ===========================================================
-   LIVE SEARCH
-=========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    const input = document.getElementById("destinationSearch");
+// =========================================
+// LIVE SEARCH
+// =========================================
+
+function searchListings() {
+
+    const input =
+        document.getElementById("destinationSearch");
 
     if (!input) return;
 
-    input.addEventListener("input", searchListings);
+    filters.search =
+        input.value.toLowerCase().trim();
 
-});
-/* ===========================================================
-   DESTINATION FILTER
-=========================================================== */
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// DESTINATION FILTER
+// =========================================
 
 function filterDestination(destination) {
 
-    currentDestination = destination;
-
-    document.querySelectorAll(".chip").forEach(chip => {
-
-        chip.classList.remove("active");
-
-        if (chip.textContent.toLowerCase().includes(destination.toLowerCase())) {
-
-            chip.classList.add("active");
-
-        }
-
-    });
+    filters.destination = destination;
 
     applyFilters();
 
 }
 
-/* ===========================================================
-   CATEGORY FILTER
-=========================================================== */
+
+
+// =========================================
+// CATEGORY FILTER
+// =========================================
 
 function filterCategory(category) {
 
-    currentCategory = category;
-
-    document.querySelectorAll(".filter-btn").forEach(button => {
-
-        button.classList.remove("active");
-
-        if (button.textContent.toLowerCase().includes(category.toLowerCase())) {
-
-            button.classList.add("active");
-
-        }
-
-    });
+    filters.category = category;
 
     applyFilters();
 
 }
 
-/* ===========================================================
-   APPLY FILTERS
-=========================================================== */
 
-function applyFilters() {
 
-    filteredListings = listings.filter(property => {
+// =========================================
+// PRICE FILTER
+// =========================================
 
-        const destinationMatch =
+function filterPrice(price) {
 
-            currentDestination === "All" ||
+    filters.maxPrice = price;
 
-            property.location === currentDestination;
-
-        const categoryMatch =
-
-            currentCategory === "All" ||
-
-            property.category === currentCategory;
-
-        return destinationMatch && categoryMatch;
-
-    });
-
-    currentPage = 1;
-
-    renderListings();
+    applyFilters();
 
 }
 
-/* ===========================================================
-   SORT LISTINGS
-=========================================================== */
+
+
+// =========================================
+// RATING FILTER
+// =========================================
+
+function filterRating(rating) {
+
+    filters.minRating = rating;
+
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// GUEST FILTER
+// =========================================
+
+function filterGuests(guests) {
+
+    filters.guests = guests;
+
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// AMENITY FILTER
+// =========================================
+
+function toggleAmenity(amenity) {
+
+    if (filters.amenities.includes(amenity)) {
+
+        filters.amenities =
+            filters.amenities.filter(item => item !== amenity);
+
+    } else {
+
+        filters.amenities.push(amenity);
+
+    }
+
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// RESET FILTERS
+// =========================================
+
+function resetFilters() {
+
+    filters.search = "";
+
+    filters.destination = "All";
+
+    filters.category = "All";
+
+    filters.maxPrice = Infinity;
+
+    filters.minRating = 0;
+
+    filters.guests = 0;
+
+    filters.amenities = [];
+
+    const search =
+        document.getElementById("destinationSearch");
+
+    if (search) {
+
+        search.value = "";
+
+    }
+
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// SORTING
+// =========================================
 
 function sortListings() {
 
-    const value = document.getElementById("sortListings").value;
+    const sort =
+        document.getElementById("sortListings").value;
 
-    switch (value) {
+    switch (sort) {
 
         case "priceLow":
 
-            filteredListings.sort((a, b) => a.price - b.price);
+            filteredProperties.sort((a, b) => a.price - b.price);
 
             break;
 
         case "priceHigh":
 
-            filteredListings.sort((a, b) => b.price - a.price);
+            filteredProperties.sort((a, b) => b.price - a.price);
 
             break;
 
         case "rating":
 
-            filteredListings.sort((a, b) => b.rating - a.rating);
+            filteredProperties.sort((a, b) => b.rating - a.rating);
 
             break;
 
         case "newest":
 
-            filteredListings.sort((a, b) => b.id - a.id);
+            filteredProperties.sort((a, b) => b.id - a.id);
 
             break;
 
         default:
 
-            filteredListings.sort((a, b) => b.rating - a.rating);
+            filteredProperties.sort((a, b) => {
 
-            break;
+                if (a.featured && !b.featured) return -1;
 
-    }
+                if (!a.featured && b.featured) return 1;
 
-    renderListings();
+                return b.rating - a.rating;
 
-}
-
-/* ===========================================================
-   LOAD SEARCH FROM HOMEPAGE
-=========================================================== */
-
-function loadHomepageSearch() {
-
-    const saved = JSON.parse(localStorage.getItem("search"));
-
-    if (!saved) return;
-
-    if (saved.destination) {
-
-        document.getElementById("destinationSearch").value = saved.destination;
-
-        filteredListings = listings.filter(property =>
-
-            property.location.toLowerCase().includes(saved.destination.toLowerCase()) ||
-
-            property.name.toLowerCase().includes(saved.destination.toLowerCase()) ||
-
-            property.county.toLowerCase().includes(saved.destination.toLowerCase())
-
-        );
+            });
 
     }
 
-    renderListings();
+    renderProperties();
 
 }
 
-/* ===========================================================
-   INITIALISE SEARCH
-=========================================================== */
 
-function initialiseSearch() {
 
-    const input = document.getElementById("destinationSearch");
+// =========================================
+// WISHLIST
+// =========================================
 
-    if (!input) return;
+function toggleWishlist(id) {
 
-    input.addEventListener("keyup", searchListings);
+    if (wishlist.includes(id)) {
+
+        wishlist = wishlist.filter(item => item !== id);
+
+        showToast("Removed from wishlist ❤️");
+
+    } else {
+
+        wishlist.push(id);
+
+        showToast("Added to wishlist ❤️");
+
+    }
+
+    localStorage.setItem(
+
+        "stayhubWishlist",
+
+        JSON.stringify(wishlist)
+
+    );
+
+    renderProperties();
 
 }
 
-/* ===========================================================
-   PROPERTY DETAILS
-=========================================================== */
+// =========================================
+// VIEW PROPERTY
+// =========================================
 
 function viewProperty(id) {
 
-    const property = listings.find(item => item.id === id);
+    selectedProperty = properties.find(property => property.id === id);
 
-    if (!property) return;
-
-    currentProperty = property;
+    if (!selectedProperty) return;
 
     const modal = document.getElementById("propertyModal");
     const content = document.getElementById("propertyContent");
 
-    if (!modal || !content) return;
-
     content.innerHTML = `
 
+    <div class="property-details">
+
         <img
-            src="${property.image}"
-            class="property-modal-image">
+        class="property-hero"
+        src="${selectedProperty.gallery[0]}"
+        alt="${selectedProperty.name}">
 
-        <h2>${property.name}</h2>
+        <div class="property-gallery">
 
-        <p>
-            <i class="fa-solid fa-location-dot"></i>
-            ${property.location}, ${property.county}
-        </p>
+            ${selectedProperty.gallery.map(image => `
 
-        <div class="modal-rating">
+                <img src="${image}" alt="Gallery">
 
-            ⭐ ${property.rating}
-
-            (${property.reviews} reviews)
-
-        </div>
-
-        <div class="modal-features">
-
-            <span>${property.guests} Guests</span>
-
-            <span>${property.beds} Beds</span>
-
-            <span>${property.bathrooms} Bathrooms</span>
-
-        </div>
-
-        <h3>KES ${property.price.toLocaleString()}</h3>
-
-        <p>${property.description}</p>
-
-        <div class="modal-amenities">
-
-            ${property.amenities.map(item => `
-                <span>${item}</span>
             `).join("")}
 
         </div>
 
-        <button
-            class="book-btn"
-            onclick="bookProperty(${property.id})">
+        <h2>${selectedProperty.name}</h2>
 
-            Book This Stay
+        <p class="property-location">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            ${selectedProperty.location}, ${selectedProperty.county}
+
+        </p>
+
+        <div class="property-rating">
+
+            ⭐ ${selectedProperty.rating}
+
+            (${selectedProperty.reviews} Reviews)
+
+        </div>
+
+        <div class="property-price">
+
+            <strong>${formatPrice(selectedProperty.price)}</strong>
+
+            / night
+
+        </div>
+
+        <p class="property-description">
+
+            ${selectedProperty.description}
+
+        </p>
+
+        <h3>Amenities</h3>
+
+        <div class="amenity-list">
+
+            ${selectedProperty.amenities.map(item => `
+
+                <span>${item}</span>
+
+            `).join("")}
+
+        </div>
+
+        <div class="host-card">
+
+            <h3>Hosted by ${selectedProperty.host.name}</h3>
+
+            <p>
+
+                Host since ${selectedProperty.host.joined}
+
+            </p>
+
+            <p>
+
+                ⭐ ${selectedProperty.host.rating} Super Host
+
+            </p>
+
+        </div>
+
+        <button
+        class="book-large-btn"
+        onclick="bookProperty(${selectedProperty.id})">
+
+            Book Now
 
         </button>
+
+    </div>
 
     `;
 
@@ -538,120 +837,635 @@ function viewProperty(id) {
 
 }
 
+
+
+// =========================================
+// CLOSE PROPERTY
+// =========================================
+
 function closeProperty() {
 
     document.getElementById("propertyModal").style.display = "none";
 
 }
 
-/* ===========================================================
-   BOOK PROPERTY
-=========================================================== */
 
-function bookProperty(id) {
 
-    currentProperty = listings.find(item => item.id === id);
+// =========================================
+// BOOK PROPERTY
+// =========================================
 
-    if (!currentProperty) return;
+function bookProperty(id){
 
-    document.getElementById("bookingModal").style.display = "flex";
+    selectedProperty =
 
-}
+    properties.find(property=>property.id===id);
 
-function closeBooking() {
+    if(!selectedProperty) return;
 
-    document.getElementById("bookingModal").style.display = "none";
+    document.getElementById("bookingModal").style.display="flex";
 
 }
 
-/* ===========================================================
-   BOOKING FORM
-=========================================================== */
 
-const bookingForm = document.getElementById("bookingForm");
 
-if (bookingForm) {
+// =========================================
+// CLOSE BOOKING
+// =========================================
 
-    bookingForm.addEventListener("submit", function(e){
+function closeBooking(){
 
-        e.preventDefault();
-
-        const booking = {
-
-            property: currentProperty,
-
-            date: new Date().toLocaleString()
-
-        };
-
-        let bookings =
-            JSON.parse(localStorage.getItem("bookings")) || [];
-
-        bookings.push(booking);
-
-        localStorage.setItem(
-            "bookings",
-            JSON.stringify(bookings)
-        );
-
-        alert("Booking Successful!");
-
-        closeBooking();
-
-    });
+    document.getElementById("bookingModal").style.display="none";
 
 }
 
-/* ===========================================================
-   WISHLIST
-=========================================================== */
 
-function toggleWishlist(id) {
 
-    let wishlist =
-        JSON.parse(localStorage.getItem("wishlist")) || [];
+// =========================================
+// BOOKING FORM
+// =========================================
 
-    if (wishlist.includes(id)) {
+const bookingForm =
 
-        wishlist =
-            wishlist.filter(item => item !== id);
+document.getElementById("bookingForm");
 
-        showToast("Removed from wishlist");
+if(bookingForm){
 
-    } else {
+bookingForm.addEventListener("submit",function(e){
 
-        wishlist.push(id);
+    e.preventDefault();
 
-        showToast("Added to wishlist");
+    if(!selectedProperty) return;
 
-    }
+    const checkIn =
 
-    localStorage.setItem(
-        "wishlist",
-        JSON.stringify(wishlist)
-    );
+    document.getElementById("bookingCheckIn").value;
 
-}
+    const checkOut =
 
-/* ===========================================================
-   NEWSLETTER
-=========================================================== */
+    document.getElementById("bookingCheckOut").value;
 
-function subscribeNewsletter() {
+    if(checkIn==="" || checkOut===""){
 
-    const email =
-        document.getElementById("newsletterEmail");
-
-    if (!email || email.value.trim() === "") {
-
-        alert("Please enter your email.");
+        alert("Please select check-in and check-out dates.");
 
         return;
 
     }
 
-    alert("Thanks for subscribing!");
+    const start = new Date(checkIn);
 
-    email.value = "";
+    const end = new Date(checkOut);
+
+    const nights =
+
+    Math.ceil((end-start)/(1000*60*60*24));
+
+    if(nights<=0){
+
+        alert("Invalid booking dates.");
+
+        return;
+
+    }
+
+    const total =
+
+    nights * selectedProperty.price;
+
+    const bookingRef =
+
+    "SH" +
+
+    Math.floor(Math.random()*900000+100000);
+
+    showToast(
+
+        "Booking Confirmed ✔"
+
+    );
+
+    alert(
+
+`Booking Successful!
+
+Reference:
+
+${bookingRef}
+
+Property:
+
+${selectedProperty.name}
+
+Nights:
+
+${nights}
+
+Total:
+
+${formatPrice(total)}
+
+Thank you for choosing StayHub.`
+
+    );
+
+    closeBooking();
+
+    bookingForm.reset();
+
+});
 
 }
+
+
+
+// =========================================
+// RECENTLY VIEWED
+// =========================================
+
+function saveRecentlyViewed(id){
+
+    let recent =
+
+    JSON.parse(
+
+    localStorage.getItem("stayhubRecent")
+
+    ) || [];
+
+    recent = recent.filter(item=>item!==id);
+
+    recent.unshift(id);
+
+    recent = recent.slice(0,6);
+
+    localStorage.setItem(
+
+    "stayhubRecent",
+
+    JSON.stringify(recent)
+
+    );
+
+}
+
+
+
+function loadRecentlyViewed(){
+
+    const container =
+
+    document.getElementById("recentGrid");
+
+    if(!container) return;
+
+    const recent =
+
+    JSON.parse(
+
+    localStorage.getItem("stayhubRecent")
+
+    ) || [];
+
+    const data =
+
+    recent
+
+    .map(id=>properties.find(p=>p.id===id))
+
+    .filter(Boolean);
+
+    container.innerHTML =
+
+    data
+
+    .map(createPropertyCard)
+
+    .join("");
+
+}
+
+
+
+// =========================================
+// UPDATE RECENTLY VIEWED
+// =========================================
+
+const originalViewProperty = viewProperty;
+
+viewProperty = function(id){
+
+    saveRecentlyViewed(id);
+
+    loadRecentlyViewed();
+
+    originalViewProperty(id);
+
+};
+// =========================================
+// TOAST NOTIFICATIONS
+// =========================================
+
+function showToast(message){
+
+    const toast = document.getElementById("toast");
+
+    const text = document.getElementById("toastText");
+
+    if(!toast || !text) return;
+
+    text.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+
+
+// =========================================
+// MAP
+// =========================================
+
+function openMap(){
+
+    const modal = document.getElementById("mapModal");
+
+    if(modal){
+
+        modal.style.display = "flex";
+
+    }
+
+}
+
+
+
+function closeMap(){
+
+    const modal = document.getElementById("mapModal");
+
+    if(modal){
+
+        modal.style.display = "none";
+
+    }
+
+}
+
+
+
+// =========================================
+// COMPARE DRAWER
+// =========================================
+
+let compareList = [];
+
+
+
+function openCompare(){
+
+    document
+
+    .getElementById("compareDrawer")
+
+    .classList.add("open");
+
+}
+
+
+
+function closeCompare(){
+
+    document
+
+    .getElementById("compareDrawer")
+
+    .classList.remove("open");
+
+}
+
+
+
+function addToCompare(id){
+
+    if(compareList.includes(id)){
+
+        showToast("Already added");
+
+        return;
+
+    }
+
+    if(compareList.length>=3){
+
+        showToast("Maximum 3 properties");
+
+        return;
+
+    }
+
+    compareList.push(id);
+
+    renderCompare();
+
+}
+
+
+
+function renderCompare(){
+
+    const container =
+
+    document.getElementById("compareItems");
+
+    if(!container) return;
+
+    container.innerHTML =
+
+    compareList.map(id=>{
+
+        const p = properties.find(x=>x.id===id);
+
+        if(!p) return "";
+
+        return `
+
+        <div class="compare-card">
+
+            <img src="${p.gallery[0]}">
+
+            <h4>${p.name}</h4>
+
+            <p>${formatPrice(p.price)}</p>
+
+            <p>⭐ ${p.rating}</p>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+
+// =========================================
+// AI CHAT
+// =========================================
+
+function toggleAssistant(){
+
+    const widget =
+
+    document.getElementById("chatWidget");
+
+    if(!widget) return;
+
+    widget.classList.toggle("show");
+
+}
+
+
+
+function sendMessage(){
+
+    const input =
+
+    document.getElementById("chatInput");
+
+    const body =
+
+    document.getElementById("chatMessages");
+
+    if(!input || !body) return;
+
+    if(input.value.trim()==="") return;
+
+    body.innerHTML += `
+
+    <div class="user-message">
+
+        ${input.value}
+
+    </div>
+
+    `;
+
+    setTimeout(()=>{
+
+        body.innerHTML += `
+
+        <div class="bot-message">
+
+        Thanks for your question.
+
+        Our AI booking assistant will be connected soon.
+
+        </div>
+
+        `;
+
+        body.scrollTop = body.scrollHeight;
+
+    },600);
+
+    input.value="";
+
+}
+
+
+
+// =========================================
+// COOKIE BANNER
+// =========================================
+
+function acceptCookies(){
+
+    localStorage.setItem(
+
+        "cookiesAccepted",
+
+        "yes"
+
+    );
+
+    document.getElementById("cookieBanner").style.display="none";
+
+}
+
+
+
+function declineCookies(){
+
+    document.getElementById("cookieBanner").style.display="none";
+
+}
+
+
+
+// =========================================
+// BACK TO TOP
+// =========================================
+
+function scrollTopPage(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+
+window.addEventListener("scroll",()=>{
+
+    const button =
+
+    document.getElementById("backTop");
+
+    if(!button) return;
+
+    if(window.scrollY>500){
+
+        button.classList.add("show");
+
+    }
+
+    else{
+
+        button.classList.remove("show");
+
+    }
+
+});
+
+
+
+// =========================================
+// VIEW DEALS
+// =========================================
+
+function viewDeals(){
+
+    filters.maxPrice = 10000;
+
+    applyFilters();
+
+    showToast("Showing today's best deals");
+
+}
+
+
+
+// =========================================
+// THEME
+// =========================================
+
+const themeToggle =
+
+document.getElementById("themeToggle");
+
+if(themeToggle){
+
+themeToggle.addEventListener("click",()=>{
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+
+        "stayhubTheme",
+
+        document.body.classList.contains("dark")
+
+        ? "dark"
+
+        : "light"
+
+    );
+
+});
+
+}
+
+
+
+const savedTheme =
+
+localStorage.getItem("stayhubTheme");
+
+if(savedTheme==="dark"){
+
+    document.body.classList.add("dark");
+
+}
+
+
+
+// =========================================
+// MOBILE MENU
+// =========================================
+
+function toggleMenu(){
+
+    const nav =
+
+    document.querySelector("nav");
+
+    if(nav){
+
+        nav.classList.toggle("show");
+
+    }
+
+}
+
+
+
+// =========================================
+// INITIALIZE
+// =========================================
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    renderProperties();
+
+    loadRecentlyViewed();
+
+    const search =
+
+    document.getElementById("destinationSearch");
+
+    if(search){
+
+        search.addEventListener("keyup",searchListings);
+
+    }
+
+    if(localStorage.getItem("cookiesAccepted")==="yes"){
+
+        const banner =
+
+        document.getElementById("cookieBanner");
+
+        if(banner){
+
+            banner.style.display="none";
+
+        }
+
+    }
+
+    console.log("✅ StayHub Listings Loaded");
+
+});
