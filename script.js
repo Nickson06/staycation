@@ -1,509 +1,373 @@
-const featuredStays = [
-{
-id:1,
-name:"Coral Bay Resort",
-location:"Watamu",
-price:8500,
-rating:4.9,
-image:"https://images.unsplash.com/photo-1501117716987-c8e1ecb2106e",
-type:"Hotel"
-},
+/*=========================================
+DARK MODE
+=========================================*/
 
-{
-id:2,
-name:"Diani Ocean Villa",
-location:"Diani",
-price:12000,
-rating:4.8,
-image:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-type:"Villa"
-},
+const themeToggle = document.getElementById("themeToggle");
 
-{
-id:3,
-name:"Nairobi City Suites",
-location:"Nairobi",
-price:7200,
-rating:4.7,
-image:"https://images.unsplash.com/photo-1566073771259-6a8506099945",
-type:"Hotel"
-},
+const body = document.body;
 
-{
-id:4,
-name:"Naivasha Safari Lodge",
-location:"Naivasha",
-price:5600,
-rating:4.9,
-image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-type:"Safari Lodge"
-},
+// Load saved theme
+if(localStorage.getItem("stayhub-theme") === "dark"){
 
-{
-id:5,
-name:"Kisumu Sunset Apartment",
-location:"Kisumu",
-price:6200,
-rating:4.8,
-image:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
-type:"Apartment"
-},
+    body.classList.add("dark");
 
-{
-id:6,
-name:"Maasai Mara Luxury Camp",
-location:"Maasai Mara",
-price:18500,
-rating:5.0,
-image:"https://images.unsplash.com/photo-1445019980597-93fa8acb246c",
-type:"Luxury Camp"
-}
-];
-const experiences=[
-
-{
-id:1,
-title:"Marine Park Tour",
-location:"Watamu",
-price:50,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
-},
-
-{
-id:2,
-title:"Deep Sea Diving",
-location:"Watamu",
-price:100,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1544551763-46a013bb70d5"
-},
-
-{
-id:3,
-title:"Private Tour Guide",
-location:"Watamu",
-price:70,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1527631746610-bca00a040d60"
-},
-
-{
-id:4,
-title:"Hippo Boat Ride",
-location:"Kisumu",
-price:40,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21"
-},
-
-{
-id:5,
-title:"Lake Victoria Sunset Cruise",
-location:"Kisumu",
-price:60,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-},
-
-{
-id:6,
-title:"Game Drive",
-location:"Maasai Mara",
-price:120,
-currency:"USD",
-image:"https://images.unsplash.com/photo-1516426122078-c23e76319801"
-}
-
-];
-function renderExperiences(){
-
-const container=document.getElementById("experienceContainer");
-
-if(!container) return;
-
-container.innerHTML=experiences.map(exp=>`
-
-<div class="experience-card">
-
-<img src="${exp.image}">
-
-<div class="experience-info">
-
-<h3>${exp.title}</h3>
-
-<p>${exp.location}</p>
-
-<strong>${exp.currency} ${exp.price}</strong>
-
-<button onclick="bookExperience(${exp.id})">
-
-Explore
-
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-function goToListings(){
-
-const destination=document.getElementById("destinationInput").value;
-
-const checkIn=document.getElementById("checkIn").value;
-
-const checkOut=document.getElementById("checkOut").value;
-
-const guests=document.getElementById("guests").value;
-
-localStorage.setItem("search",JSON.stringify({
-
-destination,
-checkIn,
-checkOut,
-guests
-
-}));
-
-window.location="listings.html";
+    themeToggle.innerHTML =
+    '<i class="fa-solid fa-sun"></i>';
 
 }
 
-/*==================================
-MOBILE MENU
-==================================*/
+themeToggle.addEventListener("click",()=>{
 
-function toggleMenu(){
+    body.classList.toggle("dark");
 
-const nav=document.querySelector(".navbar nav");
+    if(body.classList.contains("dark")){
 
-nav.classList.toggle("show-menu");
+        localStorage.setItem("stayhub-theme","dark");
 
-}
-/*==================================
+        themeToggle.innerHTML =
+        '<i class="fa-solid fa-sun"></i>';
+
+    }else{
+
+        localStorage.setItem("stayhub-theme","light");
+
+        themeToggle.innerHTML =
+        '<i class="fa-solid fa-moon"></i>';
+
+    }
+
+});
+/*=========================================
 NAVBAR SCROLL
-==================================*/
+=========================================*/
+
+const navbar = document.querySelector(".navbar");
 
 window.addEventListener("scroll",()=>{
 
-const navbar=document.querySelector(".navbar");
+    if(window.scrollY > 80){
 
-if(window.scrollY>80){
+        navbar.style.padding = "8px 0";
 
-navbar.classList.add("navbar-scroll");
+        navbar.style.boxShadow =
+        "0 12px 35px rgba(0,0,0,.12)";
+
+    }else{
+
+        navbar.style.padding = "";
+
+        navbar.style.boxShadow = "none";
+
+    }
+
+});
+/*=========================================
+COUNTER
+=========================================*/
+
+const counters =
+document.querySelectorAll(".stat-card h2");
+
+const animateCounter = counter=>{
+
+    const target =
+    parseFloat(counter.innerText);
+
+    let current = 0;
+
+    const increment = target/100;
+
+    const update = ()=>{
+
+        current += increment;
+
+        if(current < target){
+
+            counter.innerText =
+            Math.floor(current);
+
+            requestAnimationFrame(update);
+
+        }else{
+
+            counter.innerText =
+            target;
+
+        }
+
+    }
+
+    update();
 
 }
 
-else{
+const observer = new IntersectionObserver(entries=>{
 
-navbar.classList.remove("navbar-scroll");
+    entries.forEach(entry=>{
 
-}
+        if(entry.isIntersecting){
+
+            animateCounter(
+
+                entry.target.querySelector("h2")
+
+            );
+
+        }
+
+    });
 
 });
 
+document.querySelectorAll(".stat-card")
+.forEach(card=>observer.observe(card));
 
-/*==================================
-DESTINATION SEARCH
-==================================*/
+/*=========================================
+SCROLL ANIMATION
+=========================================*/
 
-function searchDestination(destination){
+const hiddenSections = document.querySelectorAll(
 
-localStorage.setItem("search",JSON.stringify({
+"section"
 
-destination
+);
 
-}));
+hiddenSections.forEach(section=>{
 
-window.location="listings.html";
+    section.style.opacity = "0";
 
-}
+    section.style.transform =
+    "translateY(60px)";
 
-function viewStay(id){
-
-localStorage.setItem("selectedStay",id);
-
-window.location="listing-details.html";
-
-}
-function bookExperience(id){
-
-localStorage.setItem("selectedExperience",id);
-
-window.location="experience.html";
-
-}
-function subscribeNewsletter(){
-
-const email=document.getElementById("newsletterEmail");
-
-if(!email.value){
-
-alert("Enter your email");
-
-return;
-
-}
-
-alert("Thanks for subscribing!");
-
-email.value="";
-
-}
-window.addEventListener("load",()=>{
-
-const loader =
-document.getElementById("loader");
-
-if(!loader) return;
-
-setTimeout(()=>{
-
-loader.style.opacity="0";
-
-setTimeout(()=>{
-
-loader.style.display="none";
-
-},400);
-
-},700);
+    section.style.transition =
+    ".8s ease";
 
 });
-const travelTips = [
 
-{
-title:"Watamu",
-text:"Best time to visit is July to October."
-},
+const reveal = new IntersectionObserver(entries=>{
 
-{
-title:"Kisumu",
-text:"Enjoy sunset cruises on Lake Victoria."
-},
+    entries.forEach(entry=>{
 
-{
-title:"Maasai Mara",
-text:"Witness the Great Migration from July."
-},
+        if(entry.isIntersecting){
 
-{
-title:"Naivasha",
-text:"Boat rides are best early in the morning."
-}
+            entry.target.style.opacity = "1";
+
+            entry.target.style.transform =
+            "translateY(0)";
+
+        }
+
+    });
+
+});
+
+hiddenSections.forEach(section=>{
+
+    reveal.observe(section);
+
+});
+/*=========================================
+MOBILE MENU
+=========================================*/
+
+const mobileMenu =
+document.querySelector(".mobile-menu");
+
+const navLinks =
+document.querySelector(".nav-links");
+
+mobileMenu.addEventListener("click",()=>{
+
+    navLinks.classList.toggle("show");
+
+});
+/*=========================================
+HERO BACKGROUND
+=========================================*/
+
+const hero = document.querySelector(".hero");
+
+const heroImages=[
+
+"images/hero1.jpg",
+
+"images/hero2.jpg",
+
+"images/hero3.jpg",
+
+"images/hero4.jpg"
 
 ];
 
-let currentTip = 0;
+let heroIndex=0;
 
-function rotateTips(){
+setInterval(()=>{
 
-const title = document.getElementById("tipTitle");
-const text = document.getElementById("tipText");
+heroIndex++;
 
-if(!title) return;
+if(heroIndex>=heroImages.length){
 
-currentTip++;
-
-if(currentTip>=travelTips.length){
-
-currentTip=0;
+heroIndex=0;
 
 }
 
-title.innerText=travelTips[currentTip].title;
+hero.style.backgroundImage=
 
-text.innerText=travelTips[currentTip].text;
+`url(${heroImages[heroIndex]})`;
 
-}
+},6000);
+/*=========================================
+PROPERTY CARDS
+=========================================*/
 
-setInterval(rotateTips,4000);
+document.querySelectorAll(".property-card")
 
-function searchDestination(destination){
+.forEach(card=>{
 
-    localStorage.setItem(
-        "searchDestination",
-        destination
-    );
+card.addEventListener("mousemove",e=>{
 
-    window.location.href =
-        "listings.html";
+const rect=card.getBoundingClientRect();
 
-}
+const x=e.clientX-rect.left;
 
-function viewDeals(){
+const y=e.clientY-rect.top;
 
-    localStorage.setItem(
-        "showDeals",
-        true
-    );
+card.style.transform=
 
-    window.location.href =
-        "listings.html";
-
-}
-function openProperty(id){
-
-    localStorage.setItem(
-        "selectedProperty",
-        id
-    );
-
-    window.location.href =
-        "property.html";
-
-}
-function openExperience(id){
-
-    localStorage.setItem(
-        "selectedExperience",
-        id
-    );
-
-    window.location.href =
-        "experience.html";
-
-}
-function subscribeNewsletter(){
-
-const email =
-document.getElementById("newsletterEmail");
-
-if(!email) return;
-
-if(email.value.trim() === ""){
-
-alert("Please enter your email");
-
-return;
-
-}
-
-alert("Thank you for subscribing!");
-
-email.value = "";
-
-}
-function filterCategory(category){
-
-    localStorage.setItem(
-        "selectedCategory",
-        category
-    );
-    let filtered = allListings;
-
-if(selectedCategory){
-
-    filtered = filtered.filter(item =>
-        item.type === selectedCategory
-    );
-
-}
-
-    window.location.href =
-        "listings.html";
-
-}
-function renderFeaturedStays(){
-
-const container =
-document.getElementById("featuredContainer");
-
-if(!container) return;
-
-container.innerHTML = featuredStays.map(stay => `
-
-<div class="featured-card">
-
-<img src="${stay.image}" alt="${stay.name}">
-
-<div class="featured-info">
-
-<span class="tag">${stay.type}</span>
-
-<h3>${stay.name}</h3>
-
-<p>${stay.location}</p>
-
-<div class="featured-bottom">
-
-<strong>KES ${stay.price.toLocaleString()}/night</strong>
-
-<span>⭐ ${stay.rating}</span>
-
-</div>
-
-<button onclick="viewStay(${stay.id})">
-
-View Stay
-
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-renderFeaturedStays();
-
-renderExperiences();
+`perspective(900px)
+rotateY(${(x-150)/25}deg)
+rotateX(${-(y-150)/25}deg)
+translateY(-8px)`;
 
 });
-/* ==========================
-   DARK MODE
-========================== */
 
-const themeBtn =
-document.getElementById("themeToggle");
+card.addEventListener("mouseleave",()=>{
 
-if(themeBtn){
+card.style.transform="";
 
-const savedTheme =
-localStorage.getItem("stayhubTheme");
+});
 
-if(savedTheme === "dark"){
+});
+/*=========================================
+SEARCH
+=========================================*/
 
-document.body.classList.add("dark-mode");
+function goToListings(){
 
-themeBtn.innerHTML =
-'<i class="fa-solid fa-sun"></i>';
+const destination=
 
-}
+document.getElementById("destinationInput").value;
 
-themeBtn.addEventListener("click",()=>{
+const checkIn=
 
-document.body.classList.toggle("dark-mode");
+document.getElementById("checkIn").value;
 
-if(document.body.classList.contains("dark-mode")){
+const checkOut=
 
-localStorage.setItem(
-"stayhubTheme",
-"dark"
-);
+document.getElementById("checkOut").value;
 
-themeBtn.innerHTML =
-'<i class="fa-solid fa-sun"></i>';
+const guests=
 
-}else{
+document.getElementById("guests").value;
 
-localStorage.setItem(
-"stayhubTheme",
-"light"
-);
+const url=
 
-themeBtn.innerHTML =
-'<i class="fa-solid fa-moon"></i>';
+`listings.html?destination=${encodeURIComponent(destination)}&checkin=${checkIn}&checkout=${checkOut}&guests=${encodeURIComponent(guests)}`;
+
+window.location.href=url;
 
 }
+
+const scrollTop=
+
+document.getElementById("scrollTop");
+
+window.addEventListener("scroll",()=>{
+
+scrollTop.style.display=
+
+window.scrollY>500?
+
+"block":"none";
+
+});
+
+scrollTop.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
 
 });
 
 }
+
+const featured = [
+
+{
+
+id:1,
+
+title:"Ocean Paradise Villa",
+
+location:"Watamu",
+
+price:8500,
+
+rating:4.96,
+
+reviews:184,
+
+badge:"SUPERHOST",
+
+discount:"20% OFF",
+
+image:"images/watamu1.jpg",
+
+amenities:[
+
+"Pool",
+
+"WiFi",
+
+"Breakfast"
+
+]
+
+},
+
+{
+
+id:2,
+
+title:"Diani Luxury Suites",
+
+location:"Diani",
+
+price:6800,
+
+rating:4.91,
+
+reviews:92,
+
+badge:"GUEST FAVORITE",
+
+discount:"15% OFF",
+
+image:"images/diani1.jpg",
+
+amenities:[
+
+"Beach",
+
+"Pool",
+
+"Parking"
+
+]
+
+}
+
+];
