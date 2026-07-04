@@ -27,7 +27,7 @@ rel="stylesheet">
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet"
-href="listings.css">
+href="css/listings.css">
 
 </head>
 
@@ -103,7 +103,9 @@ Login
 
 </a>
 
-<div class="mobile-menu" onclick="toggleMobileMenu()">
+<div
+id="mobileMenuButton"
+class="mobile-menu">
     <i class="fa-solid fa-bars"></i>
 </div>
 
@@ -359,17 +361,14 @@ Property Type
 
 </h4>
 
-<label>
-
-<input type="checkbox">
-
+<input
+type="checkbox"
+data-category="Hotel">
 Hotel
-
-</label>
-
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-category="Apartment">
 
 Apartment
 
@@ -377,7 +376,8 @@ Apartment
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-category="Villa">
 
 Villa
 
@@ -478,17 +478,14 @@ Amenities
 
 </h4>
 
-<label>
-
-<input type="checkbox">
-
+<input
+type="checkbox"
+data-amenity="WiFi">
 WiFi
-
-</label>
-
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Swimming Pool">
 
 Swimming Pool
 
@@ -496,7 +493,8 @@ Swimming Pool
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Free parking">
 
 Free Parking
 
@@ -504,7 +502,8 @@ Free Parking
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Air Conditioning">
 
 Air Conditioning
 
@@ -512,7 +511,8 @@ Air Conditioning
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Breakfast">
 
 Breakfast Included
 
@@ -520,7 +520,8 @@ Breakfast Included
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Kitchen">
 
 Kitchen
 
@@ -528,7 +529,8 @@ Kitchen
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Pet">
 
 Pet Friendly
 
@@ -536,7 +538,8 @@ Pet Friendly
 
 <label>
 
-<input type="checkbox">
+<input type="checkbox"
+data-amenity="Beach">
 
 Beach Access
 
@@ -558,41 +561,46 @@ Guests
 
 <label>
 
-<input type="radio" name="guests">
+<input
+type="radio"
+name="guests"
+value="1">
 
-1+
-
-</label>
-
-<label>
-
-<input type="radio" name="guests">
-
-2+
 
 </label>
 
 <label>
 
-<input type="radio" name="guests">
-
-4+
-
-</label>
-
-<label>
-
-<input type="radio" name="guests">
-
-6+
+<input
+type="radio"
+name="guests"
+value="2">
 
 </label>
 
 <label>
 
-<input type="radio" name="guests">
+<input
+type="radio"
+name="guests"
+value="3">
+</label>
 
-8+
+<label>
+
+<input
+type="radio"
+name="guests"
+value="4">
+
+</label>
+
+<label>
+
+<input
+type="radio"
+name="guests"
+value="6">
 
 </label>
 
@@ -676,44 +684,43 @@ Showing 80 premium stays
 
 <select id="sortListings">
 
-<option>
+<option value="recommended">
 
 Recommended
 
 </option>
 
-<option>
+<option value="priceLow">
 
 Price: Low to High
 
 </option>
 
-<option>
+<option value="priceHigh">
 
 Price: High to Low
 
 </option>
 
-<option>
+<option value="rating">
 
 Highest Rated
 
 </option>
 
-<option>
+<option value="newest">
 
 Newest
 
 </option>
 
-<option>
+<option value="popular">
 
 Most Booked
 
 </option>
 
 </select>
-
 <button class="map-btn">
 
 <i class="fa-solid fa-map-location-dot"></i>
@@ -1362,39 +1369,23 @@ PAGINATION
 
 <section class="pagination">
 
-    <button class="page-btn active">
+    <button
+    id="prevPage"
+    class="page-btn">
 
-        1
-
-    </button>
-
-    <button class="page-btn">
-
-        2
+        <i class="fa-solid fa-chevron-left"></i>
 
     </button>
 
-    <button class="page-btn">
+    <div id="paginationNumbers"></div>
 
-        3
-
-    </button>
-
-    <button class="page-btn">
-
-        4
-
-    </button>
-
-    <button class="page-btn">
+    <button
+    id="nextPage"
+    class="page-btn">
 
         <i class="fa-solid fa-chevron-right"></i>
 
     </button>
-
-</section>
-
-</div>
 
 </section>
 
@@ -1589,28 +1580,32 @@ BOOKING MODAL
         <form id="bookingForm">
 
             <input
-            type="text"
-            placeholder="Full Name"
-            required>
+id="bookingName"
+type="text"
+placeholder="Full Name"
+required>
 
-            <input
-            type="email"
-            placeholder="Email Address"
-            required>
+<input
+id="bookingEmail"
+type="email"
+placeholder="Email Address"
+required>
 
-            <input
-            type="tel"
-            placeholder="Phone Number"
-            required>
+<input
+id="bookingPhone"
+type="tel"
+placeholder="Phone Number"
+required>
 
-            <input
-            type="date"
-            required>
+<input
+id="bookingCheckIn"
+type="date"
+required>
 
-            <input
-            type="date"
-            required>
-
+<input
+id="bookingCheckOut"
+type="date"
+required>
             <button type="submit">
 
                 Confirm Booking
@@ -1623,8 +1618,8 @@ BOOKING MODAL
 
 </div>
 
-<script src="properties.js"></script>
-<script src="listings.js"></script>
+<script src="js/properties.js"></script>
+<script src="js/listings.js"></script>
 
 </body>
 </html>
