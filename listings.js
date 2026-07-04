@@ -1,13 +1,9 @@
-/*==================================================
-    STAYHUB LISTINGS
-    MODULE 1 - INITIALIZATION
-==================================================*/
+// =========================================
+// STAYHUB LISTINGS
+// Part 1 - Core Engine
+// =========================================
 
-"use strict";
-
-/*==================================================
-    GLOBAL STATE
-==================================================*/
+// Make sure properties.js is loaded BEFORE listings.js
 
 let filteredProperties = [...properties];
 
@@ -20,15 +16,20 @@ let selectedProperty = null;
 let wishlist =
 JSON.parse(localStorage.getItem("stayhubWishlist")) || [];
 
+
+// =========================================
+// FILTER STATE
+// =========================================
+
 const filters = {
 
     search: "",
 
-    destination: "All Destinations",
+    destination: "All",
 
-    propertyTypes: [],
+    category: "All",
 
-    maxPrice: 50000,
+    maxPrice: Infinity,
 
     minRating: 0,
 
@@ -39,325 +40,22 @@ const filters = {
 };
 
 
-/*==================================================
-    DOM ELEMENTS
-==================================================*/
 
-const listingGrid =
-document.getElementById("listingGrid");
-
-const resultsCount =
-document.getElementById("resultsCount");
-
-const destinationSearch =
-document.getElementById("destinationSearch");
-
-const destinationFilter =
-document.getElementById("destinationFilter");
-
-const sortListingsSelect =
-document.getElementById("sortListings");
-
-const themeToggle =
-document.getElementById("themeToggle");
-
-const bookingModal =
-document.getElementById("bookingModal");
-
-const propertyModal =
-document.getElementById("propertyModal");
-
-
-/*==================================================
-    INITIALIZE APPLICATION
-==================================================*/
-
-document.addEventListener("DOMContentLoaded", initializeApp);
-
-function initializeApp(){
-
-    console.log("🚀 StayHub Listings Loaded");
-
-    loadTheme();
-
-    attachEventListeners();
-
-    renderProperties();
-
-}
-
-
-window.addEventListener("scroll",()=>{
-
-    const navbar =
-
-    document.querySelector(".navbar");
-
-    if(!navbar) return;
-
-    if(window.scrollY>30){
-
-        navbar.classList.add("scrolled");
-
-    }
-
-    else{
-
-        navbar.classList.remove("scrolled");
-
-    }
-
-});
-/*==================================================
-    ATTACH EVENT LISTENERS
-==================================================*/
-
-function attachEventListeners(){
-
-    /* Search */
-
-    if(destinationSearch){
-
-        destinationSearch.addEventListener(
-
-            "input",
-
-            searchListings
-
-        );
-
-    }
-    const mobileButton =
-
-document.getElementById(
-
-"mobileMenuButton"
-
-);
-
-if(mobileButton){
-
-    mobileButton.addEventListener(
-
-        "click",
-
-        toggleMobileMenu
-
-    );
-
-}
-
-
-    /* Destination Filter */
-
-    if(destinationFilter){
-
-        destinationFilter.addEventListener(
-
-            "change",
-
-            function(){
-
-                filterDestination(this.value);
-
-            }
-
-        );
-
-    }
-
-
-    /* Sorting */
-
-    if(sortListingsSelect){
-
-        sortListingsSelect.addEventListener(
-
-            "change",
-
-            sortListings
-
-        );
-
-    }
-
-
-    /* Theme */
-
-    if(themeToggle){
-
-        themeToggle.addEventListener(
-
-            "click",
-
-            toggleTheme
-
-        );
-
-    }
-
-
-    /* Reset Filters */
-
-    const resetButton =
-
-    document.querySelector(".reset-btn");
-
-    if(resetButton){
-
-        resetButton.addEventListener(
-
-            "click",
-
-            resetFilters
-
-        );
-
-    }
-
-
-    /* Property Details Modal */
-
-    document.querySelectorAll(
-
-        "#propertyModal .close"
-
-    ).forEach(button=>{
-
-        button.addEventListener(
-
-            "click",
-
-            closeProperty
-
-        );
-
-    });
-
-
-    /* Booking Modal */
-
-    document.querySelectorAll(
-
-        "#bookingModal .close"
-
-    ).forEach(button=>{
-
-        button.addEventListener(
-
-            "click",
-
-            closeBooking
-
-        );
-
-    });
-
-
-    /* Close modal when clicking outside */
-
-    window.addEventListener(
-
-        "click",
-
-        function(event){
-
-            if(event.target===propertyModal){
-
-                closeProperty();
-
-            }
-
-            if(event.target===bookingModal){
-
-                closeBooking();
-
-            }
-
-        }
-
-    );
-
-}
-
-
-/*==================================================
-    MOBILE MENU
-==================================================*/
-
-function toggleMobileMenu(){
-
-    const nav =
-
-    document.querySelector(".nav-links");
-
-    if(nav){
-
-        nav.classList.toggle("show");
-
-    }
-
-}
-
-
-/*==================================================
-    PRICE FORMATTER
-==================================================*/
+// =========================================
+// FORMAT PRICE
+// =========================================
 
 function formatPrice(price){
-/*==================================================
-    MODULE 2 - PROPERTY RENDERING
-==================================================*/
 
-
-/*==================================================
-    RENDER ALL PROPERTIES
-==================================================*/
-
-function renderProperties(){
-
-    if(!listingGrid) return;
-
-    const start =
-    (currentPage - 1) * propertiesPerPage;
-
-    const end =
-    start + propertiesPerPage;
-
-    const pageProperties =
-    filteredProperties.slice(start,end);
-
-    if(pageProperties.length===0){
-
-        listingGrid.innerHTML = emptyState();
-
-        updateResults();
-
-        renderPagination();
-
-        return;
-
-    }
-
-    listingGrid.innerHTML =
-
-        pageProperties
-
-        .map(createPropertyCard)
-
-        .join("");
-
-    updateResults();
-
-    renderPagination();
+    return "KES " + price.toLocaleString();
 
 }
 
 
 
-/*==================================================
-    CREATE PROPERTY CARD
-==================================================*/
+// =========================================
+// CREATE PROPERTY CARD
+// =========================================
 
 function createPropertyCard(property){
 
@@ -368,150 +66,161 @@ function createPropertyCard(property){
 
 <div class="property-card">
 
-    <div class="property-image">
+<div class="property-image">
 
-        <img
-        src="${property.gallery[0]}"
-        alt="${property.name}">
+<img
+src="${property.gallery[0]}"
+alt="${property.name}">
 
-        ${property.discount>0 ?
+${property.discount > 0 ?
 
-        `<div class="discount-badge">
+`<span class="discount-badge">
 
-            -${property.discount}%
+-${property.discount}%
 
-        </div>`
+</span>`
 
-        :
+:
 
-        ""}
+""}
 
-        ${property.featured ?
+<button
+class="wishlist-btn"
+onclick="toggleWishlist(${property.id})">
 
-        `<div class="favorite-badge">
+<i class="${liked ?
 
-            Guest Favourite
+'fa-solid'
 
-        </div>`
+:
 
-        :
+'fa-regular'}
 
-        ""}
+fa-heart"></i>
 
-        <button
-        class="wishlist-btn"
-        onclick="toggleWishlist(${property.id})">
+</button>
 
-            <i class="fa-${liked ? "solid" : "regular"} fa-heart"></i>
+</div>
 
-        </button>
 
-    </div>
 
-    <div class="property-info">
+<div class="property-info">
 
-        <div class="property-rating">
+<div class="property-rating">
 
-            <span>
+⭐ ${property.rating}
 
-                ⭐ ${property.rating}
+<span>
 
-            </span>
+(${property.reviews} reviews)
 
-            <small>
+</span>
 
-                ${property.reviews} reviews
+</div>
 
-            </small>
 
-        </div>
+<h3>
 
-        <h3 class="property-title">
+${property.name}
 
-            ${property.name}
+</h3>
 
-        </h3>
 
-        <div class="property-location">
+<p class="location">
 
-            <i class="fa-solid fa-location-dot"></i>
+<i class="fa-solid fa-location-dot"></i>
 
-            ${property.location} • ${property.county}
+${property.location}, ${property.county}
 
-        </div>
+</p>
 
-        <div class="property-features">
 
-            <span>
 
-                👥 ${property.guests} Guests
+<div class="property-meta">
 
-            </span>
+<span>
 
-            <span>
+🛏 ${property.bedrooms} Bedrooms
 
-                🛏 ${property.bedrooms} Bedrooms
+</span>
 
-            </span>
+<span>
 
-            <span>
+🛁 ${property.bathrooms} Baths
 
-                🛁 ${property.bathrooms} Baths
+</span>
 
-            </span>
+<span>
 
-        </div>
+👥 ${property.guests} Guests
 
-        <div class="property-features">
+</span>
 
-            ${property.amenities
-            .slice(0,4)
-            .map(item=>`<span>${item}</span>`)
-            .join("")}
+</div>
 
-        </div>
 
-        <div class="property-bottom">
 
-            <div class="property-price">
+<div class="property-amenities">
 
-                <h3>
+${property.amenities
 
-                    ${formatPrice(property.price)}
+.slice(0,3)
 
-                </h3>
+.map(item=>`<span>${item}</span>`)
 
-                <span>
+.join("")}
 
-                    per night
+</div>
 
-                </span>
 
-            </div>
 
-            <div class="card-buttons">
+<div class="property-footer">
 
-                <button
-                class="details-btn"
-                onclick="viewProperty(${property.id})">
+<div>
 
-                    Details
+<h3>
 
-                </button>
+${formatPrice(property.price)}
 
-                <button
-                class="book-btn"
-                onclick="bookProperty(${property.id})">
+</h3>
 
-                    Book
+<p>
 
-                </button>
+per night
 
-            </div>
+</p>
 
-        </div>
+</div>
 
-    </div>
+
+
+<div class="property-buttons">
+
+<button
+
+class="details-btn"
+
+onclick="viewProperty(${property.id})">
+
+Details
+
+</button>
+
+<button
+
+class="book-btn"
+
+onclick="bookProperty(${property.id})">
+
+Book Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -521,168 +230,256 @@ function createPropertyCard(property){
 
 
 
-/*==================================================
-    UPDATE RESULTS COUNT
-==================================================*/
+// =========================================
+// RENDER PROPERTIES
+// =========================================
+
+function renderProperties(){
+
+const listingGrid =
+
+document.getElementById("listingGrid");
+
+if(!listingGrid) return;
+
+
+
+const start =
+
+(currentPage-1)*propertiesPerPage;
+
+
+
+const end =
+
+start + propertiesPerPage;
+
+
+
+const pageItems =
+
+filteredProperties.slice(start,end);
+
+
+
+listingGrid.innerHTML =
+
+pageItems
+
+.map(createPropertyCard)
+
+.join("");
+
+
+
+updateResults();
+
+renderPagination();
+
+}
+
+
+
+// =========================================
+// RESULTS
+// =========================================
 
 function updateResults(){
 
-    if(!resultsCount) return;
+const results =
 
-    resultsCount.textContent =
+document.getElementById("resultsCount");
 
-    `Showing ${filteredProperties.length} premium stays`;
+if(!results) return;
+
+results.textContent =
+
+`Showing ${filteredProperties.length} premium stays`;
 
 }
 
 
 
-/*==================================================
-    EMPTY STATE
-==================================================*/
+// =========================================
+// PAGINATION
+// =========================================
 
-function emptyState(){
+function renderPagination(){
 
-return `
+const container =
 
-<div class="empty-results">
+document.getElementById("paginationNumbers");
 
-    <i class="fa-solid fa-bed"></i>
+if(!container) return;
 
-    <h2>
 
-        No properties found
 
-    </h2>
+const totalPages =
 
-    <p>
+Math.ceil(
 
-        Try adjusting your filters or search terms.
+filteredProperties.length /
 
-    </p>
+propertiesPerPage
 
-    <button
-    class="reset-btn"
-    onclick="resetFilters()">
+);
 
-        Reset Filters
 
-    </button>
 
-</div>
+let html = "";
+
+
+
+for(
+
+let page=1;
+
+page<=totalPages;
+
+page++
+
+){
+
+html += `
+
+<button
+
+class="page-btn
+
+${page===currentPage ?
+
+'active'
+
+:
+
+''}"
+
+onclick="goToPage(${page})">
+
+${page}
+
+</button>
 
 `;
 
 }
-    return "KES " + Number(price).toLocaleString();
+
+
+
+container.innerHTML = html;
 
 }
-/*==================================================
-    MODULE 3 - SEARCH & FILTERS
-==================================================*/
 
 
-/*==================================================
-    APPLY ALL FILTERS
-==================================================*/
 
-function applyFilters(){
+// =========================================
+// CHANGE PAGE
+// =========================================
 
-    filteredProperties = properties.filter(property=>{
+function goToPage(page){
 
-        /*------------------------------
-        Search
-        ------------------------------*/
+currentPage = page;
+
+renderProperties();
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+
+
+// =========================================
+// PREVIOUS PAGE
+// =========================================
+
+function previousPage(){
+
+if(currentPage>1){
+
+currentPage--;
+
+renderProperties();
+
+}
+
+}
+
+
+
+// =========================================
+// NEXT PAGE
+// =========================================
+
+function nextPage(){
+
+const total =
+
+Math.ceil(
+
+filteredProperties.length /
+
+propertiesPerPage
+
+);
+
+if(currentPage<total){
+
+currentPage++;
+
+renderProperties();
+
+}
+
+}
+// =========================================
+// APPLY FILTERS
+// =========================================
+
+function applyFilters() {
+
+    filteredProperties = properties.filter(property => {
 
         const matchesSearch =
-
-            filters.search === "" ||
-
             property.name.toLowerCase().includes(filters.search) ||
-
             property.location.toLowerCase().includes(filters.search) ||
-
             property.county.toLowerCase().includes(filters.search);
 
-
-        /*------------------------------
-        Destination
-        ------------------------------*/
-
         const matchesDestination =
-
-            filters.destination === "All Destinations" ||
-
+            filters.destination === "All" ||
             property.location === filters.destination;
 
-
-        /*------------------------------
-        Category
-        ------------------------------*/
-
         const matchesCategory =
-
-            filters.categories.length === 0 ||
-
-            filters.categories.includes(property.category);
-
-
-        /*------------------------------
-        Price
-        ------------------------------*/
+            filters.category === "All" ||
+            property.category === filters.category;
 
         const matchesPrice =
-
             property.price <= filters.maxPrice;
 
-
-        /*------------------------------
-        Rating
-        ------------------------------*/
-
         const matchesRating =
-
             property.rating >= filters.minRating;
 
-
-        /*------------------------------
-        Guests
-        ------------------------------*/
-
         const matchesGuests =
-
             property.guests >= filters.guests;
 
-
-        /*------------------------------
-        Amenities
-        ------------------------------*/
-
         const matchesAmenities =
-
-            filters.amenities.every(item=>
-
+            filters.amenities.every(item =>
                 property.amenities.includes(item)
-
             );
 
-
         return (
-
             matchesSearch &&
-
             matchesDestination &&
-
             matchesCategory &&
-
             matchesPrice &&
-
             matchesRating &&
-
             matchesGuests &&
-
             matchesAmenities
-
         );
 
     });
@@ -694,32 +491,32 @@ function applyFilters(){
 }
 
 
-/*==================================================
-    HERO SEARCH
-==================================================*/
 
-function searchListings(){
+// =========================================
+// LIVE SEARCH
+// =========================================
 
-    if(!destinationSearch) return;
+function searchListings() {
+
+    const input =
+        document.getElementById("destinationSearch");
+
+    if (!input) return;
 
     filters.search =
-
-    destinationSearch.value
-
-    .trim()
-
-    .toLowerCase();
+        input.value.toLowerCase().trim();
 
     applyFilters();
 
 }
 
 
-/*==================================================
-    DESTINATION FILTER
-==================================================*/
 
-function filterDestination(destination){
+// =========================================
+// DESTINATION FILTER
+// =========================================
+
+function filterDestination(destination) {
 
     filters.destination = destination;
 
@@ -728,85 +525,75 @@ function filterDestination(destination){
 }
 
 
-/*==================================================
-    CATEGORY FILTER
-==================================================*/
 
-function filterCategory(category){
+// =========================================
+// CATEGORY FILTER
+// =========================================
 
-    if(filters.categories.includes(category)){
+function filterCategory(category) {
 
-        filters.categories =
-
-        filters.categories.filter(item=>item!==category);
-
-    }
-
-    else{
-
-        filters.categories.push(category);
-
-    }
+    filters.category = category;
 
     applyFilters();
 
 }
 
 
-/*==================================================
-    PRICE FILTER
-==================================================*/
 
-function filterPrice(price){
+// =========================================
+// PRICE FILTER
+// =========================================
 
-    filters.maxPrice = Number(price);
+function filterPrice(price) {
 
-    applyFilters();
-
-}
-
-
-/*==================================================
-    RATING FILTER
-==================================================*/
-
-function filterRating(rating){
-
-    filters.minRating = Number(rating);
+    filters.maxPrice = price;
 
     applyFilters();
 
 }
 
 
-/*==================================================
-    GUEST FILTER
-==================================================*/
 
-function filterGuests(guests){
+// =========================================
+// RATING FILTER
+// =========================================
 
-    filters.guests = Number(guests);
+function filterRating(rating) {
+
+    filters.minRating = rating;
 
     applyFilters();
 
 }
 
 
-/*==================================================
-    AMENITY FILTER
-==================================================*/
 
-function toggleAmenity(amenity){
+// =========================================
+// GUEST FILTER
+// =========================================
 
-    if(filters.amenities.includes(amenity)){
+function filterGuests(guests) {
+
+    filters.guests = guests;
+
+    applyFilters();
+
+}
+
+
+
+// =========================================
+// AMENITY FILTER
+// =========================================
+
+function toggleAmenity(amenity) {
+
+    if (filters.amenities.includes(amenity)) {
 
         filters.amenities =
+            filters.amenities.filter(item => item !== amenity);
 
-        filters.amenities.filter(item=>item!==amenity);
-
-    }
-
-    else{
+    } else {
 
         filters.amenities.push(amenity);
 
@@ -817,19 +604,20 @@ function toggleAmenity(amenity){
 }
 
 
-/*==================================================
-    RESET FILTERS
-==================================================*/
 
-function resetFilters(){
+// =========================================
+// RESET FILTERS
+// =========================================
+
+function resetFilters() {
 
     filters.search = "";
 
-    filters.destination = "All Destinations";
+    filters.destination = "All";
 
-    filters.categories = [];
+    filters.category = "All";
 
-    filters.maxPrice = 50000;
+    filters.maxPrice = Infinity;
 
     filters.minRating = 0;
 
@@ -837,786 +625,69 @@ function resetFilters(){
 
     filters.amenities = [];
 
+    const search =
+        document.getElementById("destinationSearch");
 
+    if (search) {
 
-    /* Search */
-
-    if(destinationSearch){
-
-        destinationSearch.value = "";
-
-    }
-
-
-    /* Destination */
-
-    if(destinationFilter){
-
-        destinationFilter.selectedIndex = 0;
+        search.value = "";
 
     }
-
-
-    /* Price */
-
-    const priceSlider =
-
-    document.getElementById("priceRange");
-
-    if(priceSlider){
-
-        priceSlider.value = 50000;
-
-    }
-
-
-    /* Checkboxes */
-
-    document
-
-    .querySelectorAll(
-
-        '.filters input[type="checkbox"]'
-
-    )
-
-    .forEach(box=>box.checked=false);
-
-
-    /* Radios */
-
-    document
-
-    .querySelectorAll(
-
-        '.filters input[type="radio"]'
-
-    )
-
-    .forEach(radio=>radio.checked=false);
-
 
     applyFilters();
 
 }
 
 
-/*==================================================
-    CONNECT SIDEBAR FILTERS
-==================================================*/
 
-function initializeFilters(){
+// =========================================
+// SORTING
+// =========================================
 
+function sortListings() {
 
-    /* Category */
+    const sort =
+        document.getElementById("sortListings").value;
 
-    document
+    switch (sort) {
 
-    .querySelectorAll(
+        case "priceLow":
 
-        '.filters input[type="checkbox"][data-category]'
+            filteredProperties.sort((a, b) => a.price - b.price);
 
-    )
+            break;
 
-    .forEach(box=>{
+        case "priceHigh":
 
-        box.addEventListener("change",()=>{
+            filteredProperties.sort((a, b) => b.price - a.price);
 
-            filterCategory(
+            break;
 
-                box.dataset.category
+        case "rating":
 
-            );
+            filteredProperties.sort((a, b) => b.rating - a.rating);
 
-        });
+            break;
 
-    });
+        case "newest":
 
+            filteredProperties.sort((a, b) => b.id - a.id);
 
-    /* Amenities */
+            break;
 
-    document
+        default:
 
-    .querySelectorAll(
+            filteredProperties.sort((a, b) => {
 
-        '.filters input[type="checkbox"][data-amenity]'
+                if (a.featured && !b.featured) return -1;
 
-    )
-
-    .forEach(box=>{
-
-        box.addEventListener("change",()=>{
-
-            toggleAmenity(
-
-                box.dataset.amenity
-
-            );
-
-        });
-
-    });
-
-
-    /* Rating */
-
-    document
-
-    .querySelectorAll(
-
-        'input[name="rating"]'
-
-    )
-
-    .forEach(radio=>{
-
-        radio.addEventListener("change",()=>{
-
-            filterRating(
-
-                radio.value
-
-            );
-
-        });
-
-    });
-
-
-    /* Guests */
-
-    document
-
-    .querySelectorAll(
-
-        'input[name="guests"]'
-
-    )
-
-    .forEach(radio=>{
-
-        radio.addEventListener("change",()=>{
-
-            filterGuests(
-
-                radio.value
-
-            );
-
-        });
-
-    });
-
-
-    /* Price */
-
-    const priceSlider =
-
-    document.getElementById("priceRange");
-
-    if(priceSlider){
-
-        priceSlider.addEventListener("input",()=>{
-
-            filterPrice(priceSlider.value);
-
-        });
-
-    }
-
-}
-function initializeApp(){
-
-    console.log("🚀 StayHub Listings Loaded");
-
-    loadTheme();
-
-    loadWishlist();
-
-    attachEventListeners();
-
-    initializeFilters();
-
-    initializePagination();
-
-    initializeBookingForm();
-
-    initializeMobileMenu();
-
-    initializeBookingDates();
-
-    initializeDateWatcher();
-
-    initializeGlobalEvents();
-
-    initializeScroll();
-
-    renderProperties();
-
-    applicationHealthCheck();
-
-}
-/*==================================================
-    MODULE 4 - SORTING
-==================================================*/
-
-
-/*==================================================
-    SORT PROPERTIES
-==================================================*/
-
-function sortListings(){
-
-    if(!sortListingsSelect) return;
-
-    const sortBy =
-
-    sortListingsSelect.value;
-
-
-    switch(sortBy){
-
-        /*------------------------------
-        Recommended
-        ------------------------------*/
-
-        case "recommended":
-
-            filteredProperties.sort((a,b)=>{
-
-                if(a.featured && !b.featured) return -1;
-
-                if(!a.featured && b.featured) return 1;
+                if (!a.featured && b.featured) return 1;
 
                 return b.rating - a.rating;
 
             });
 
-            break;
-
-
-        /*------------------------------
-        Lowest Price
-        ------------------------------*/
-
-        case "priceLow":
-
-            filteredProperties.sort(
-
-                (a,b)=>a.price-b.price
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Highest Price
-        ------------------------------*/
-
-        case "priceHigh":
-
-            filteredProperties.sort(
-
-                (a,b)=>b.price-a.price
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Highest Rating
-        ------------------------------*/
-
-        case "rating":
-
-            filteredProperties.sort((a,b)=>{
-
-                if(b.rating!==a.rating){
-
-                    return b.rating-a.rating;
-
-                }
-
-                return b.reviews-a.reviews;
-
-            });
-
-            break;
-
-
-        /*------------------------------
-        Newest Listings
-        ------------------------------*/
-
-        case "newest":
-
-            filteredProperties.sort(
-
-                (a,b)=>b.id-a.id
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Most Booked
-        ------------------------------*/
-
-        case "popular":
-
-            filteredProperties.sort((a,b)=>{
-
-                return b.reviews-a.reviews;
-
-            });
-
-            break;
-
     }
-
-
-    currentPage = 1;
-
-    renderProperties();
-
-}
-/*==================================================
-    MODULE 4 - SORTING
-==================================================*/
-
-
-/*==================================================
-    SORT PROPERTIES
-==================================================*/
-
-function sortListings(){
-
-    if(!sortListingsSelect) return;
-
-    const sortBy =
-
-    sortListingsSelect.value;
-
-
-    switch(sortBy){
-
-        /*------------------------------
-        Recommended
-        ------------------------------*/
-
-        case "recommended":
-
-            filteredProperties.sort((a,b)=>{
-
-                if(a.featured && !b.featured) return -1;
-
-                if(!a.featured && b.featured) return 1;
-
-                return b.rating - a.rating;
-
-            });
-
-            break;
-
-
-        /*------------------------------
-        Lowest Price
-        ------------------------------*/
-
-        case "priceLow":
-
-            filteredProperties.sort(
-
-                (a,b)=>a.price-b.price
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Highest Price
-        ------------------------------*/
-
-        case "priceHigh":
-
-            filteredProperties.sort(
-
-                (a,b)=>b.price-a.price
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Highest Rating
-        ------------------------------*/
-
-        case "rating":
-
-            filteredProperties.sort((a,b)=>{
-
-                if(b.rating!==a.rating){
-
-                    return b.rating-a.rating;
-
-                }
-
-                return b.reviews-a.reviews;
-
-            });
-
-            break;
-
-
-        /*------------------------------
-        Newest Listings
-        ------------------------------*/
-
-        case "newest":
-
-            filteredProperties.sort(
-
-                (a,b)=>b.id-a.id
-
-            );
-
-            break;
-
-
-        /*------------------------------
-        Most Booked
-        ------------------------------*/
-
-        case "popular":
-
-            filteredProperties.sort((a,b)=>{
-
-                return b.reviews-a.reviews;
-
-            });
-
-            break;
-
-    }
-
-
-    currentPage = 1;
-
-    renderProperties();
-
-}
-/*==================================================
-    MODULE 5 - PAGINATION
-==================================================*/
-
-
-/*==================================================
-    RENDER PAGINATION
-==================================================*/
-
-function renderPagination(){
-
-    const container =
-
-    document.getElementById("paginationNumbers");
-
-    if(!container) return;
-
-    const totalPages =
-
-    Math.ceil(
-
-        filteredProperties.length /
-
-        propertiesPerPage
-
-    );
-
-    container.innerHTML = "";
-
-    if(totalPages <= 1){
-
-        updatePaginationButtons(totalPages);
-
-        return;
-
-    }
-
-    for(
-
-        let page = 1;
-
-        page <= totalPages;
-
-        page++
-
-    ){
-
-        const button =
-
-        document.createElement("button");
-
-        button.className =
-
-        "page-btn";
-
-        if(page === currentPage){
-
-            button.classList.add("active");
-
-        }
-
-        button.textContent = page;
-
-        button.addEventListener(
-
-            "click",
-
-            ()=>{
-
-                goToPage(page);
-
-            }
-
-        );
-
-        container.appendChild(button);
-
-    }
-
-    updatePaginationButtons(totalPages);
-
-}
-
-
-
-/*==================================================
-    GO TO PAGE
-==================================================*/
-
-function goToPage(page){
-
-    const totalPages =
-
-    Math.ceil(
-
-        filteredProperties.length /
-
-        propertiesPerPage
-
-    );
-
-    if(
-
-        page < 1 ||
-
-        page > totalPages
-
-    ){
-
-        return;
-
-    }
-
-    currentPage = page;
-
-    renderProperties();
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-}
-
-
-
-/*==================================================
-    NEXT PAGE
-==================================================*/
-
-function nextPage(){
-
-    const totalPages =
-
-    Math.ceil(
-
-        filteredProperties.length /
-
-        propertiesPerPage
-
-    );
-
-    if(currentPage < totalPages){
-
-        currentPage++;
-
-        renderProperties();
-
-        window.scrollTo({
-
-            top:0,
-
-            behavior:"smooth"
-
-        });
-
-    }
-
-}
-
-
-
-/*==================================================
-    PREVIOUS PAGE
-==================================================*/
-
-function previousPage(){
-
-    if(currentPage > 1){
-
-        currentPage--;
-
-        renderProperties();
-
-        window.scrollTo({
-
-            top:0,
-
-            behavior:"smooth"
-
-        });
-
-    }
-
-}
-
-
-
-/*==================================================
-    UPDATE BUTTON STATES
-==================================================*/
-
-function updatePaginationButtons(totalPages){
-
-    const prev =
-
-    document.getElementById("prevPage");
-
-    const next =
-
-    document.getElementById("nextPage");
-
-    if(prev){
-
-        prev.disabled =
-
-        currentPage === 1;
-
-    }
-
-    if(next){
-
-        next.disabled =
-
-        currentPage === totalPages ||
-
-        totalPages === 0;
-
-    }
-
-}
-
-
-
-/*==================================================
-    INITIALIZE PAGINATION
-==================================================*/
-
-function initializePagination(){
-
-    const prev =
-
-    document.getElementById("prevPage");
-
-    const next =
-
-    document.getElementById("nextPage");
-
-    if(prev){
-
-        prev.addEventListener(
-
-            "click",
-
-            previousPage
-
-        );
-
-    }
-
-    if(next){
-
-        next.addEventListener(
-
-            "click",
-
-            nextPage
-
-        );
-
-    }
-
-}
-
-/*==================================================
-    MODULE 6 - WISHLIST
-==================================================*/
-
-
-/*==================================================
-    TOGGLE WISHLIST
-==================================================*/
-
-function toggleWishlist(propertyId){
-
-    const index =
-
-    wishlist.indexOf(propertyId);
-
-    if(index > -1){
-
-        wishlist.splice(index,1);
-
-        showToast(
-
-            "Removed from your wishlist ❤️"
-
-        );
-
-    }
-
-    else{
-
-        wishlist.push(propertyId);
-
-        showToast(
-
-            "Added to your wishlist ❤️"
-
-        );
-
-    }
-
-    saveWishlist();
 
     renderProperties();
 
@@ -1624,11 +695,25 @@ function toggleWishlist(propertyId){
 
 
 
-/*==================================================
-    SAVE WISHLIST
-==================================================*/
+// =========================================
+// WISHLIST
+// =========================================
 
-function saveWishlist(){
+function toggleWishlist(id) {
+
+    if (wishlist.includes(id)) {
+
+        wishlist = wishlist.filter(item => item !== id);
+
+        showToast("Removed from wishlist ❤️");
+
+    } else {
+
+        wishlist.push(id);
+
+        showToast("Added to wishlist ❤️");
+
+    }
 
     localStorage.setItem(
 
@@ -1638,281 +723,107 @@ function saveWishlist(){
 
     );
 
-}
-
-
-
-/*==================================================
-    LOAD WISHLIST
-==================================================*/
-
-function loadWishlist(){
-
-    const saved =
-
-    localStorage.getItem(
-
-        "stayhubWishlist"
-
-    );
-
-    if(saved){
-
-        wishlist =
-
-        JSON.parse(saved);
-
-    }
-
-    else{
-
-        wishlist = [];
-
-    }
-
-}
-
-
-
-/*==================================================
-    CHECK IF PROPERTY IS SAVED
-==================================================*/
-
-function isWishlisted(propertyId){
-
-    return wishlist.includes(propertyId);
-
-}
-
-
-
-/*==================================================
-    GET WISHLIST PROPERTIES
-==================================================*/
-
-function getWishlistProperties(){
-
-    return properties.filter(property=>
-
-        wishlist.includes(property.id)
-
-    );
-
-}
-
-
-
-/*==================================================
-    CLEAR WISHLIST
-==================================================*/
-
-function clearWishlist(){
-
-    wishlist = [];
-
-    saveWishlist();
-
     renderProperties();
 
-    showToast(
-
-        "Wishlist cleared."
-
-    );
-
-}
-/*==================================================
-    MODULE 7 - PROPERTY DETAILS MODAL
-==================================================*/
-
-
-/*==================================================
-    OPEN PROPERTY DETAILS
-==================================================*/
-
-function viewProperty(propertyId){
-
-    selectedProperty =
-
-    properties.find(property=>
-
-        property.id===propertyId
-
-    );
-
-    if(!selectedProperty) return;
-
-    const modal =
-
-    document.getElementById("propertyModal");
-
-    const details =
-
-    document.getElementById("propertyDetails");
-
-    if(!modal || !details) return;
-
-    details.innerHTML = createPropertyModal(selectedProperty);
-
-    modal.style.display = "flex";
-
-    document.body.style.overflow = "hidden";
-
 }
 
+// =========================================
+// VIEW PROPERTY
+// =========================================
 
+function viewProperty(id) {
 
-/*==================================================
-    CREATE PROPERTY MODAL
-==================================================*/
+    selectedProperty = properties.find(property => property.id === id);
 
-function createPropertyModal(property){
+    if (!selectedProperty) return;
 
-    return `
+    const modal = document.getElementById("propertyModal");
+    const content = document.getElementById("propertyContent");
 
-<div class="property-modal-wrapper">
+    content.innerHTML = `
 
-    <img
+    <div class="property-details">
 
-    class="property-modal-image"
+        <img
+        class="property-hero"
+        src="${selectedProperty.gallery[0]}"
+        alt="${selectedProperty.name}">
 
-    src="${property.gallery[0]}"
+        <div class="property-gallery">
 
-    alt="${property.name}">
+            ${selectedProperty.gallery.map(image => `
 
-
-    <div class="property-modal-body">
-
-
-        <h2>
-
-            ${property.name}
-
-        </h2>
-
-
-        <div class="property-rating">
-
-            ⭐ ${property.rating}
-
-            (${property.reviews} Reviews)
-
-        </div>
-
-
-        <p class="property-location">
-
-            <i class="fa-solid fa-location-dot"></i>
-
-            ${property.location},
-
-            ${property.county}
-
-        </p>
-
-
-        <h3>
-
-            ${formatPrice(property.price)}
-
-            <small>
-
-                / night
-
-            </small>
-
-        </h3>
-
-
-        <div class="property-features">
-
-            <span>
-
-                👥 ${property.guests} Guests
-
-            </span>
-
-            <span>
-
-                🛏 ${property.bedrooms} Bedrooms
-
-            </span>
-
-            <span>
-
-                🛁 ${property.bathrooms} Bathrooms
-
-            </span>
-
-        </div>
-
-
-        <h3>
-
-            Description
-
-        </h3>
-
-        <p>
-
-            ${property.description}
-
-        </p>
-
-
-        <h3>
-
-            Amenities
-
-        </h3>
-
-        <div class="property-amenities">
-
-            ${property.amenities.map(item=>`
-
-                <span>
-
-                    ${item}
-
-                </span>
+                <img src="${image}" alt="Gallery">
 
             `).join("")}
 
         </div>
 
+        <h2>${selectedProperty.name}</h2>
 
-        <div class="host-box">
+        <p class="property-location">
 
-            <h3>
+            <i class="fa-solid fa-location-dot"></i>
 
-                Hosted by
+            ${selectedProperty.location}, ${selectedProperty.county}
 
-                ${property.host.name}
+        </p>
 
-            </h3>
+        <div class="property-rating">
+
+            ⭐ ${selectedProperty.rating}
+
+            (${selectedProperty.reviews} Reviews)
+
+        </div>
+
+        <div class="property-price">
+
+            <strong>${formatPrice(selectedProperty.price)}</strong>
+
+            / night
+
+        </div>
+
+        <p class="property-description">
+
+            ${selectedProperty.description}
+
+        </p>
+
+        <h3>Amenities</h3>
+
+        <div class="amenity-list">
+
+            ${selectedProperty.amenities.map(item => `
+
+                <span>${item}</span>
+
+            `).join("")}
+
+        </div>
+
+        <div class="host-card">
+
+            <h3>Hosted by ${selectedProperty.host.name}</h3>
 
             <p>
 
-                ⭐ ${property.host.rating}
+                Host since ${selectedProperty.host.joined}
 
             </p>
 
             <p>
 
-                Host since
-
-                ${property.host.joined}
+                ⭐ ${selectedProperty.host.rating} Super Host
 
             </p>
 
         </div>
 
-
         <button
-
         class="book-large-btn"
-
-        onclick="bookProperty(${property.id})">
+        onclick="bookProperty(${selectedProperty.id})">
 
             Book Now
 
@@ -1920,154 +831,71 @@ function createPropertyModal(property){
 
     </div>
 
-</div>
-
-`;
-
-}
-
-
-
-/*==================================================
-    CLOSE PROPERTY MODAL
-==================================================*/
-
-function closeProperty(){
-
-    const modal =
-
-    document.getElementById("propertyModal");
-
-    if(!modal) return;
-
-    modal.style.display = "none";
-
-    document.body.style.overflow = "";
-
-}
-
-
-
-/*==================================================
-    ESC KEY SUPPORT
-==================================================*/
-
-document.addEventListener("keydown",function(event){
-
-    if(
-
-        event.key==="Escape"
-
-    ){
-
-        closeProperty();
-
-    }
-
-});
-
-
-/*==================================================
-    CLICK OUTSIDE TO CLOSE
-==================================================*/
-
-window.addEventListener("click",function(event){
-
-    const modal =
-
-    document.getElementById("propertyModal");
-
-    if(event.target===modal){
-
-        closeProperty();
-
-    }
-
-});
-
-/*==================================================
-    MODULE 8 - BOOKING SYSTEM
-==================================================*/
-
-
-/*==================================================
-    OPEN BOOKING MODAL
-==================================================*/
-
-function bookProperty(propertyId){
-
-    selectedProperty =
-
-    properties.find(property=>
-
-        property.id===propertyId
-
-    );
-
-    if(!selectedProperty) return;
-
-    const modal =
-
-    document.getElementById("bookingModal");
-
-    if(!modal) return;
+    `;
 
     modal.style.display = "flex";
 
-    document.body.style.overflow = "hidden";
+}
+
+
+
+// =========================================
+// CLOSE PROPERTY
+// =========================================
+
+function closeProperty() {
+
+    document.getElementById("propertyModal").style.display = "none";
 
 }
 
 
 
-/*==================================================
-    CLOSE BOOKING MODAL
-==================================================*/
+// =========================================
+// BOOK PROPERTY
+// =========================================
 
-function closeBooking(){
+function bookProperty(id){
 
-    const modal =
+    selectedProperty =
 
-    document.getElementById("bookingModal");
-
-    if(!modal) return;
-
-    modal.style.display = "none";
-
-    document.body.style.overflow = "";
-
-}
-
-
-
-/*==================================================
-    BOOKING FORM
-==================================================*/
-
-function initializeBookingForm(){
-
-    const form =
-
-    document.getElementById("bookingForm");
-
-    if(!form) return;
-
-    form.addEventListener("submit",submitBooking);
-
-}
-
-
-
-/*==================================================
-    SUBMIT BOOKING
-==================================================*/
-
-function submitBooking(event){
-
-    event.preventDefault();
+    properties.find(property=>property.id===id);
 
     if(!selectedProperty) return;
 
+    document.getElementById("bookingModal").style.display="flex";
+
+}
+
+
+
+// =========================================
+// CLOSE BOOKING
+// =========================================
+
+function closeBooking(){
+
+    document.getElementById("bookingModal").style.display="none";
+
+}
+
+
+
+// =========================================
+// BOOKING FORM
+// =========================================
+
+const bookingForm =
+
+document.getElementById("bookingForm");
+
+if(bookingForm){
+
+bookingForm.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    if(!selectedProperty) return;
 
     const checkIn =
 
@@ -2077,333 +905,180 @@ function submitBooking(event){
 
     document.getElementById("bookingCheckOut").value;
 
+    if(checkIn==="" || checkOut===""){
 
-    if(!validateBookingDates(checkIn,checkOut)){
+        alert("Please select check-in and check-out dates.");
 
         return;
 
     }
 
+    const start = new Date(checkIn);
+
+    const end = new Date(checkOut);
 
     const nights =
 
-    calculateNights(checkIn,checkOut);
+    Math.ceil((end-start)/(1000*60*60*24));
+
+    if(nights<=0){
+
+        alert("Invalid booking dates.");
+
+        return;
+
+    }
 
     const total =
 
     nights * selectedProperty.price;
 
+    const bookingRef =
 
-    const booking = {
+    "SH" +
 
-        reference:
-
-        generateBookingReference(),
-
-        property:
-
-        selectedProperty.name,
-
-        guest:
-
-        document.getElementById("bookingName").value,
-
-        email:
-
-        document.getElementById("bookingEmail").value,
-
-        phone:
-
-        document.getElementById("bookingPhone").value,
-
-        checkIn,
-
-        checkOut,
-
-        nights,
-
-        total,
-
-        bookedAt:
-
-        new Date().toISOString()
-
-    };
-
-
-    saveBooking(booking);
-
-    showBookingConfirmation(booking);
-
-    closeBooking();
-
-    event.target.reset();
-
-}
-
-/*==================================================
-    BOOKING REFERENCE
-==================================================*/
-
-function generateBookingReference(){
-
-    return "SH-"
-
-    +
-
-    Date.now()
-
-    .toString()
-
-    .slice(-6);
-
-}
-/*==================================================
-    SAVE BOOKING
-==================================================*/
-
-function saveBooking(booking){
-
-    let bookings =
-
-    JSON.parse(
-
-        localStorage.getItem(
-
-            "stayhubBookings"
-
-        )
-
-    ) || [];
-
-    bookings.unshift(booking);
-
-    localStorage.setItem(
-
-        "stayhubBookings",
-
-        JSON.stringify(bookings)
-
-    );
-
-}
-
-/*==================================================
-    BOOKING CONFIRMATION
-==================================================*/
-
-function showBookingConfirmation(booking){
+    Math.floor(Math.random()*900000+100000);
 
     showToast(
 
-        "Booking confirmed successfully!"
+        "Booking Confirmed ✔"
 
     );
 
     alert(
 
-`Booking Confirmed!
+`Booking Successful!
 
 Reference:
-${booking.reference}
+
+${bookingRef}
 
 Property:
-${booking.property}
 
-Guest:
-${booking.guest}
-
-Check In:
-${booking.checkIn}
-
-Check Out:
-${booking.checkOut}
+${selectedProperty.name}
 
 Nights:
-${booking.nights}
+
+${nights}
 
 Total:
-${formatPrice(booking.total)}
 
-Thank you for choosing StayHub!`
+${formatPrice(total)}
+
+Thank you for choosing StayHub.`
 
     );
 
-}
+    closeBooking();
 
-/*==================================================
-    ESC CLOSE
-==================================================*/
-
-document.addEventListener("keydown",function(event){
-
-    if(event.key==="Escape"){
-
-        closeBooking();
-
-    }
+    bookingForm.reset();
 
 });
-
-/*==================================================
-    CLICK OUTSIDE
-==================================================*/
-
-window.addEventListener("click",function(event){
-
-    const modal =
-
-    document.getElementById("bookingModal");
-
-    if(event.target===modal){
-
-        closeBooking();
-
-    }
-
-});
-
-/*==================================================
-    MODULE 9 - UI & THEME
-==================================================*/
-
-
-/*==================================================
-    LOAD THEME
-==================================================*/
-
-function loadTheme(){
-
-    const savedTheme =
-
-    localStorage.getItem("stayhubTheme");
-
-    if(savedTheme==="dark"){
-
-        document.body.classList.add("dark");
-
-        updateThemeIcon(true);
-
-    }
-
-    else{
-
-        document.body.classList.remove("dark");
-
-        updateThemeIcon(false);
-
-    }
 
 }
 
 
 
-/*==================================================
-    TOGGLE THEME
-==================================================*/
+// =========================================
+// RECENTLY VIEWED
+// =========================================
 
-function toggleTheme(){
+function saveRecentlyViewed(id){
 
-    const darkMode =
+    let recent =
 
-    document.body.classList.toggle("dark");
+    JSON.parse(
+
+    localStorage.getItem("stayhubRecent")
+
+    ) || [];
+
+    recent = recent.filter(item=>item!==id);
+
+    recent.unshift(id);
+
+    recent = recent.slice(0,6);
 
     localStorage.setItem(
 
-        "stayhubTheme",
+    "stayhubRecent",
 
-        darkMode
-
-        ?
-
-        "dark"
-
-        :
-
-        "light"
+    JSON.stringify(recent)
 
     );
 
-    updateThemeIcon(darkMode);
+}
+
+
+
+function loadRecentlyViewed(){
+
+    const container =
+
+    document.getElementById("recentGrid");
+
+    if(!container) return;
+
+    const recent =
+
+    JSON.parse(
+
+    localStorage.getItem("stayhubRecent")
+
+    ) || [];
+
+    const data =
+
+    recent
+
+    .map(id=>properties.find(p=>p.id===id))
+
+    .filter(Boolean);
+
+    container.innerHTML =
+
+    data
+
+    .map(createPropertyCard)
+
+    .join("");
 
 }
 
 
 
-/*==================================================
-    UPDATE THEME ICON
-==================================================*/
+// =========================================
+// UPDATE RECENTLY VIEWED
+// =========================================
 
-function updateThemeIcon(isDark){
+const originalViewProperty = viewProperty;
 
-    if(!themeToggle) return;
+viewProperty = function(id){
 
-    themeToggle.innerHTML = isDark
+    saveRecentlyViewed(id);
 
-    ?
+    loadRecentlyViewed();
 
-    '<i class="fa-solid fa-sun"></i>'
+    originalViewProperty(id);
 
-    :
-
-    '<i class="fa-solid fa-moon"></i>';
-
-}
-
-
-
-/*==================================================
-    TOAST NOTIFICATION
-==================================================*/
+};
+// =========================================
+// TOAST NOTIFICATIONS
+// =========================================
 
 function showToast(message){
 
-    let toast =
+    const toast = document.getElementById("toast");
 
-    document.getElementById("toast");
+    const text = document.getElementById("toastText");
 
-
-
-    if(!toast){
-
-        toast =
-
-        document.createElement("div");
-
-        toast.id = "toast";
-
-
-
-        toast.innerHTML =
-
-        `<span id="toastText"></span>`;
-
-
-        document.body.appendChild(toast);
-
-    }
-
-
-
-    const text =
-
-    document.getElementById("toastText");
-
-
+    if(!toast || !text) return;
 
     text.textContent = message;
 
-
-
     toast.classList.add("show");
 
-
-
-    clearTimeout(toast.timer);
-
-
-
-    toast.timer = setTimeout(()=>{
+    setTimeout(()=>{
 
         toast.classList.remove("show");
 
@@ -2413,73 +1088,233 @@ function showToast(message){
 
 
 
-/*==================================================
-    MOBILE MENU
-==================================================*/
+// =========================================
+// MAP
+// =========================================
 
-function toggleMobileMenu(){
+function openMap(){
 
-    const nav =
+    const modal = document.getElementById("mapModal");
 
-    document.querySelector(".nav-links");
+    if(modal){
 
-    if(!nav) return;
+        modal.style.display = "flex";
 
-    nav.classList.toggle("show");
-
-}
-
-
-
-/*==================================================
-    CLOSE MOBILE MENU
-==================================================*/
-
-function closeMobileMenu(){
-
-    const nav =
-
-    document.querySelector(".nav-links");
-
-    if(!nav) return;
-
-    nav.classList.remove("show");
+    }
 
 }
 
 
 
-/*==================================================
-    AUTO CLOSE MOBILE MENU
-==================================================*/
+function closeMap(){
 
-function initializeMobileMenu(){
+    const modal = document.getElementById("mapModal");
+
+    if(modal){
+
+        modal.style.display = "none";
+
+    }
+
+}
+
+
+
+// =========================================
+// COMPARE DRAWER
+// =========================================
+
+let compareList = [];
+
+
+
+function openCompare(){
 
     document
 
-    .querySelectorAll(".nav-links a")
+    .getElementById("compareDrawer")
 
-    .forEach(link=>{
-
-        link.addEventListener(
-
-            "click",
-
-            closeMobileMenu
-
-        );
-
-    });
+    .classList.add("open");
 
 }
 
 
 
-/*==================================================
-    SCROLL TO TOP
-==================================================*/
+function closeCompare(){
 
-function scrollToTop(){
+    document
+
+    .getElementById("compareDrawer")
+
+    .classList.remove("open");
+
+}
+
+
+
+function addToCompare(id){
+
+    if(compareList.includes(id)){
+
+        showToast("Already added");
+
+        return;
+
+    }
+
+    if(compareList.length>=3){
+
+        showToast("Maximum 3 properties");
+
+        return;
+
+    }
+
+    compareList.push(id);
+
+    renderCompare();
+
+}
+
+
+
+function renderCompare(){
+
+    const container =
+
+    document.getElementById("compareItems");
+
+    if(!container) return;
+
+    container.innerHTML =
+
+    compareList.map(id=>{
+
+        const p = properties.find(x=>x.id===id);
+
+        if(!p) return "";
+
+        return `
+
+        <div class="compare-card">
+
+            <img src="${p.gallery[0]}">
+
+            <h4>${p.name}</h4>
+
+            <p>${formatPrice(p.price)}</p>
+
+            <p>⭐ ${p.rating}</p>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+
+// =========================================
+// AI CHAT
+// =========================================
+
+function toggleAssistant(){
+
+    const widget =
+
+    document.getElementById("chatWidget");
+
+    if(!widget) return;
+
+    widget.classList.toggle("show");
+
+}
+
+
+
+function sendMessage(){
+
+    const input =
+
+    document.getElementById("chatInput");
+
+    const body =
+
+    document.getElementById("chatMessages");
+
+    if(!input || !body) return;
+
+    if(input.value.trim()==="") return;
+
+    body.innerHTML += `
+
+    <div class="user-message">
+
+        ${input.value}
+
+    </div>
+
+    `;
+
+    setTimeout(()=>{
+
+        body.innerHTML += `
+
+        <div class="bot-message">
+
+        Thanks for your question.
+
+        Our AI booking assistant will be connected soon.
+
+        </div>
+
+        `;
+
+        body.scrollTop = body.scrollHeight;
+
+    },600);
+
+    input.value="";
+
+}
+
+
+
+// =========================================
+// COOKIE BANNER
+// =========================================
+
+function acceptCookies(){
+
+    localStorage.setItem(
+
+        "cookiesAccepted",
+
+        "yes"
+
+    );
+
+    document.getElementById("cookieBanner").style.display="none";
+
+}
+
+
+
+function declineCookies(){
+
+    document.getElementById("cookieBanner").style.display="none";
+
+}
+
+
+
+// =========================================
+// BACK TO TOP
+// =========================================
+
+function scrollTopPage(){
 
     window.scrollTo({
 
@@ -2493,328 +1328,144 @@ function scrollToTop(){
 
 
 
-/*==================================================
-    LOADING BUTTON
-==================================================*/
+window.addEventListener("scroll",()=>{
 
-function setButtonLoading(button,isLoading){
+    const button =
+
+    document.getElementById("backTop");
 
     if(!button) return;
 
-    if(isLoading){
+    if(window.scrollY>500){
 
-        button.disabled = true;
-
-        button.dataset.original =
-
-        button.innerHTML;
-
-        button.innerHTML =
-
-        '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+        button.classList.add("show");
 
     }
 
     else{
 
-        button.disabled = false;
-
-        button.innerHTML =
-
-        button.dataset.original;
+        button.classList.remove("show");
 
     }
 
-}
+});
 
 
 
-/*==================================================
-    FORMAT DATE
-==================================================*/
+// =========================================
+// VIEW DEALS
+// =========================================
 
-function formatDate(date){
+function viewDeals(){
 
-    return new Date(date)
+    filters.maxPrice = 10000;
 
-    .toLocaleDateString(
+    applyFilters();
 
-        "en-KE",
-
-        {
-
-            year:"numeric",
-
-            month:"short",
-
-            day:"numeric"
-
-        }
-
-    );
-
-}
-/*==================================================
-    MODULE 10 - APPLICATION UTILITIES
-==================================================*/
-
-
-/*==================================================
-    GLOBAL EVENTS
-==================================================*/
-
-function initializeGlobalEvents(){
-
-    /* ESC closes any open modal */
-
-    document.addEventListener("keydown",(event)=>{
-
-        if(event.key !== "Escape") return;
-
-        closeProperty();
-
-        closeBooking();
-
-    });
-
-
-    /* Click outside modal */
-
-    window.addEventListener("click",(event)=>{
-
-        const propertyModal =
-
-        document.getElementById("propertyModal");
-
-        const bookingModal =
-
-        document.getElementById("bookingModal");
-
-
-        if(event.target===propertyModal){
-
-            closeProperty();
-
-        }
-
-
-        if(event.target===bookingModal){
-
-            closeBooking();
-
-        }
-
-    });
+    showToast("Showing today's best deals");
 
 }
 
 
-/*==================================================
-    MINIMUM BOOKING DATE
-==================================================*/
 
-function initializeBookingDates(){
+// =========================================
+// THEME
+// =========================================
 
-    const today =
+const themeToggle =
 
-    new Date()
+document.getElementById("themeToggle");
 
-    .toISOString()
+if(themeToggle){
 
-    .split("T")[0];
+themeToggle.addEventListener("click",()=>{
 
-    const checkIn =
+    document.body.classList.toggle("dark");
 
-    document.getElementById("bookingCheckIn");
+    localStorage.setItem(
 
-    const checkOut =
-
-    document.getElementById("bookingCheckOut");
-
-    if(checkIn){
-
-        checkIn.min = today;
-
-    }
-
-    if(checkOut){
-
-        checkOut.min = today;
-
-    }
-
-}
-
-
-/*==================================================
-    AUTO UPDATE CHECKOUT DATE
-==================================================*/
-
-function initializeDateWatcher(){
-
-    const checkIn =
-
-    document.getElementById("bookingCheckIn");
-
-    const checkOut =
-
-    document.getElementById("bookingCheckOut");
-
-    if(!checkIn || !checkOut) return;
-
-    checkIn.addEventListener("change",()=>{
-
-        checkOut.min = checkIn.value;
-
-    });
-
-}
-
-
-/*==================================================
-    DEBOUNCE
-==================================================*/
-
-function debounce(callback,delay=300){
-
-    let timeout;
-
-    return function(){
-
-        clearTimeout(timeout);
-
-        timeout = setTimeout(
-
-            ()=>{
-
-                callback.apply(
-
-                    this,
-
-                    arguments
-
-                );
-
-            },
-
-            delay
-
-        );
-
-    };
-
-}
-
-
-/*==================================================
-    EMAIL VALIDATION
-==================================================*/
-
-function isValidEmail(email){
-
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-    .test(email);
-
-}
-
-
-/*==================================================
-    PHONE VALIDATION
-==================================================*/
-
-function isValidPhone(phone){
-
-    return /^[0-9+\-\s]{9,15}$/
-
-    .test(phone);
-
-}
-
-
-/*==================================================
-    SCROLL TO TOP ON LOAD
-==================================================*/
-
-function initializeScroll(){
-
-    window.scrollTo({
-
-        top:0
-
-    });
-
-}
-
-
-/*==================================================
-    APP HEALTH CHECK
-==================================================*/
-
-function applicationHealthCheck(){
-
-    console.log("========== StayHub ==========");
-
-    console.log(
-
-        "Properties:",
-
-        properties.length
-
-    );
-
-    console.log(
-
-        "Wishlist:",
-
-        wishlist.length
-
-    );
-
-    console.log(
-
-        "Theme:",
+        "stayhubTheme",
 
         document.body.classList.contains("dark")
 
-        ?
+        ? "dark"
 
-        "Dark"
-
-        :
-
-        "Light"
+        : "light"
 
     );
 
-    console.log(
-
-        "Version: 1.0"
-
-    );
-
-    console.log("=============================");
+});
 
 }
 
 
-/*==================================================
-    SAFE QUERY
-==================================================*/
 
-function $(selector){
+const savedTheme =
 
-    return document.querySelector(selector);
+localStorage.getItem("stayhubTheme");
+
+if(savedTheme==="dark"){
+
+    document.body.classList.add("dark");
+
+}
+
+
+
+// =========================================
+// MOBILE MENU
+// =========================================
+
+function toggleMenu(){
+
+    const nav =
+
+    document.querySelector("nav");
+
+    if(nav){
+
+        nav.classList.toggle("show");
+
+    }
 
 }
 
 
-/*==================================================
-    SAFE QUERY ALL
-==================================================*/
 
-function $$(selector){
+// =========================================
+// INITIALIZE
+// =========================================
 
-    return document.querySelectorAll(selector);
+document.addEventListener("DOMContentLoaded",()=>{
 
-}
+    renderProperties();
+
+    loadRecentlyViewed();
+
+    const search =
+
+    document.getElementById("destinationSearch");
+
+    if(search){
+
+        search.addEventListener("keyup",searchListings);
+
+    }
+
+    if(localStorage.getItem("cookiesAccepted")==="yes"){
+
+        const banner =
+
+        document.getElementById("cookieBanner");
+
+        if(banner){
+
+            banner.style.display="none";
+
+        }
+
+    }
+
+    console.log("✅ StayHub Listings Loaded");
+
+});
