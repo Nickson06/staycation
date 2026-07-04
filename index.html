@@ -23,69 +23,93 @@
 
 <body>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!--==================================
+NAVIGATION
+===================================-->
 
 <header class="navbar">
 
     <div class="nav-container">
 
-        <a href="index.html" class="logo">
+        <!-- Logo -->
+
+        <a
+        href="index.html"
+        class="logo">
 
             <i class="fa-solid fa-house"></i>
 
-            <span>StayHub</span>
+            <span>
+
+                StayHub
+
+            </span>
 
         </a>
 
+        <!-- Navigation -->
+
         <nav class="nav-links">
 
-            <a href="listings.html">Stays</a>
 
-            <a href="experiences.html">Experiences</a>
+            <a href="listings.html">
 
-            <a href="host.html">Become a Host</a>
+                Stays
+
+            </a>
+
+            <a
+            href="experiences.html"
+            class="active">
+
+                Experiences
+
+            </a>
+
+            <a href="host.html">
+
+                Become a Host
+
+            </a>
+
+            <a href="wishlist.html">
+
+                Wishlist
+
+            </a>
 
         </nav>
 
-        <div class="nav-actions">
+        <!-- Right Side -->
 
-            <button class="search-icon">
+        <div class="nav-right">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-            </button>
-
-            <button id="themeToggle" class="theme-toggle">
+            <button
+            id="themeToggle"
+            class="theme-btn">
 
                 <i class="fa-solid fa-moon"></i>
 
             </button>
 
-            <a href="login.html" class="login-btn">
+            <a
+            href="login.html"
+            class="login-btn">
 
                 Login
 
             </a>
 
-            <a href="signup.html" class="signup-btn">
-
-                Sign Up
-
-            </a>
-
+        <div class="mobile-menu" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
         </div>
 
-        <button class="mobile-menu">
-
-            <i class="fa-solid fa-bars"></i>
-
-        </button>
+        </div>
 
     </div>
 
 </header>
+
 
 <!-- =========================
      HERO
