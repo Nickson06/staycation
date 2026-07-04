@@ -118,9 +118,9 @@ section{
     margin:auto;
 
 }
-//*====================================
+/* =========================================
 NAVBAR
-=====================================*/
+========================================= */
 
 .navbar{
 
@@ -132,23 +132,35 @@ NAVBAR
 
     width:100%;
 
-    background:#fff;
-
     z-index:999;
 
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+    backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.75);
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+body.dark .navbar{
+
+    background:rgba(15,23,42,.82);
 
 }
 
 .nav-container{
+
+    max-width:1280px;
+
+    margin:auto;
+
+    padding:18px 40px;
 
     display:flex;
 
     justify-content:space-between;
 
     align-items:center;
-
-    padding:18px 8%;
 
 }
 
@@ -160,17 +172,17 @@ NAVBAR
 
     gap:10px;
 
-    font-size:28px;
+    font-size:1.5rem;
 
     font-weight:800;
 
-    color:#0F766E;
+    color:var(--primary);
 
 }
 
 .logo i{
 
-    color:#0F766E;
+    font-size:28px;
 
 }
 
@@ -186,19 +198,45 @@ NAVBAR
 
     font-weight:600;
 
+    position:relative;
+
     transition:.3s;
 
 }
 
-.nav-links a:hover,
+.nav-links a:hover{
 
-.nav-links .active{
-
-    color:#0F766E;
+    color:var(--primary);
 
 }
 
-.nav-right{
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-8px;
+
+    left:0;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--primary);
+
+    transition:.3s;
+
+}
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+.nav-actions{
 
     display:flex;
 
@@ -208,39 +246,50 @@ NAVBAR
 
 }
 
-.theme-btn{
+.search-icon,
 
-    width:45px;
+.theme-toggle{
 
-    height:45px;
+    width:44px;
+
+    height:44px;
 
     border:none;
 
     border-radius:50%;
 
-    background:#eef3f7;
+    background:var(--card);
+
+    box-shadow:var(--shadow);
 
 }
 
 .login-btn{
 
-    background:#0F766E;
+    font-weight:600;
+
+}
+
+.signup-btn{
+
+    background:var(--primary);
 
     color:#fff;
 
     padding:12px 24px;
 
-    border-radius:30px;
+    border-radius:999px;
 
-    font-weight:600;
+    transition:.3s;
+
+}
+
+.signup-btn:hover{
+
+    background:var(--primary-dark);
 
 }
 
-.mobile-menu{
-
-    display:none;
-
-}
 .mobile-menu{
 
     display:none;
