@@ -23,18 +23,23 @@
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
-    <header class="navbar">
+<header class="navbar">
+
+    <div class="nav-container">
 
         <a href="index.html" class="logo">
-            <i class="fa-solid fa-house"></i>
-            <span>StayHub</span>
-        </div>
 
-        <nav>
+            <i class="fa-solid fa-house"></i>
+
+            <span>StayHub</span>
+
+        </a>
+
+        <nav class="nav-links">
 
             <a href="listings.html">Stays</a>
 
@@ -42,221 +47,191 @@
 
             <a href="host.html">Become a Host</a>
 
-            <a href="login.html">Login</a>
-
         </nav>
 
-        <button id="themeToggle" class="theme-toggle">
+        <div class="nav-actions">
 
-<i class="fa-solid fa-moon"></i>
+            <button class="search-icon">
 
-</button>
+                <i class="fa-solid fa-magnifying-glass"></i>
 
-       <div class="mobile-menu" onclick="toggleMenu()">
-    <i class="fa-solid fa-bars"></i>
-</div>
+            </button>
 
-    </header>
+            <button id="themeToggle" class="theme-toggle">
 
-    <!-- =========================
-         HERO
-    ========================== -->
+                <i class="fa-solid fa-moon"></i>
 
-    <section class="hero">
+            </button>
 
-        <div class="overlay"></div>
+            <a href="login.html" class="login-btn">
 
-        <div class="hero-content">
+                Login
 
-            <h1>
-                Find your next unforgettable stay in Kenya
-            </h1>
+            </a>
 
-            <p>
-                Luxury Hotels • Villas • Airbnb • Lodges • Beach Houses
-            </p>
+            <a href="signup.html" class="signup-btn">
 
-            <!-- SEARCH -->
+                Sign Up
 
-            <div class="search-bar">
-
-                <div class="search-item">
-
-                    <label>Where</label>
-
-                    <input
-                        id="destinationInput"
-                        type="text"
-                        placeholder="Search destinations">
-
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="search-item">
-
-                    <label>Check in</label>
-
-                    <input
-                        id="checkIn"
-                        type="date">
-
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="search-item">
-
-                    <label>Check out</label>
-
-                    <input
-                        id="checkOut"
-                        type="date">
-
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="search-item">
-
-                    <label>Guests</label>
-
-                    <select id="guests">
-
-                        <option>1 Guest</option>
-                        <option>2 Guests</option>
-                        <option>3 Guests</option>
-                        <option>4 Guests</option>
-                        <option>5 Guests</option>
-                        <option>6+ Guests</option>
-
-                    </select>
-
-                </div>
-
-                <button class="search-btn" onclick="goToListings()">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                </button>
-
-            </div>
+            </a>
 
         </div>
 
-    </section>
-    
+        <button class="mobile-menu">
 
-    <!-- =========================
-         POPULAR DESTINATIONS
-    ========================== -->
+            <i class="fa-solid fa-bars"></i>
 
-    <section class="destinations">
+        </button>
 
-        <div class="section-header">
+    </div>
 
-            <h2>Popular destinations</h2>
+</header>
 
-            <p>Explore Kenya's most loved places.</p>
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            🇰🇪 Discover Kenya's Best Stays
+
+        </span>
+
+        <h1>
+
+            Find Your Perfect Stay,
+            Anywhere in Kenya
+
+        </h1>
+
+        <p>
+
+            Luxury hotels, beach villas, Airbnbs,
+            safari lodges and unforgettable experiences.
+
+        </p>
+
+        <div class="search-bar">
+
+            <div class="search-item">
+
+                <label>Destination</label>
+
+                <input
+                    id="destinationInput"
+                    type="text"
+                    placeholder="Where are you going?">
+
+            </div>
+
+            <div class="search-item">
+
+                <label>Check In</label>
+
+                <input
+                    id="checkIn"
+                    type="date">
+
+            </div>
+
+            <div class="search-item">
+
+                <label>Check Out</label>
+
+                <input
+                    id="checkOut"
+                    type="date">
+
+            </div>
+
+            <div class="search-item">
+
+                <label>Guests</label>
+
+                <select id="guests">
+
+                    <option>1 Guest</option>
+                    <option>2 Guests</option>
+                    <option>3 Guests</option>
+                    <option>4 Guests</option>
+                    <option>5 Guests</option>
+
+                </select>
+
+            </div>
+
+            <button class="search-btn"
+                onclick="goToListings()">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
 
         </div>
 
-        <div class="destination-grid">
+    </div>
 
-            <div class="destination-card">
+</section>
+<!-- =========================
+     STATS
+========================= -->
 
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+<section class="stats-section">
 
-                <div class="destination-info">
+    <div class="stats-grid">
 
-                    <h3>Watamu</h3>
+        <div class="stat-card">
 
-                    <p>146 stays</p>
+            <i class="fa-solid fa-building"></i>
 
-                </div>
+            <h2>2,500+</h2>
 
-            </div>
-
-            <div class="destination-card">
-
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb">
-
-                <div class="destination-info">
-
-                    <h3>Diani</h3>
-
-                    <p>212 stays</p>
-
-                </div>
-
-            </div>
-
-            <div class="destination-card">
-
-                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750">
-
-                <div class="destination-info">
-
-                    <h3>Nairobi</h3>
-
-                    <p>520 stays</p>
-
-                </div>
-
-            </div>
-
-            <div class="destination-card">
-
-                <img src="https://images.unsplash.com/photo-1494526585095-c41746248156">
-
-                <div class="destination-info">
-
-                    <h3>Kisumu</h3>
-
-                    <p>97 stays</p>
-
-                </div>
-
-            </div>
-
-            <div class="destination-card">
-
-                <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b">
-
-                <div class="destination-info">
-
-                    <h3>Naivasha</h3>
-
-                    <p>81 stays</p>
-
-                </div>
-
-            </div>
-
-            <div class="destination-card">
-
-                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e">
-
-                <div class="destination-info">
-
-                    <h3>Maasai Mara</h3>
-
-                    <p>64 stays</p>
-
-                </div>
-
-            </div>
+            <p>Verified Properties</p>
 
         </div>
 
-    </section>
+        <div class="stat-card">
 
-    <!-- =========================
-         NEXT SECTION
-         Featured Stays
-    ========================== -->
+            <i class="fa-solid fa-star"></i>
 
-   <!-- =========================
+            <h2>4.9</h2>
+
+            <p>Average Rating</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-users"></i>
+
+            <h2>700+</h2>
+
+            <p>Trusted Hosts</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <h2>35+</h2>
+
+            <p>Destinations</p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================
      FEATURED STAYS
 ========================= -->
 
@@ -266,17 +241,29 @@
 
         <div>
 
-            <h2>Featured stays</h2>
+            <span class="section-tag">
+
+                Featured
+
+            </span>
+
+            <h2>
+
+                Featured This Week
+
+            </h2>
 
             <p>
-                Hand-picked places loved by thousands of travellers.
+
+                Hand-picked stays loved by thousands of travellers.
+
             </p>
 
         </div>
 
         <a href="listings.html" class="view-all">
 
-            View all
+            View All
 
             <i class="fa-solid fa-arrow-right"></i>
 
@@ -284,164 +271,162 @@
 
     </div>
 
-    <div id="featuredContainer" class="featured-grid">
+    <div
+        id="featuredContainer"
+        class="featured-grid">
+
+        <!-- Generated by JavaScript -->
 
     </div>
 
 </section>
+<!-- =========================
+     POPULAR DESTINATIONS
+========================= -->
 
-<section class="offers-section">
-
-<div class="section-header">
-
-<h2>🔥 Limited Time Offers</h2>
-
-<p>
-
-Book today and save up to 30%.
-
-</p>
-
-</div>
-
-<div class="offers-grid">
-
-<div class="offer-card">
-
-<span>-20%</span>
-
-<h3>Watamu Beach Villas</h3>
-
-<p>Now from KES 6,500/night</p>
-
-<button>Book Now</button>
-
-</div>
-
-<div class="offer-card">
-
-<span>-15%</span>
-
-<h3>Diani Ocean Suites</h3>
-
-<p>Luxury getaway</p>
-
-<button>View Deal</button>
-
-</div>
-
-<div class="offer-card">
-
-<span>Weekend</span>
-
-<h3>Kisumu Lakeside</h3>
-
-<p>Free breakfast included</p>
-
-<button>Reserve</button>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="why-section">
+<section class="destinations-section">
 
     <div class="section-header">
 
-        <h2>Why travellers love StayHub</h2>
+        <div>
 
-        <p>Everything you need for a perfect stay.</p>
+            <span class="section-tag">
+
+                Explore Kenya
+
+            </span>
+
+            <h2>Popular Destinations</h2>
+
+            <p>
+
+                Discover Kenya's most loved destinations, from pristine beaches to vibrant cities and unforgettable safari adventures.
+
+            </p>
+
+        </div>
+
+        <a href="listings.html" class="view-all">
+
+            Explore All
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
 
     </div>
 
-    <div class="why-grid">
+    <div class="destination-grid">
 
-        <div class="why-card">
+        <!-- Watamu -->
 
-            <i class="fa-solid fa-shield-halved"></i>
+        <div class="destination-card">
 
-            <h3>Verified Listings</h3>
+            <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+            alt="Watamu">
 
-            <p>Every property is reviewed before appearing on StayHub.</p>
+            <div class="destination-info">
 
-        </div>
+                <h3>Watamu</h3>
 
-        <div class="why-card">
+                <p>146 Luxury Stays</p>
 
-            <i class="fa-solid fa-credit-card"></i>
-
-            <h3>Secure Payments</h3>
-
-            <p>Pay safely using M-Pesa, Visa or Mastercard.</p>
+            </div>
 
         </div>
 
-        <div class="why-card">
+        <!-- Diani -->
 
-            <i class="fa-solid fa-earth-africa"></i>
+        <div class="destination-card">
 
-            <h3>Local Experiences</h3>
+            <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+            alt="Diani">
 
-            <p>Book activities, guides and adventures nearby.</p>
+            <div class="destination-info">
+
+                <h3>Diani Beach</h3>
+
+                <p>212 Beachfront Properties</p>
+
+            </div>
 
         </div>
 
-        <div class="why-card">
+        <!-- Nairobi -->
 
-            <i class="fa-solid fa-headset"></i>
+        <div class="destination-card">
 
-            <h3>24/7 Support</h3>
+            <img
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80"
+            alt="Nairobi">
 
-            <p>Our support team is always available.</p>
+            <div class="destination-info">
+
+                <h3>Nairobi</h3>
+
+                <p>520 City Apartments</p>
+
+            </div>
+
+        </div>
+
+        <!-- Naivasha -->
+
+        <div class="destination-card">
+
+            <img
+            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80"
+            alt="Naivasha">
+
+            <div class="destination-info">
+
+                <h3>Naivasha</h3>
+
+                <p>89 Nature Escapes</p>
+
+            </div>
+
+        </div>
+
+        <!-- Kisumu -->
+
+        <div class="destination-card">
+
+            <img
+            src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80"
+            alt="Kisumu">
+
+            <div class="destination-info">
+
+                <h3>Kisumu</h3>
+
+                <p>94 Lakeside Stays</p>
+
+            </div>
+
+        </div>
+
+        <!-- Maasai Mara -->
+
+        <div class="destination-card">
+
+            <img
+            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=900&q=80"
+            alt="Maasai Mara">
+
+            <div class="destination-info">
+
+                <h3>Maasai Mara</h3>
+
+                <p>64 Safari Lodges</p>
+
+            </div>
 
         </div>
 
     </div>
-
-</section>
-
-<section class="experience-section">
-
-<div class="section-header">
-
-<h2>Things to do nearby</h2>
-
-<p>Make your trip unforgettable.</p>
-
-</div>
-
-<div id="experienceContainer" class="experience-grid">
-
-</div>
-
-</section>
-<section class="live-deals">
-
-<div class="deal-track">
-
-<div class="deal-pill"
-onclick="openProperty(1)">
-🔥 Watamu Villa 30% OFF
-</div>
-
-<div class="deal-pill"
-onclick="openProperty(2)">
-🌊 Diani Suite KES 5,999
-</div>
-
-<div class="deal-pill"
-onclick="openProperty(3)">
-🚤 Kisumu Weekend Deal
-</div>
-
-<div class="deal-pill"
-onclick="openProperty(4)">
-🐘 Maasai Mara Safari Offer
-</div>
-
-</div>
 
 </section>
 
@@ -455,282 +440,367 @@ onclick="openProperty(4)">
 
         <div>
 
-            <h2>Browse by category</h2>
+            <span class="section-tag">
 
-            <p>Find exactly the type of stay you're looking for.</p>
+                Categories
+
+            </span>
+
+            <h2>Browse by Category</h2>
+
+            <p>
+
+                Find the perfect accommodation for every journey.
+
+            </p>
 
         </div>
 
     </div>
-    <div class="category-card"
-      onclick="filterCategory('hotel')">
 
-    <i class="fa-solid fa-hotel"></i>
+    <div class="categories-grid">
 
-    <h3>Hotels</h3>
+        <div class="category-card">
 
-    <p>Luxury & budget hotels</p>
+            <i class="fa-solid fa-hotel"></i>
 
-</div>
+            <h3>Hotels</h3>
 
-      
- <div class="category-card"
-        onclick="filterCategory('airbnb')">
+            <p>Luxury & Budget Hotels</p>
 
-      <i class="fa-solid fa-house"></i>
-
-    <h3>Airbnb</h3>
-
-    <p>Entire homes & apartments</p>
-
-</div>
-
-<div class="category-card"
-    onclick="filterCategory('villa')">
-    <i class="fa-solid fa-water"></i>
-    <h3>Beach Villas</h3>
-    <p>Oceanfront escapes</p>
-
-</div>
-
-<div class="category-card"
-   onclick="filterCategory('lodge')">
-
-    <i class="fa-solid fa-tree"></i>
-
-    <h3>Safari Lodges</h3>
-
-    <p>Wildlife adventures</p>
-
-</div>
-
-        <div class="category-card"
-   onclick="filterCategory('camp')">
-
-            <i class="fa-solid fa-campground"></i>
-            <h3>Camping</h3>
-            <p>Nature experiences</p>
         </div>
 
-       <div class="category-card"
-   onclick="filterCategory('city')">
+        <div class="category-card">
+
+            <i class="fa-solid fa-house"></i>
+
+            <h3>Apartments</h3>
+
+            <p>Entire Homes</p>
+
+        </div>
+
+        <div class="category-card">
+
+            <i class="fa-solid fa-water"></i>
+
+            <h3>Beach Villas</h3>
+
+            <p>Oceanfront Escapes</p>
+
+        </div>
+
+        <div class="category-card">
+
+            <i class="fa-solid fa-tree"></i>
+
+            <h3>Safari Lodges</h3>
+
+            <p>Wildlife Adventures</p>
+
+        </div>
+
+        <div class="category-card">
+
+            <i class="fa-solid fa-campground"></i>
+
+            <h3>Camping</h3>
+
+            <p>Outdoor Experiences</p>
+
+        </div>
+
+        <div class="category-card">
 
             <i class="fa-solid fa-city"></i>
+
             <h3>City Escapes</h3>
+
             <p>Nairobi • Kisumu • Mombasa</p>
+
         </div>
 
     </div>
 
 </section>
+<!-- =========================
+     WHY STAYHUB
+========================= -->
+
+<section class="why-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-tag">
+
+                Why Us
+
+            </span>
+
+            <h2>Why Travellers Love StayHub</h2>
+
+        </div>
+
+    </div>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>Verified Properties</h3>
+
+            <p>
+
+                Every listing is carefully reviewed.
+
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-credit-card"></i>
+
+            <h3>Secure Payments</h3>
+
+            <p>
+
+                Pay safely using trusted payment methods.
+
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-headset"></i>
+
+            <h3>24/7 Support</h3>
+
+            <p>
+
+                Our team is available whenever you need us.
+
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-earth-africa"></i>
+
+            <h3>Local Experiences</h3>
+
+            <p>
+
+                Discover unforgettable adventures.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================
+     HOST BANNER
+========================= -->
 
 <section class="host-banner">
 
-<div>
+    <div>
 
-<h2>Become a StayHub Host</h2>
+        <h2>
 
-<p>
+            Become a StayHub Host
 
-Earn income by listing your apartment, villa, hotel or holiday home.
-
-</p>
-
-</div>
-
-<a href="host.html">
-
-<button>
-
-Start Hosting
-
-</button>
-
-</a>
-
-</section>
-
-<section class="testimonial-section">
-
-<h2>What our guests say</h2>
-
-<div class="testimonial-grid">
-
-<div class="testimonial">
-
-★★★★★
-
-<p>
-
-"The booking process was effortless and the villa exceeded expectations."
-
-</p>
-
-<strong>— Brian, Nairobi</strong>
-
-</div>
-
-<div class="testimonial">
-
-★★★★★
-
-<p>
-
-"The local experiences made our Watamu holiday unforgettable."
-
-</p>
-
-<strong>— Grace, Kisumu</strong>
-
-</div>
-
-<div class="testimonial">
-
-★★★★★
-
-<p>
-
-"Professional hosts and excellent customer service."
-
-</p>
-
-<strong>— James, Mombasa</strong>
-
-</div>
-
-</div>
-
-</section>
-
-<<section class="newsletter">
-
-    <div class="newsletter-content">
-
-        <h2>Stay Inspired</h2>
+        </h2>
 
         <p>
 
-            Get exclusive travel deals, destination guides,
-            weekend escapes and special offers delivered
-            straight to your inbox.
+            Turn your extra space into extra income by hosting travellers.
 
         </p>
 
     </div>
 
-    <form class="newsletter-form">
+    <a href="host.html">
 
-        <input
-        type="email"
-        placeholder="Enter your email address">
+        <button>
 
-        <button onclick="subscribeNewsletter()">
+            Start Hosting
 
-Subscribe
+        </button>
 
-</button>
-    </form>
+    </a>
 
 </section>
+<!-- =========================
+     TESTIMONIALS
+========================= -->
 
-<section class="travel-tip">
+<section class="testimonial-section">
 
-<div class="tip-icon">
+    <div class="section-header">
 
-🌍
+        <div>
 
-</div>
+            <span class="section-tag">
 
-<div>
+                Reviews
 
-<h3 id="tipTitle">
+            </span>
 
-Travel Tip
+            <h2>What Our Guests Say</h2>
 
-</h3>
+        </div>
 
-<p id="tipText">
+    </div>
 
-Best time to visit Watamu is July to October.
+    <div class="testimonial-grid">
 
-</p>
+        <div class="testimonial">
 
-</div>
+            <h3>★★★★★</h3>
+
+            <p>
+
+                The booking process was effortless and the villa exceeded every expectation.
+
+            </p>
+
+            <strong>
+
+                — Brian, Nairobi
+
+            </strong>
+
+        </div>
+
+        <div class="testimonial">
+
+            <h3>★★★★★</h3>
+
+            <p>
+
+                StayHub helped us discover amazing places we never knew existed.
+
+            </p>
+
+            <strong>
+
+                — Grace, Kisumu
+
+            </strong>
+
+        </div>
+
+        <div class="testimonial">
+
+            <h3>★★★★★</h3>
+
+            <p>
+
+                Excellent customer support and beautiful accommodation.
+
+            </p>
+
+            <strong>
+
+                — James, Mombasa
+
+            </strong>
+
+        </div>
+
+    </div>
 
 </section>
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="footer">
 
-<div class="footer-top">
+    <div class="footer-top">
 
-<div class="footer-grid">
+        <div class="footer-grid">
 
-<div>
+            <div>
 
-<h3>StayHub</h3>
+                <h3>StayHub</h3>
 
-<p>
+                <p>
 
-Discover unique stays and experiences across Kenya.
+                    Discover unforgettable stays across Kenya.
 
-</p>
+                </p>
 
-</div>
+            </div>
 
-<div>
+            <div>
 
-<h4>Explore</h4>
+                <h4>Explore</h4>
 
-<a href="listings.html">Stays</a>
+                <a href="listings.html">Stays</a>
 
-<a href="#">Experiences</a>
+                <a href="experiences.html">Experiences</a>
 
-<a href="#">Destinations</a>
+                <a href="host.html">Become a Host</a>
 
-</div>
+            </div>
 
-<div>
+            <div>
 
-<h4>Company</h4>
+                <h4>Support</h4>
 
-<a href="#">About</a>
+                <a href="#">Help Centre</a>
 
-<a href="#">Become a Host</a>
+                <a href="#">Privacy Policy</a>
 
-<a href="#">Contact</a>
+                <a href="#">Terms & Conditions</a>
 
-</div>
+            </div>
 
-<div>
+            <div>
 
-<h4>Follow us</h4>
+                <h4>Follow Us</h4>
 
-<div class="social-icons">
+                <div class="social-icons">
 
-<a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
 
-<a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
 
-<a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
 
-<a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
 
-</div>
-<div id="loader">
+                </div>
 
-<div class="spinner"></div>
+            </div>
 
-</div>
+        </div>
 
-</div>
-<p class="copyright">
+        <p class="copyright">
 
-© 2026 StayHub Kenya. All Rights Reserved.
+            © 2026 StayHub Kenya. All Rights Reserved.
 
-</p>
+        </p>
+
+    </div>
+<button id="scrollTop">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
 
 </footer>
-   <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 
