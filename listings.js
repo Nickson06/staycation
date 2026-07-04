@@ -87,6 +87,27 @@ function initializeApp(){
 }
 
 
+window.addEventListener("scroll",()=>{
+
+    const navbar =
+
+    document.querySelector(".navbar");
+
+    if(!navbar) return;
+
+    if(window.scrollY>30){
+
+        navbar.classList.add("scrolled");
+
+    }
+
+    else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
 /*==================================================
     ATTACH EVENT LISTENERS
 ==================================================*/
