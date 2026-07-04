@@ -1,259 +1,2176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StayHub Host System</title>
 
-<style>
-/* =======================
-   GLOBAL STYLES
-======================= */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-}
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-/* HEADER */
-.header {
-  background: white;
-  padding: 15px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
+<title>StayHub | Become a Host</title>
 
-.logo {
-  font-weight: bold;
-  font-size: 20px;
-}
+<meta
+name="description"
+content="List your property or experience on StayHub and start earning from thousands of travellers across Kenya.">
 
-.back {
-  text-decoration: none;
-  color: #ff385c;
-  font-weight: bold;
-}
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-/* LAYOUT */
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  padding: 30px;
-}
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-@media (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-/* CARD */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-}
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-/* FORM */
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-}
+<link rel="stylesheet"
+href="host.css">
 
-input:focus, select:focus, textarea:focus {
-  border-color: #ff385c;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: #ff385c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #e03150;
-}
-
-/* LISTINGS */
-.listing {
-  border: 1px solid #eee;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.listing img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.small {
-  font-size: 12px;
-  color: gray;
-}
-
-.delete {
-  background: black;
-  margin-top: 5px;
-  font-size: 12px;
-}
-.preview {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  display: none;
-  margin-bottom: 10px;
-}
-</style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo">🏡 StayHub Host System</div>
-  <a class="back" href="index.html">← Back</a>
-</div>
 
-<!-- MAIN -->
-<div class="container">
+<!--==================================
+NAVBAR
+===================================-->
 
-  <!-- FORM -->
-  <div class="card">
-    <h2>Create Listing</h2>
+<header class="navbar">
 
-    <input id="name" placeholder="Property Name">
-    <input id="location" placeholder="Location">
-    <input id="price" type="number" placeholder="Price per night (KES)">
+    <div class="nav-container">
 
-    <select id="type">
-      <option>Hotel</option>
-      <option>Airbnb Apartment</option>
-      <option>Villa</option>
-      <option>Safari Lodge</option>
-    </select>
+        <a href="index.html" class="logo">
 
-    <textarea id="desc" placeholder="Description"></textarea>
+            <i class="fa-solid fa-house"></i>
 
-    <input type="file" id="imageInput" accept="image/*">
-    <img id="preview" class="preview">
+            <span>StayHub</span>
 
-    <button id="submitBtn" onclick="addListing()">Publish Listing</button>
-  </div>
+        </a>
 
-  <!-- LISTINGS -->
-  <div class="card">
-    <h2>My Listings</h2>
-    <div id="listings"></div>
-  </div>
+        <nav class="nav-links">
 
-</div>
+            <a href="index.html">
 
-<script>
-let listings = JSON.parse(localStorage.getItem("stayhub_listings")) || [];
+                Home
 
-// IMAGE PREVIEW
-document.getElementById("imageInput").addEventListener("change", function(e){
-  const file = e.target.files[0];
-  const reader = new FileReader();
+            </a>
 
-  reader.onload = function(){
-    const preview = document.getElementById("preview");
-    preview.src = reader.result;
-    preview.style.display = "block";
-  }
+            <a href="listings.html">
 
-  if(file) reader.readAsDataURL(file);
-});
+                Stays
 
-// ADD LISTING
-function addListing() {
-  const name = document.getElementById("name").value;
-  const location = document.getElementById("location").value;
-  const price = document.getElementById("price").value;
-  const type = document.getElementById("type").value;
-  const desc = document.getElementById("desc").value;
-  const image = document.getElementById("preview").src;
+            </a>
 
-  if (!name || !location || !price) {
-    alert("Please fill required fields");
-    return;
-  }
+            <a href="experiences.html">
 
-  const listing = {
-    id: Date.now(),
-    name,
-    location,
-    price,
-    type,
-    desc,
-    image: image || ""
-  };
+                Experiences
 
-  listings.push(listing);
-  localStorage.setItem("stayhub_listings", JSON.stringify(listings));
+            </a>
 
-  clearForm();
-  renderListings();
-}
+            <a
+            href="host.html"
+            class="active">
 
-// CLEAR FORM
-function clearForm() {
-  document.getElementById("name").value = "";
-  document.getElementById("location").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("desc").value = "";
-  document.getElementById("preview").style.display = "none";
-}
+                Become a Host
 
-// DELETE
-function deleteListing(id) {
-  listings = listings.filter(l => l.id !== id);
-  localStorage.setItem("stayhub_listings", JSON.stringify(listings));
-  renderListings();
-}
+            </a>
 
-// RENDER
-function renderListings() {
-  const container = document.getElementById("listings");
-  container.innerHTML = "";
+            <a href="wishlist.html">
 
-  listings.forEach(l => {
-    container.innerHTML += `
-      <div class="listing">
-        <img src="${l.image || 'https://via.placeholder.com/80'}">
-        <div>
-          <b>${l.name}</b><br>
-          <span class="small">${l.location}</span><br>
-          <span class="small">KES ${l.price} / night</span><br>
-          <button class="delete" onclick="deleteListing(${l.id})">Delete</button>
+                Wishlist
+
+            </a>
+
+        </nav>
+
+        <div class="nav-right">
+
+            <button
+            id="themeToggle"
+            class="theme-btn">
+
+                <i class="fa-solid fa-moon"></i>
+
+            </button>
+
+            <a
+            href="login.html"
+            class="login-btn">
+
+                Login
+
+            </a>
+
+       <button
+        class="mobile-menu"
+        onclick="toggleMobileMenu()">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
         </div>
-      </div>
-    `;
-  });
-}
 
-renderListings();
-</script>
+    </div>
+
+</header>
+<!--==================================
+HOST HERO
+===================================-->
+
+<section class="host-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            🏡 Become a StayHub Host
+
+        </span>
+
+        <h1>
+
+            Turn Your Space Into Income
+
+        </h1>
+
+        <p>
+
+            List your hotel, villa, apartment, Airbnb, lodge or unforgettable
+            experience and start earning from thousands of travellers across Kenya.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+            class="primary-btn"
+            onclick="scrollToRegistration()">
+
+                Start Hosting
+
+            </button>
+
+            <button
+            class="secondary-btn"
+            onclick="scrollToCalculator()">
+
+                Estimate Earnings
+
+            </button>
+
+        </div>
+
+        <div class="host-trust">
+
+            <span>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Free Listing
+
+            </span>
+
+            <span>
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Secure Payments
+
+            </span>
+
+            <span>
+
+                <i class="fa-solid fa-headset"></i>
+
+                24/7 Support
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOST STATS
+===================================-->
+
+<section class="host-stats">
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-money-bill-wave"></i>
+
+        <h2>
+
+            KES 120M+
+
+        </h2>
+
+        <p>
+
+            Paid to Hosts
+
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-house-user"></i>
+
+        <h2>
+
+            12,500+
+
+        </h2>
+
+        <p>
+
+            Active Hosts
+
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <h2>
+
+            48
+
+        </h2>
+
+        <p>
+
+            Counties Covered
+
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-star"></i>
+
+        <h2>
+
+            98%
+
+        </h2>
+
+        <p>
+
+            Host Satisfaction
+
+        </p>
+
+    </div>
+
+</section>
+<!--==================================
+WHY HOST
+===================================-->
+
+<section class="why-host">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            Why Choose StayHub?
+
+        </span>
+
+        <h2>
+
+            Everything You Need To Grow
+
+        </h2>
+
+        <p>
+
+            Whether you're renting one apartment or managing a luxury resort,
+            StayHub gives you the tools to succeed.
+
+        </p>
+
+    </div>
+
+    <div class="benefits-grid">
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-bullhorn"></i>
+
+            <h3>
+
+                Massive Exposure
+
+            </h3>
+
+            <p>
+
+                Reach thousands of local and international travellers every day.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h3>
+
+                Fast Payments
+
+            </h3>
+
+            <p>
+
+                Receive secure payouts directly to your preferred payment method.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>
+
+                Smart Analytics
+
+            </h3>
+
+            <p>
+
+                Track bookings, occupancy rates and earnings in one dashboard.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-headset"></i>
+
+            <h3>
+
+                Dedicated Support
+
+            </h3>
+
+            <p>
+
+                Our team is available whenever you need assistance.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOW HOSTING WORKS
+===================================-->
+
+<section class="hosting-steps">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            🚀 Start in Minutes
+
+        </span>
+
+        <h2>
+
+            Hosting Has Never Been Easier
+
+        </h2>
+
+        <p>
+
+            Join StayHub in just four simple steps and start earning from travellers across Kenya.
+
+        </p>
+
+    </div>
+
+    <div class="steps-grid">
+
+        <!-- STEP 1 -->
+
+        <div class="step-card">
+
+            <div class="step-number">
+
+                01
+
+            </div>
+
+            <i class="fa-solid fa-house-circle-check"></i>
+
+            <h3>
+
+                Create Your Listing
+
+            </h3>
+
+            <p>
+
+                Add your property or experience with photos,
+                pricing, amenities and availability.
+
+            </p>
+
+        </div>
+
+        <!-- STEP 2 -->
+
+        <div class="step-card">
+
+            <div class="step-number">
+
+                02
+
+            </div>
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <h3>
+
+                Receive Bookings
+
+            </h3>
+
+            <p>
+
+                Travellers discover your listing and book
+                instantly through StayHub.
+
+            </p>
+
+        </div>
+
+        <!-- STEP 3 -->
+
+        <div class="step-card">
+
+            <div class="step-number">
+
+                03
+
+            </div>
+
+            <i class="fa-solid fa-handshake"></i>
+
+            <h3>
+
+                Welcome Guests
+
+            </h3>
+
+            <p>
+
+                Deliver an unforgettable experience and earn
+                great reviews.
+
+            </p>
+
+        </div>
+
+        <!-- STEP 4 -->
+
+        <div class="step-card">
+
+            <div class="step-number">
+
+                04
+
+            </div>
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h3>
+
+                Get Paid
+
+            </h3>
+
+            <p>
+
+                Receive secure payouts directly to your
+                preferred payment method.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOST CATEGORIES
+===================================-->
+
+<section class="host-categories">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            🏡 Host Anything
+
+        </span>
+
+        <h2>
+
+            What Can You List?
+
+        </h2>
+
+        <p>
+
+            StayHub welcomes every type of accommodation and unforgettable experience.
+
+        </p>
+
+    </div>
+
+    <div class="host-category-grid">
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-hotel"></i>
+
+            <h3>
+
+                Hotels
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-building"></i>
+
+            <h3>
+
+                Apartments
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-house"></i>
+
+            <h3>
+
+                Villas
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-campground"></i>
+
+            <h3>
+
+                Camps
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-water"></i>
+
+            <h3>
+
+                Beach Resorts
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-tree"></i>
+
+            <h3>
+
+                Lodges
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-route"></i>
+
+            <h3>
+
+                Tours
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-mountain-sun"></i>
+
+            <h3>
+
+                Adventures
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-utensils"></i>
+
+            <h3>
+
+                Food Experiences
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-ship"></i>
+
+            <h3>
+
+                Boat Cruises
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-camera"></i>
+
+            <h3>
+
+                Photography Tours
+
+            </h3>
+
+        </div>
+
+        <div class="host-category">
+
+            <i class="fa-solid fa-people-group"></i>
+
+            <h3>
+
+                Cultural Experiences
+
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+EARNINGS CALCULATOR
+===================================-->
+
+<section
+id="earningsCalculator"
+class="earnings-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            💰 Earnings Calculator
+
+        </span>
+
+        <h2>
+
+            Estimate Your Monthly Income
+
+        </h2>
+
+        <p>
+
+            See how much you could earn by hosting on StayHub.
+
+        </p>
+
+    </div>
+
+    <div class="calculator-wrapper">
+
+        <div class="calculator-form">
+
+            <div class="form-group">
+
+                <label>
+
+                    Nightly Price (KES)
+
+                </label>
+
+                <input
+                id="nightPrice"
+                type="number"
+                value="5000"
+                min="1000">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Nights Booked Per Month
+
+                </label>
+
+                <input
+                id="bookedNights"
+                type="range"
+                min="1"
+                max="30"
+                value="20"
+                oninput="calculateEarnings()">
+
+                <span id="nightCount">
+
+                    20 Nights
+
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Cleaning Fee (Optional)
+
+                </label>
+
+                <input
+                id="cleaningFee"
+                type="number"
+                value="0">
+
+            </div>
+
+        </div>
+
+        <div class="earnings-card">
+
+            <h3>
+
+                Estimated Monthly Earnings
+
+            </h3>
+
+            <h1 id="monthlyIncome">
+
+                KES 100,000
+
+            </h1>
+
+            <p>
+
+                Before taxes and service fees.
+
+            </p>
+
+            <button
+            class="primary-btn"
+            onclick="scrollToRegistration()">
+
+                Start Hosting
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOST BENEFITS
+===================================-->
+
+<section class="host-benefits">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            ⭐ Host Benefits
+
+        </span>
+
+        <h2>
+
+            Everything You Need To Succeed
+
+        </h2>
+
+    </div>
+
+    <div class="benefits-grid">
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-coins"></i>
+
+            <h3>
+
+                Secure Payments
+
+            </h3>
+
+            <p>
+
+                Fast payouts directly to your preferred payment method.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>
+
+                Smart Pricing
+
+            </h3>
+
+            <p>
+
+                AI recommendations help maximise your earnings.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>
+
+                Verified Guests
+
+            </h3>
+
+            <p>
+
+                Every booking is protected through our verification system.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-bullhorn"></i>
+
+            <h3>
+
+                Free Marketing
+
+            </h3>
+
+            <p>
+
+                Your listing reaches thousands of travellers every month.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-headset"></i>
+
+            <h3>
+
+                24/7 Support
+
+            </h3>
+
+            <p>
+
+                Our team is always available whenever you need assistance.
+
+            </p>
+
+        </div>
+
+        <div class="benefit-card">
+
+            <i class="fa-solid fa-mobile-screen-button"></i>
+
+            <h3>
+
+                Mobile Management
+
+            </h3>
+
+            <p>
+
+                Accept bookings and manage your calendar anywhere.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOST SUCCESS STORIES
+===================================-->
+
+<section class="host-success">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            ❤️ Success Stories
+
+        </span>
+
+        <h2>
+
+            Meet Some Of Our Top Hosts
+
+        </h2>
+
+    </div>
+
+    <div class="success-grid">
+
+        <div class="success-card">
+
+            <img
+            src="https://randomuser.me/api/portraits/women/45.jpg"
+            alt="Host">
+
+            <h3>
+
+                Mary Wanjiku
+
+            </h3>
+
+            <span>
+
+                Nairobi Apartment Host
+
+            </span>
+
+            <h2>
+
+                KES 248,000/month
+
+            </h2>
+
+            <p>
+
+                "StayHub helped me turn my apartment into a reliable source of income."
+
+            </p>
+
+        </div>
+
+        <div class="success-card">
+
+            <img
+            src="https://randomuser.me/api/portraits/men/32.jpg"
+            alt="Host">
+
+            <h3>
+
+                David Otieno
+
+            </h3>
+
+            <span>
+
+                Maasai Mara Camp
+
+            </span>
+
+            <h2>
+
+                KES 620,000/month
+
+            </h2>
+
+            <p>
+
+                "International bookings doubled after joining StayHub."
+
+            </p>
+
+        </div>
+
+        <div class="success-card">
+
+            <img
+            src="https://randomuser.me/api/portraits/women/63.jpg"
+            alt="Host">
+
+            <h3>
+
+                Aisha Mohammed
+
+            </h3>
+
+            <span>
+
+                Diani Beach Villa
+
+            </span>
+
+            <h2>
+
+                KES 480,000/month
+
+            </h2>
+
+            <p>
+
+                "Managing bookings has become incredibly easy."
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+HOST REGISTRATION
+===================================-->
+
+<section
+id="hostRegistration"
+class="host-registration">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            📝 Become a Host
+
+        </span>
+
+        <h2>
+
+            Create Your Listing
+
+        </h2>
+
+        <p>
+
+            Complete a few simple steps and publish your property or experience.
+
+        </p>
+
+    </div>
+
+    <!-- Progress -->
+
+    <div class="wizard-progress">
+
+        <div class="progress-step active">
+
+            1
+
+            <span>
+
+                Property
+
+            </span>
+
+        </div>
+
+        <div class="progress-step">
+
+            2
+
+            <span>
+
+                Location
+
+            </span>
+
+        </div>
+
+        <div class="progress-step">
+
+            3
+
+            <span>
+
+                Details
+
+            </span>
+
+        </div>
+
+        <div class="progress-step">
+
+            4
+
+            <span>
+
+                Photos
+
+            </span>
+
+        </div>
+
+        <div class="progress-step">
+
+            5
+
+            <span>
+
+                Finish
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <form id="hostWizard">
+      <div class="wizard-page active">
+
+<h3>
+
+Step 1 • Property Type
+
+</h3>
+
+<div class="property-grid">
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-hotel"></i>
+
+<span>
+
+Hotel
+
+</span>
+
+</label>
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-building"></i>
+
+<span>
+
+Apartment
+
+</span>
+
+</label>
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+
+Villa
+
+</span>
+
+</label>
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-campground"></i>
+
+<span>
+
+Camp
+
+</span>
+
+</label>
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-tree"></i>
+
+<span>
+
+Lodge
+
+</span>
+
+</label>
+
+<label class="property-option">
+
+<input type="radio" name="propertyType">
+
+<i class="fa-solid fa-route"></i>
+
+<span>
+
+Experience
+
+</span>
+
+</label>
+
+</div>
+
+<div class="wizard-buttons">
+
+<button
+type="button"
+class="next-btn"
+onclick="nextStep()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<div class="wizard-page">
+
+<h3>
+
+Step 2 • Property Location
+
+</h3>
+
+<div class="form-grid">
+
+<input
+type="text"
+placeholder="Property Name">
+
+<select>
+
+<option>
+
+Select County
+
+</option>
+
+<option>
+
+Nairobi
+
+</option>
+
+<option>
+
+Mombasa
+
+</option>
+
+<option>
+
+Kisumu
+
+</option>
+
+<option>
+
+Nakuru
+
+</option>
+
+<option>
+
+Kilifi
+
+</option>
+
+</select>
+
+<input
+type="text"
+placeholder="Town">
+
+<input
+type="text"
+placeholder="Street Address">
+
+</div>
+
+<div class="wizard-buttons">
+
+<button
+type="button"
+class="prev-btn"
+onclick="previousStep()">
+
+← Back
+
+</button>
+
+<button
+type="button"
+class="next-btn"
+onclick="nextStep()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<div class="wizard-page">
+
+<h3>
+
+Step 3 • Property Details
+
+</h3>
+
+<div class="form-grid">
+
+<input
+type="number"
+placeholder="Bedrooms">
+
+<input
+type="number"
+placeholder="Bathrooms">
+
+<input
+type="number"
+placeholder="Maximum Guests">
+
+<input
+type="number"
+placeholder="Nightly Price (KES)">
+
+</div>
+
+<textarea
+rows="6"
+placeholder="Describe your property or experience..."></textarea>
+
+<div class="wizard-buttons">
+
+<button
+type="button"
+class="prev-btn"
+onclick="previousStep()">
+
+← Back
+
+</button>
+
+<button
+type="button"
+class="next-btn"
+onclick="nextStep()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<div class="wizard-page">
+
+<h3>
+
+Step 4 • Photos & Amenities
+
+</h3>
+
+<div class="upload-box">
+
+<i class="fa-solid fa-cloud-arrow-up"></i>
+
+<h4>
+
+Drag & Drop Photos Here
+
+</h4>
+
+<p>
+
+or click below
+
+</p>
+
+<input
+type="file"
+multiple>
+
+</div>
+
+<h4>
+
+Amenities
+
+</h4>
+
+<div class="amenities-grid">
+
+<label><input type="checkbox"> WiFi</label>
+
+<label><input type="checkbox"> Pool</label>
+
+<label><input type="checkbox"> Parking</label>
+
+<label><input type="checkbox"> Air Conditioning</label>
+
+<label><input type="checkbox"> Breakfast</label>
+
+<label><input type="checkbox"> Kitchen</label>
+
+<label><input type="checkbox"> TV</label>
+
+<label><input type="checkbox"> Pet Friendly</label>
+
+</div>
+
+<div class="wizard-buttons">
+
+<button
+type="button"
+class="prev-btn"
+onclick="previousStep()">
+
+← Back
+
+</button>
+
+<button
+type="button"
+class="next-btn"
+onclick="nextStep()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<div class="wizard-page">
+
+<h3>
+
+Step 5 • Ready To Publish
+
+</h3>
+
+<div class="review-card">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<h2>
+
+Everything Looks Great!
+
+</h2>
+
+<p>
+
+Review your listing before publishing.
+
+Once submitted, our team will verify your listing before it goes live.
+
+</p>
+
+</div>
+
+<div class="wizard-buttons">
+
+<button
+type="button"
+class="prev-btn"
+onclick="previousStep()">
+
+← Back
+
+</button>
+
+<button
+type="submit"
+class="publish-btn">
+
+Publish Listing
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+<!--==================================
+HOST DASHBOARD PREVIEW
+===================================-->
+
+<section class="dashboard-preview">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            📊 Dashboard Preview
+
+        </span>
+
+        <h2>
+
+            Manage Everything In One Place
+
+        </h2>
+
+        <p>
+
+            Track bookings, earnings, guests and reviews from your personalized host dashboard.
+
+        </p>
+
+    </div>
+
+    <div class="dashboard-container">
+      <div class="dashboard-top">
+
+    <div class="dashboard-stat">
+
+        <i class="fa-solid fa-wallet"></i>
+
+        <span>
+
+            Monthly Earnings
+
+        </span>
+
+        <h2>
+
+            KES 482,000
+
+        </h2>
+
+    </div>
+
+    <div class="dashboard-stat">
+
+        <i class="fa-solid fa-calendar-check"></i>
+
+        <span>
+
+            Bookings
+
+        </span>
+
+        <h2>
+
+            48
+
+        </h2>
+
+    </div>
+
+    <div class="dashboard-stat">
+
+        <i class="fa-solid fa-bed"></i>
+
+        <span>
+
+            Occupancy
+
+        </span>
+
+        <h2>
+
+            87%
+
+        </h2>
+
+    </div>
+
+    <div class="dashboard-stat">
+
+        <i class="fa-solid fa-star"></i>
+
+        <span>
+
+            Rating
+
+        </span>
+
+        <h2>
+
+            4.98
+
+        </h2>
+
+    </div>
+
+</div>
+<div class="dashboard-bookings">
+
+    <h3>
+
+        Recent Bookings
+
+    </h3>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Guest</th>
+
+                <th>Property</th>
+
+                <th>Date</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>Sarah M.</td>
+
+                <td>Diani Beach Villa</td>
+
+                <td>14 Jul</td>
+
+                <td>
+
+                    <span class="status confirmed">
+
+                        Confirmed
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>James K.</td>
+
+                <td>Naivasha Cabin</td>
+
+                <td>18 Jul</td>
+
+                <td>
+
+                    <span class="status pending">
+
+                        Pending
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>Faith N.</td>
+
+                <td>Watamu Apartment</td>
+
+                <td>20 Jul</td>
+
+                <td>
+
+                    <span class="status completed">
+
+                        Completed
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+<div class="performance-grid">
+
+    <div class="performance-card">
+
+        <h3>
+
+            Revenue Growth
+
+        </h3>
+
+        <div class="chart-placeholder">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <p>
+
+                Monthly Revenue Chart
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="performance-card">
+
+        <h3>
+
+            Occupancy Calendar
+
+        </h3>
+
+        <div class="calendar-placeholder">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+            <p>
+
+                Booking Calendar Preview
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="host-reviews">
+
+    <h3>
+
+        Latest Guest Reviews
+
+    </h3>
+
+    <div class="review-grid">
+
+        <div class="review-card">
+
+            <div class="stars">
+
+                ★★★★★
+
+            </div>
+
+            <p>
+
+                "Fantastic stay. Very clean and exactly as advertised."
+
+            </p>
+
+            <strong>
+
+                — Alice W.
+
+            </strong>
+
+        </div>
+
+        <div class="review-card">
+
+            <div class="stars">
+
+                ★★★★★
+
+            </div>
+
+            <p>
+
+                "Excellent communication and amazing location."
+
+            </p>
+
+            <strong>
+
+                — Brian O.
+
+            </strong>
+
+        </div>
+
+        <div class="review-card">
+
+            <div class="stars">
+
+                ★★★★★
+
+            </div>
+
+            <p>
+
+                "One of the best properties we've booked in Kenya."
+
+            </p>
+
+            <strong>
+
+                — Diana M.
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+<!--==================================
+HOST FAQ
+===================================-->
+
+<section class="host-faq">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            ❓ FAQs
+
+        </span>
+
+        <h2>
+
+            Frequently Asked Questions
+
+        </h2>
+
+    </div>
+
+    <div class="faq-grid">
+
+        <div class="faq-card">
+
+            <h3 onclick="toggleFAQ(this)">
+
+                How much does it cost to list?
+
+                <i class="fa-solid fa-plus"></i>
+
+            </h3>
+
+            <p>
+
+                Listing on StayHub is completely free. You only pay a small commission when you receive a confirmed booking.
+
+            </p>
+
+        </div>
+
+        <div class="faq-card">
+
+            <h3 onclick="toggleFAQ(this)">
+
+                How do I receive payments?
+
+                <i class="fa-solid fa-plus"></i>
+
+            </h3>
+
+            <p>
+
+                Payments are securely transferred to your preferred payment method after guest check-in.
+
+            </p>
+
+        </div>
+
+        <div class="faq-card">
+
+            <h3 onclick="toggleFAQ(this)">
+
+                How long does verification take?
+
+                <i class="fa-solid fa-plus"></i>
+
+            </h3>
+
+            <p>
+
+                Most listings are reviewed and approved within 24–48 hours.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+FINAL CTA
+===================================-->
+
+<section class="host-cta">
+
+    <div class="cta-content">
+
+        <h2>
+
+            Ready To Start Hosting?
+
+        </h2>
+
+        <p>
+
+            Join thousands of Kenyan hosts already earning with StayHub.
+
+        </p>
+
+        <button
+        class="primary-btn"
+        onclick="scrollToRegistration()">
+
+            Become A Host Today
+
+        </button>
+
+    </div>
+
+</section>
+<!--==================================
+FOOTER
+===================================-->
+
+<footer class="footer">
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>
+
+                StayHub
+
+            </h3>
+
+            <p>
+
+                Kenya's trusted marketplace for stays and unforgettable experiences.
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                Explore
+
+            </h4>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+            <a href="listings.html">
+
+                Stays
+
+            </a>
+
+            <a href="experiences.html">
+
+                Experiences
+
+            </a>
+
+            <a href="host.html">
+
+                Become a Host
+
+            </a>
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                Support
+
+            </h4>
+
+            <a href="#">
+
+                Help Centre
+
+            </a>
+
+            <a href="#">
+
+                Privacy Policy
+
+            </a>
+
+            <a href="#">
+
+                Terms
+
+            </a>
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                Follow
+
+            </h4>
+
+            <div class="footer-social">
+
+                <i class="fab fa-facebook-f"></i>
+
+                <i class="fab fa-instagram"></i>
+
+                <i class="fab fa-x-twitter"></i>
+
+                <i class="fab fa-linkedin-in"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 StayHub Kenya. All Rights Reserved.
+
+    </div>
+
+</footer>
+<!--==================================
+AI ASSISTANT
+===================================-->
+
+<button
+class="assistant-btn"
+onclick="toggleAssistant()">
+
+    <i class="fa-solid fa-robot"></i>
+
+</button>
+
+<!--==================================
+BACK TO TOP
+===================================-->
+
+<button
+id="backTop"
+class="back-top"
+onclick="scrollTopPage()">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+<!--==================================
+TOAST
+===================================-->
+
+<div
+id="toast"
+class="toast">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastText">
+
+        Success
+
+    </span>
+
+</div>
+
+<!--==================================
+SCRIPTS
+===================================-->
+
+<script src="host.js"></script>
+
+<script src="theme.js"></script>
 
 </body>
 </html>
