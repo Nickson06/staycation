@@ -1,67 +1,1938 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Login | StayHub</title>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>StayHub | Login</title>
+
+<meta
+name="description"
+content="Login to your StayHub account and continue exploring Kenya.">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+/*==================================
+GLOBAL
+===================================*/
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body{
+
+font-family:'Inter',sans-serif;
+
+background:#f4f7fb;
+
+color:#0f172a;
+
+overflow-x:hidden;
+
+}
+
+a{
+
+text-decoration:none;
+
+color:inherit;
+
+}
+
+button{
+
+border:none;
+
+cursor:pointer;
+
+font-family:inherit;
+
+transition:.3s;
+
+}
+
+/*==================================
+LAYOUT
+===================================*/
+
+.login-container{
+
+display:grid;
+
+grid-template-columns:1.05fr .95fr;
+
+min-height:100vh;
+
+}
+
+/*==================================
+LEFT PANEL
+===================================*/
+
+.login-left{
+
+position:relative;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:60px;
+
+background:
+
+linear-gradient(rgba(3,105,161,.78),rgba(15,118,110,.82)),
+
+url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80");
+
+background-size:cover;
+
+background-position:center;
+
+overflow:hidden;
+
+}
+
+.overlay{
+
+position:absolute;
+
+inset:0;
+
+background:linear-gradient(135deg,
+rgba(14,165,233,.2),
+rgba(16,185,129,.2));
+
+}
+
+.left-content{
+
+position:relative;
+
+z-index:2;
+
+max-width:520px;
+
+color:#fff;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:2rem;
+
+font-weight:800;
+
+margin-bottom:35px;
+
+}
+
+.logo i{
+
+font-size:2rem;
+
+}
+
+.badge{
+
+display:inline-block;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.18);
+
+backdrop-filter:blur(10px);
+
+font-weight:600;
+
+margin-bottom:25px;
+
+}
+
+.left-content h1{
+
+font-size:3rem;
+
+line-height:1.15;
+
+margin-bottom:20px;
+
+}
+
+.left-content p{
+
+font-size:1.05rem;
+
+line-height:1.8;
+
+opacity:.95;
+
+margin-bottom:35px;
+
+}
+
+/*==================================
+FEATURES
+===================================*/
+
+.features{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+margin-bottom:40px;
+
+}
+
+.features div{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:15px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(12px);
+
+}
+
+.features i{
+
+width:30px;
+
+height:30px;
+
+border-radius:50%;
+
+background:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+color:#0ea5e9;
+
+font-size:.8rem;
+
+}
+
+/*==================================
+STATS
+===================================*/
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+}
+
+.stats div{
+
+background:rgba(255,255,255,.12);
+
+padding:18px;
+
+border-radius:16px;
+
+text-align:center;
+
+backdrop-filter:blur(12px);
+
+}
+
+.stats h2{
+
+font-size:1.6rem;
+
+margin-bottom:6px;
+
+}
+
+.stats span{
+
+font-size:.85rem;
+
+}
+
+/*==================================
+RIGHT PANEL
+===================================*/
+
+.login-right{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:45px;
+
+background:#f8fafc;
+
+}
+
+.login-card{
+
+width:100%;
+
+max-width:520px;
+
+background:#fff;
+
+padding:45px;
+
+border-radius:28px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.08);
+
+}
+
+.form-tag{
+
+display:inline-block;
+
+padding:9px 18px;
+
+background:#e0f2fe;
+
+color:#0284c7;
+
+border-radius:999px;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+}
+
+.login-card h2{
+
+font-size:2rem;
+
+margin-bottom:10px;
+
+}
+
+.login-card>p{
+
+color:#64748b;
+
+margin-bottom:30px;
+
+}
+
+/*==================================
+FORM
+===================================*/
+
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+}
+
+.input-group input{
+
+width:100%;
+
+padding:15px 18px;
+
+border:1px solid #dbe4ee;
+
+border-radius:14px;
+
+font-size:1rem;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+border-color:#0ea5e9;
+
+box-shadow:0 0 0 4px rgba(14,165,233,.15);
+
+}
+
+/*==================================
+PASSWORD
+===================================*/
+
+.password-box{
+
+position:relative;
+
+}
+
+.password-box input{
+
+padding-right:55px;
+
+}
+
+.toggle-password{
+
+position:absolute;
+
+right:15px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+background:none;
+
+color:#64748b;
+
+font-size:1rem;
+
+}
+
+/*==================================
+OPTIONS
+===================================*/
+
+.options{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin:20px 0 28px;
+
+font-size:.92rem;
+
+}
+
+.options a{
+
+color:#0ea5e9;
+
+font-weight:600;
+
+}
+
+.options label{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+/*==================================
+LOGIN BUTTON
+===================================*/
+
+.login-btn{
+
+width:100%;
+
+padding:16px;
+
+border-radius:14px;
+
+background:#0ea5e9;
+
+color:#fff;
+
+font-size:1rem;
+
+font-weight:700;
+
+}
+
+.login-btn:hover{
+
+background:#0284c7;
+
+transform:translateY(-2px);
+
+}
+
+/*==================================
+DIVIDER
+===================================*/
+
+.divider{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin:35px 0;
+
+color:#94a3b8;
+
+font-size:.85rem;
+
+}
+
+.divider::before,
+
+.divider::after{
+
+content:"";
+
+flex:1;
+
+height:1px;
+
+background:#e2e8f0;
+
+}
+
+/*==================================
+SOCIAL
+===================================*/
+
+.social-buttons{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:12px;
+
+}
+
+.social-buttons button{
+
+padding:14px;
+
+border-radius:14px;
+
+background:#f8fafc;
+
+border:1px solid #e2e8f0;
+
+font-weight:600;
+
+}
+
+.social-buttons button:hover{
+
+background:#0ea5e9;
+
+color:#fff;
+
+border-color:#0ea5e9;
+
+}
+
+/*==================================
+SIGNUP LINK
+===================================*/
+
+.signup-link{
+
+margin-top:30px;
+
+text-align:center;
+
+color:#64748b;
+
+}
+
+.signup-link a{
+
+color:#0ea5e9;
+
+font-weight:700;
+
+}
+
+/*==================================
+MODAL
+===================================*/
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.55);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+
+}
+
+.modal-content{
+
+background:#fff;
+
+width:90%;
+
+max-width:420px;
+
+padding:35px;
+
+border-radius:22px;
+
+position:relative;
+
+animation:popup .3s ease;
+
+}
+
+.modal-content h2{
+
+margin-bottom:15px;
+
+}
+
+.modal-content p{
+
+color:#64748b;
+
+margin-bottom:20px;
+
+}
+
+.modal-content input{
+
+width:100%;
+
+padding:14px;
+
+border:1px solid #dbe4ee;
+
+border-radius:12px;
+
+margin-bottom:20px;
+
+}
+
+.modal-content button{
+
+width:100%;
+
+padding:14px;
+
+background:#0ea5e9;
+
+color:#fff;
+
+border-radius:12px;
+
+font-weight:700;
+
+}
+
+.close{
+
+position:absolute;
+
+right:18px;
+
+top:15px;
+
+font-size:1.5rem;
+
+cursor:pointer;
+
+}
+
+/*==================================
+TOAST
+===================================*/
+
+.toast{
+
+position:fixed;
+
+right:25px;
+
+bottom:25px;
+
+background:#0f172a;
+
+color:#fff;
+
+padding:15px 22px;
+
+border-radius:12px;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.35s;
+
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+}
+
+/*==================================
+ANIMATION
+===================================*/
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+
+transform:scale(.9);
+
+}
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+/*==================================
+RESPONSIVE DESIGN
+===================================*/
+
+@media(max-width:1200px){
+
+.login-container{
+
+grid-template-columns:1fr;
+
+}
+
+.login-left{
+
+min-height:500px;
+
+padding:50px 40px;
+
+}
+
+.left-content{
+
+max-width:700px;
+
+text-align:center;
+
+}
+
+.logo{
+
+justify-content:center;
+
+}
+
+.features{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.stats{
+
+grid-template-columns:repeat(4,1fr);
+
+}
+
+.login-right{
+
+padding:50px 30px;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.login-left{
+
+padding:45px 25px;
+
+}
+
+.left-content h1{
+
+font-size:2.5rem;
+
+}
+
+.features{
+
+gap:12px;
+
+}
+
+.stats{
+
+gap:12px;
+
+}
+
+.login-card{
+
+padding:35px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.login-left{
+
+min-height:auto;
+
+padding:40px 20px;
+
+}
+
+.left-content h1{
+
+font-size:2rem;
+
+}
+
+.left-content p{
+
+font-size:.95rem;
+
+}
+
+.features{
+
+grid-template-columns:1fr;
+
+}
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.login-right{
+
+padding:25px 18px;
+
+}
+
+.login-card{
+
+padding:30px 22px;
+
+border-radius:22px;
+
+}
+
+.login-card h2{
+
+font-size:1.7rem;
+
+}
+
+.social-buttons{
+
+grid-template-columns:1fr;
+
+}
+
+.social-buttons button{
+
+width:100%;
+
+}
+
+.options{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:12px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.badge{
+
+font-size:.8rem;
+
+padding:8px 16px;
+
+}
+
+.left-content h1{
+
+font-size:1.7rem;
+
+}
+
+.left-content p{
+
+font-size:.9rem;
+
+line-height:1.6;
+
+}
+
+.logo{
+
+font-size:1.5rem;
+
+}
+
+.logo i{
+
+font-size:1.6rem;
+
+}
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.stats h2{
+
+font-size:1.3rem;
+
+}
+
+.stats span{
+
+font-size:.8rem;
+
+}
+
+.login-card{
+
+padding:24px 18px;
+
+}
+
+.form-tag{
+
+font-size:.8rem;
+
+padding:8px 15px;
+
+}
+
+.login-card h2{
+
+font-size:1.5rem;
+
+}
+
+.input-group input{
+
+padding:14px 15px;
+
+font-size:.95rem;
+
+}
+
+.login-btn{
+
+padding:15px;
+
+font-size:.95rem;
+
+}
+
+.toast{
+
+left:15px;
+
+right:15px;
+
+bottom:20px;
+
+text-align:center;
+
+}
+
+.modal-content{
+
+padding:25px;
+
+}
+
+}
+
+@media(max-height:700px){
+
+.login-left{
+
+padding-top:30px;
+
+padding-bottom:30px;
+
+}
+
+.left-content h1{
+
+margin-bottom:15px;
+
+}
+
+.left-content p{
+
+margin-bottom:25px;
+
+}
+
+.features{
+
+margin-bottom:25px;
+
+}
+
+}
+</style>
+
 </head>
 
-<body style="margin:0;font-family:Arial;background:#f7f7f7;">
+<body>
 
-<!-- HEADER -->
-<div style="background:white;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);">
-  <div style="font-weight:bold;font-size:20px;">🏡 StayHub</div>
-  <a href="index.html" style="text-decoration:none;color:#ff385c;font-weight:bold;">← Back</a>
+<!--==================================
+LOGIN CONTAINER
+===================================-->
+
+<div class="login-container">
+
+    <!--==================================
+    LEFT SIDE
+    ===================================-->
+
+    <div class="login-left">
+
+        <div class="overlay"></div>
+
+        <div class="left-content">
+
+            <a
+            href="index.html"
+            class="logo">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>StayHub</span>
+
+            </a>
+
+            <span class="badge">
+
+                🇰🇪 Welcome Back
+
+            </span>
+
+            <h1>
+
+                Continue Your Journey Across Kenya
+
+            </h1>
+
+            <p>
+
+                Log in to manage your bookings, wishlist, hosted properties, and discover new adventures across Kenya.
+
+            </p>
+
+            <div class="features">
+
+                <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Secure Login
+
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Instant Bookings
+
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    AI Travel Assistant
+
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Verified Hosts
+
+                </div>
+
+            </div>
+
+            <div class="stats">
+
+                <div>
+
+                    <h2>
+
+                        18K+
+
+                    </h2>
+
+                    <span>
+
+                        Travellers
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h2>
+
+                        420+
+
+                    </h2>
+
+                    <span>
+
+                        Stays
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h2>
+
+                        80+
+
+                    </h2>
+
+                    <span>
+
+                        Experiences
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h2>
+
+                        4.9★
+
+                    </h2>
+
+                    <span>
+
+                        Rating
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--==================================
+    RIGHT SIDE
+    ===================================-->
+
+    <div class="login-right">
+
+        <div class="login-card">
+
+            <span class="form-tag">
+
+                Login
+
+            </span>
+
+            <h2>
+
+                Welcome Back
+
+            </h2>
+
+            <p>
+
+                Sign in to continue your StayHub journey.
+
+            </p>
+
+            <!-- FORM -->
+
+            <form
+            id="loginForm">
+
+                <div class="input-group">
+
+                    <label>
+
+                        Email Address
+
+                    </label>
+
+                    <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+
+                        Password
+
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                        id="password"
+                        type="password"
+                        placeholder="Enter password"
+                        required>
+
+                        <button
+                        type="button"
+                        class="toggle-password">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="options">
+
+                    <label>
+
+                        <input
+                        id="rememberMe"
+                        type="checkbox">
+
+                        Remember Me
+
+                    </label>
+
+                    <a
+                    href="#"
+                    id="forgotPassword">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+                <button
+                type="submit"
+                class="login-btn">
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <div class="divider">
+
+                <span>
+
+                    OR CONTINUE WITH
+
+                </span>
+
+            </div>
+
+            <div class="social-buttons">
+
+                <button>
+
+                    <i class="fab fa-google"></i>
+
+                    Google
+
+                </button>
+
+                <button>
+
+                    <i class="fab fa-facebook-f"></i>
+
+                    Facebook
+
+                </button>
+
+                <button>
+
+                    <i class="fab fa-apple"></i>
+
+                    Apple
+
+                </button>
+
+            </div>
+
+            <div class="signup-link">
+
+                Don't have an account?
+
+                <a href="signup.html">
+
+                    Create Account
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<!-- LOGIN BOX -->
-<div style="max-width:400px;margin:80px auto;background:white;padding:30px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.08);text-align:center;">
+<!--==================================
+FORGOT PASSWORD MODAL
+===================================-->
 
-  <h2 style="margin-bottom:10px;">Welcome back</h2>
-  <p style="color:#666;margin-bottom:20px;">Login to book or host stays</p>
+<div
+id="forgotModal"
+class="modal">
 
-  <form onsubmit="login(event)">
+    <div class="modal-content">
 
-    <input id="email" type="email" placeholder="Email"
-      style="width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;"><br>
+        <span
+        class="close">
 
-    <input id="password" type="password" placeholder="Password"
-      style="width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;"><br>
+            &times;
 
-    <button type="submit"
-      style="width:100%;padding:14px;background:#ff385c;color:white;border:none;border-radius:10px;font-size:16px;cursor:pointer;margin-top:10px;">
-      Login
-    </button>
+        </span>
 
-  </form>
+        <h2>
 
-  <p style="margin-top:15px;font-size:14px;color:#666;">
-    Don't have an account?
-    <a href="signup.html" style="color:#ff385c;text-decoration:none;">Sign up</a>
-  </p>
+            Forgot Password
+
+        </h2>
+
+        <p>
+
+            Enter your email address below.
+
+        </p>
+
+        <input
+        id="resetEmail"
+        type="email"
+        placeholder="Email Address">
+
+        <button
+        id="resetButton">
+
+            Send Reset Link
+
+        </button>
+
+    </div>
+
+</div>
+
+<!--==================================
+TOAST
+===================================-->
+
+<div
+id="toast"
+class="toast">
+
+    Success
 
 </div>
 
 <script>
-function login(event) {
-  event.preventDefault();
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+/*==================================
+TOAST MESSAGE
+===================================*/
 
-  // fake check (no backend yet)
-  const user = JSON.parse(localStorage.getItem("user"));
+function showToast(message){
 
-  if (user && user.email === email) {
-    alert("Login successful!");
+const toast=document.getElementById("toast");
 
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
+toast.textContent=message;
 
-    window.location.href = "index.html";
-  } else {
-    alert("User not found. Please sign up first.");
-  }
+toast.style.opacity="1";
+
+toast.style.pointerEvents="auto";
+
+setTimeout(()=>{
+
+toast.style.opacity="0";
+
+toast.style.pointerEvents="none";
+
+},3000);
+
 }
-</script>
 
+/*==================================
+SHOW / HIDE PASSWORD
+===================================*/
+
+const password=document.getElementById("password");
+
+document.querySelector(".toggle-password").addEventListener("click",function(){
+
+if(password.type==="password"){
+
+password.type="text";
+
+this.innerHTML='<i class="fa-solid fa-eye-slash"></i>';
+
+}else{
+
+password.type="password";
+
+this.innerHTML='<i class="fa-solid fa-eye"></i>';
+
+}
+
+});
+
+/*==================================
+GET USERS
+===================================*/
+
+function getUsers(){
+
+const users=localStorage.getItem("stayhubUsers");
+
+return users ? JSON.parse(users) : [];
+
+}
+
+/*==================================
+REMEMBER ME
+===================================*/
+
+window.addEventListener("load",()=>{
+
+const remembered=localStorage.getItem("rememberedEmail");
+
+if(remembered){
+
+document.getElementById("email").value=remembered;
+
+document.getElementById("rememberMe").checked=true;
+
+}
+
+});
+
+/*==================================
+LOGIN
+===================================*/
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const email=document.getElementById("email").value.trim();
+
+const pass=password.value;
+
+const remember=document.getElementById("rememberMe").checked;
+
+if(email===""){
+
+showToast("Enter your email.");
+
+return;
+
+}
+
+if(pass===""){
+
+showToast("Enter your password.");
+
+return;
+
+}
+
+const users=getUsers();
+
+const user=users.find(u=>u.email===email);
+
+if(!user){
+
+showToast("No account found.");
+
+return;
+
+}
+
+if(user.password!==pass){
+
+showToast("Incorrect password.");
+
+return;
+
+}
+
+/*==================================
+SAVE SESSION
+===================================*/
+
+localStorage.setItem("currentUser",JSON.stringify(user));
+
+if(remember){
+
+localStorage.setItem("rememberedEmail",email);
+
+}else{
+
+localStorage.removeItem("rememberedEmail");
+
+}
+
+/*==================================
+LOGIN BUTTON
+===================================*/
+
+const btn=document.querySelector(".login-btn");
+
+const original=btn.innerHTML;
+
+btn.disabled=true;
+
+btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Logging In...';
+
+setTimeout(()=>{
+
+btn.innerHTML=original;
+
+btn.disabled=false;
+
+showToast("Welcome back, "+user.firstName+"!");
+
+setTimeout(()=>{
+
+window.location.href="index.html";
+
+},1500);
+
+},1800);
+
+});
+
+/*==================================
+FORGOT PASSWORD
+===================================*/
+
+const modal=document.getElementById("forgotModal");
+
+document.getElementById("forgotPassword").onclick=function(e){
+
+e.preventDefault();
+
+modal.style.display="flex";
+
+}
+
+document.querySelector(".close").onclick=function(){
+
+modal.style.display="none";
+
+}
+
+window.onclick=function(e){
+
+if(e.target===modal){
+
+modal.style.display="none";
+
+}
+
+}
+
+/*==================================
+RESET PASSWORD
+===================================*/
+
+document.getElementById("resetButton").onclick=function(){
+
+const email=document.getElementById("resetEmail").value.trim();
+
+if(email===""){
+
+showToast("Enter your email.");
+
+return;
+
+}
+
+const users=getUsers();
+
+const exists=users.find(u=>u.email===email);
+
+if(!exists){
+
+showToast("Email not found.");
+
+return;
+
+}
+
+modal.style.display="none";
+
+showToast("Password reset link sent.");
+
+}
+
+/*==================================
+ENTER KEY SUPPORT
+===================================*/
+
+document.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+const active=document.activeElement;
+
+if(active.tagName!=="TEXTAREA"){
+
+document.getElementById("loginForm").requestSubmit();
+
+}
+
+}
+
+});
+/*==================================
+AUTO LOGIN
+===================================*/
+
+window.addEventListener("load",()=>{
+
+const currentUser=localStorage.getItem("currentUser");
+
+if(currentUser){
+
+showToast("Welcome back!");
+
+setTimeout(()=>{
+
+window.location.href="index.html";
+
+},1000);
+
+}
+
+});
+
+/*==================================
+AUTO FOCUS
+===================================*/
+
+document.getElementById("email").focus();
+
+/*==================================
+INPUT ANIMATION
+===================================*/
+
+document.querySelectorAll("input").forEach(input=>{
+
+input.addEventListener("focus",()=>{
+
+input.parentElement.style.transform="translateY(-2px)";
+
+});
+
+input.addEventListener("blur",()=>{
+
+input.parentElement.style.transform="translateY(0)";
+
+});
+
+});
+
+/*==================================
+EMAIL VALIDATION
+===================================*/
+
+document.getElementById("email").addEventListener("blur",function(){
+
+const email=this.value.trim();
+
+const pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(email!="" && !pattern.test(email)){
+
+this.style.borderColor="#ef4444";
+
+showToast("Invalid email address.");
+
+}else{
+
+this.style.borderColor="#22c55e";
+
+}
+
+});
+
+/*==================================
+CAPS LOCK DETECTION
+===================================*/
+
+password.addEventListener("keyup",function(e){
+
+let warning=document.getElementById("capsWarning");
+
+if(e.getModifierState("CapsLock")){
+
+if(!warning){
+
+warning=document.createElement("small");
+
+warning.id="capsWarning";
+
+warning.style.color="#f59e0b";
+
+warning.style.marginTop="8px";
+
+warning.innerHTML="⚠ Caps Lock is ON";
+
+password.parentElement.appendChild(warning);
+
+}
+
+}else{
+
+if(warning){
+
+warning.remove();
+
+}
+
+}
+
+});
+
+/*==================================
+SOCIAL LOGIN PLACEHOLDER
+===================================*/
+
+document.querySelectorAll(".social-buttons button").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+showToast("Social login will be available soon.");
+
+});
+
+});
+
+/*==================================
+LOGOUT FUNCTION
+===================================*/
+
+function logout(){
+
+localStorage.removeItem("currentUser");
+
+showToast("Logged out successfully.");
+
+setTimeout(()=>{
+
+window.location.href="login.html";
+
+},1200);
+
+}
+
+/*==================================
+SESSION CHECK
+===================================*/
+
+function isLoggedIn(){
+
+return localStorage.getItem("currentUser")!==null;
+
+}
+
+/*==================================
+PROTECT PAGES
+===================================*/
+
+function protectPage(){
+
+if(!isLoggedIn()){
+
+window.location.href="login.html";
+
+}
+
+}
+
+/*==================================
+WELCOME MESSAGE
+===================================*/
+
+const current=JSON.parse(localStorage.getItem("currentUser"));
+
+if(current){
+
+console.log("Welcome",current.firstName);
+
+}
+
+/*==================================
+SMOOTH BUTTON EFFECT
+===================================*/
+
+document.querySelector(".login-btn").addEventListener("mouseenter",function(){
+
+this.style.transform="translateY(-2px)";
+
+});
+
+document.querySelector(".login-btn").addEventListener("mouseleave",function(){
+
+this.style.transform="translateY(0px)";
+
+});
+
+/*==================================
+PASSWORD LENGTH FEEDBACK
+===================================*/
+
+password.addEventListener("input",()=>{
+
+if(password.value.length>=8){
+
+password.style.borderColor="#22c55e";
+
+}else{
+
+password.style.borderColor="#dbe4ee";
+
+}
+
+});
+
+/*==================================
+CLEAR TOAST ON CLICK
+===================================*/
+
+document.getElementById("toast").onclick=function(){
+
+this.style.opacity="0";
+
+};
+
+/*==================================
+END OF LOGIN.JS
+===================================*/
+</script>
 </body>
+
 </html>
