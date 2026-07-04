@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        StayHub | Discover Amazing Experiences Across Kenya
+
+    </title>
+
+    <meta
+    name="description"
+    content="Book unforgettable safaris, food tours, hiking adventures, beach experiences and cultural activities across Kenya with StayHub.">
+
+    <meta
+    name="keywords"
+    content="Kenya Tours, Safari, Travel, StayHub, Experiences, Diani, Maasai Mara, Watamu, Nairobi">
+
+    <meta
+    name="author"
+    content="StayHub Kenya">
+
+    <!-- Google Fonts -->
+
+    <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+    <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Main Styles -->
+
+    <link
+    rel="stylesheet"
+    href="css/experiences.css">
+
+</head>
+
+<body>
+
+<!--==================================
+NAVIGATION
+===================================-->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <!-- Logo -->
+
+        <a
+        href="index.html"
+        class="logo">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>
+
+                StayHub
+
+            </span>
+
+        </a>
+
+        <!-- Navigation -->
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+            <a href="listings.html">
+
+                Stays
+
+            </a>
+
+            <a
+            href="experiences.html"
+            class="active">
+
+                Experiences
+
+            </a>
+
+            <a href="host.html">
+
+                Become a Host
+
+            </a>
+
+            <a href="wishlist.html">
+
+                Wishlist
+
+            </a>
+
+        </nav>
+
+        <!-- Right Side -->
+
+        <div class="nav-right">
+
+            <button
+            id="themeToggle"
+            class="theme-btn">
+
+                <i class="fa-solid fa-moon"></i>
+
+            </button>
+
+            <a
+            href="login.html"
+            class="login-btn">
+
+                Login
+
+            </a>
+
+        <div class="mobile-menu" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!--==================================
+HERO
+===================================-->
+
+<section class="experience-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            🇰🇪 Kenya's #1 Experiences Marketplace
+
+        </span>
+
+        <h1>
+
+            Explore Kenya One Adventure at a Time
+
+        </h1>
+
+        <p>
+
+            Discover unforgettable safaris, beach adventures, food tours,
+            cultural experiences, hiking trails and hidden gems curated by
+            trusted local guides.
+
+        </p>
+
+        <!--==========================
+        SEARCH BAR
+        ===========================-->
+
+        <div class="experience-search">
+
+            <div class="search-item">
+
+                <label>
+
+                    Destination
+
+                </label>
+
+                <input
+                id="experienceDestination"
+                type="text"
+                placeholder="Where do you want to go?">
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-item">
+
+                <label>
+
+                    Date
+
+                </label>
+
+                <input
+                id="experienceDate"
+                type="date">
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-item">
+
+                <label>
+
+                    Guests
+
+                </label>
+
+                <select id="experienceGuests">
+
+                    <option>1 Guest</option>
+                    <option>2 Guests</option>
+                    <option>3 Guests</option>
+                    <option>4 Guests</option>
+                    <option>5 Guests</option>
+                    <option>6+ Guests</option>
+
+                </select>
+
+            </div>
+
+            <button
+            class="search-btn"
+            onclick="searchExperiences()">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+        <!--==========================
+        QUICK DESTINATIONS
+        ===========================-->
+
+        <div class="hero-tags">
+
+            <button onclick="filterDestination('Maasai Mara')">
+
+                🦁 Maasai Mara
+
+            </button>
+
+            <button onclick="filterDestination('Diani')">
+
+                🏖 Diani
+
+            </button>
+
+            <button onclick="filterDestination('Watamu')">
+
+                🐬 Watamu
+
+            </button>
+
+            <button onclick="filterDestination('Nairobi')">
+
+                🌆 Nairobi
+
+            </button>
+
+            <button onclick="filterDestination('Naivasha')">
+
+                🚤 Naivasha
+
+            </button>
+
+            <button onclick="filterDestination('Lamu')">
+
+                ⛵ Lamu
+
+            </button>
+
+        </div>
+
+        <!--==========================
+        STATS
+        ===========================-->
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+
+                <h2>
+
+                    420+
+
+                </h2>
+
+                <p>
+
+                    Experiences
+
+                </p>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <h2>
+
+                    135+
+
+                </h2>
+
+                <p>
+
+                    Verified Guides
+
+                </p>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <h2>
+
+                    28
+
+                </h2>
+
+                <p>
+
+                    Destinations
+
+                </p>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <h2>
+
+                    18K+
+
+                </h2>
+
+                <p>
+
+                    Happy Travellers
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+POPULAR CATEGORIES
+===================================-->
+
+<section class="experience-categories">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            🎯 Browse Categories
+
+        </span>
+
+        <h2>
+
+            Find Your Perfect Adventure
+
+        </h2>
+
+        <p>
+
+            Explore Kenya through unforgettable experiences tailored to every traveller.
+
+        </p>
+
+    </div>
+
+    <div class="category-grid">
+
+        <!-- Safari -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Safari')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-paw"></i>
+
+            </div>
+
+            <h3>
+
+                Safari
+
+            </h3>
+
+            <p>
+
+                Game drives & wildlife adventures
+
+            </p>
+
+            <span>
+
+                24 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Beach -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Beach')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-umbrella-beach"></i>
+
+            </div>
+
+            <h3>
+
+                Beach
+
+            </h3>
+
+            <p>
+
+                Sun, sand & ocean escapes
+
+            </p>
+
+            <span>
+
+                18 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Boat Tours -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Boat Tour')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-ship"></i>
+
+            </div>
+
+            <h3>
+
+                Boat Tours
+
+            </h3>
+
+            <p>
+
+                Cruises, dhow rides & island trips
+
+            </p>
+
+            <span>
+
+                12 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Hiking -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Hiking')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-person-hiking"></i>
+
+            </div>
+
+            <h3>
+
+                Hiking
+
+            </h3>
+
+            <p>
+
+                Mountains, forests & scenic trails
+
+            </p>
+
+            <span>
+
+                16 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Food -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Food')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-utensils"></i>
+
+            </div>
+
+            <h3>
+
+                Food Tours
+
+            </h3>
+
+            <p>
+
+                Taste authentic Kenyan cuisine
+
+            </p>
+
+            <span>
+
+                14 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Culture -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Culture')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-landmark"></i>
+
+            </div>
+
+            <h3>
+
+                Culture
+
+            </h3>
+
+            <p>
+
+                Museums, villages & traditions
+
+            </p>
+
+            <span>
+
+                20 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Fishing -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Fishing')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-fish"></i>
+
+            </div>
+
+            <h3>
+
+                Fishing
+
+            </h3>
+
+            <p>
+
+                Lake & deep-sea adventures
+
+            </p>
+
+            <span>
+
+                10 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Cycling -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Cycling')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-bicycle"></i>
+
+            </div>
+
+            <h3>
+
+                Cycling
+
+            </h3>
+
+            <p>
+
+                Explore Kenya on two wheels
+
+            </p>
+
+            <span>
+
+                9 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Photography -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Photography')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-camera"></i>
+
+            </div>
+
+            <h3>
+
+                Photography
+
+            </h3>
+
+            <p>
+
+                Capture Kenya's beauty
+
+            </p>
+
+            <span>
+
+                15 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Nightlife -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Nightlife')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-martini-glass"></i>
+
+            </div>
+
+            <h3>
+
+                Nightlife
+
+            </h3>
+
+            <p>
+
+                Rooftops, clubs & live music
+
+            </p>
+
+            <span>
+
+                11 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Family -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Family')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-people-group"></i>
+
+            </div>
+
+            <h3>
+
+                Family
+
+            </h3>
+
+            <p>
+
+                Fun for all ages
+
+            </p>
+
+            <span>
+
+                13 Experiences
+
+            </span>
+
+        </div>
+
+        <!-- Luxury -->
+
+        <div
+        class="category-card"
+        onclick="filterCategory('Luxury')">
+
+            <div class="category-icon">
+
+                <i class="fa-solid fa-gem"></i>
+
+            </div>
+
+            <h3>
+
+                Luxury
+
+            </h3>
+
+            <p>
+
+                Premium curated adventures
+
+            </p>
+
+            <span>
+
+                8 Experiences
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+FEATURED EXPERIENCES
+===================================-->
+
+<section class="featured-experiences">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-tag">
+
+                ⭐ Editor's Picks
+
+            </span>
+
+            <h2>
+
+                Featured Experiences
+
+            </h2>
+
+            <p>
+
+                Hand-picked adventures loved by travellers across Kenya.
+
+            </p>
+
+        </div>
+
+        <button
+        class="view-all-btn"
+        onclick="scrollToExperiences()">
+
+            View All Experiences
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+    <div
+    id="featuredExperiences"
+    class="featured-grid">
+
+        <!-- JavaScript will load the featured cards here -->
+
+    </div>
+
+</section>
+<!--===================================================================
+WHY CHOOSE STAYHUB EXPERIENCES
+===================================-->
+
+<section class="why-experience">
+
+    <div class="why-container">
+
+        <div class="why-content">
+
+            <span class="section-tag">
+                💎 Why Book With StayHub?
+            </span>
+
+            <h2>
+                Every Experience is Carefully Curated
+            </h2>
+
+            <p>
+                Travel confidently knowing every experience is verified for
+                quality, safety and unforgettable memories.
+            </p>
+
+            <button
+        class="view-all-btn"
+        onclick="scrollToExperiences()">
+                Explore Experiences
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </div>
+
+        <div class="why-grid">
+
+            <div class="why-card">
+
+                <span class="why-icon">
+                    <i class="fa-solid fa-user-check"></i>
+                </span>
+
+                <h3>Verified Guides</h3>
+
+                <p>
+                    Every guide is identity verified and highly rated by travellers.
+                </p>
+
+            </div>
+
+            <div class="why-card">
+
+                <span class="why-icon">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </span>
+
+                <h3>Safe Booking</h3>
+
+                <p>
+                    Secure payments with instant confirmations and flexible cancellation.
+                </p>
+
+            </div>
+
+            <div class="why-card">
+
+                <span class="why-icon">
+                    <i class="fa-solid fa-star"></i>
+                </span>
+
+                <h3>Top Rated</h3>
+
+                <p>
+                    Thousands of authentic reviews help you choose confidently.
+                </p>
+
+            </div>
+
+            <div class="why-card">
+
+                <span class="why-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </span>
+
+                <h3>24/7 Support</h3>
+
+                <p>
+                    Our support team is available whenever you need assistance.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+POPULAR DESTINATIONS
+===================================-->
+
+<section class="destination-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-tag">
+
+                🌍 Explore Kenya
+
+            </span>
+
+            <h2>
+
+                Top Experience Destinations
+
+            </h2>
+
+            <p>
+
+                Discover Kenya's most exciting destinations and the unforgettable adventures waiting for you.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="destination-grid">
+
+        <!-- Maasai Mara -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Maasai Mara')">
+
+            <img
+            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80"
+            alt="Maasai Mara">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.9
+
+                </span>
+
+                <h3>
+
+                    Maasai Mara
+
+                </h3>
+
+                <p>
+
+                    Wildlife Safaris • Balloon Rides • Luxury Camps
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        31 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Diani -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Diani')">
+
+            <img
+            src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80"
+            alt="Diani">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.8
+
+                </span>
+
+                <h3>
+
+                    Diani Beach
+
+                </h3>
+
+                <p>
+
+                    Jet Ski • Sunset Cruises • Beach Adventures
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        34 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Watamu -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Watamu')">
+
+            <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+            alt="Watamu">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.9
+
+                </span>
+
+                <h3>
+
+                    Watamu
+
+                </h3>
+
+                <p>
+
+                    Dolphin Tours • Snorkeling • Marine Park
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        28 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Nairobi -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Nairobi')">
+
+            <img
+            src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80"
+            alt="Nairobi">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.8
+
+                </span>
+
+                <h3>
+
+                    Nairobi
+
+                </h3>
+
+                <p>
+
+                    Food Tours • Museums • Nightlife
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        56 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Naivasha -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Naivasha')">
+
+            <img
+            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80"
+            alt="Naivasha">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.8
+
+                </span>
+
+                <h3>
+
+                    Naivasha
+
+                </h3>
+
+                <p>
+
+                    Boat Safaris • Cycling • Crescent Island
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        27 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Lamu -->
+
+        <div
+        class="destination-card"
+        onclick="filterDestination('Lamu')">
+
+            <img
+            src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80"
+            alt="Lamu">
+
+            <div class="destination-overlay">
+
+                <span class="destination-badge">
+
+                    ⭐ 4.9
+
+                </span>
+
+                <h3>
+
+                    Lamu
+
+                </h3>
+
+                <p>
+
+                    Dhow Cruises • Swahili Culture • Historic Town
+
+                </p>
+
+                <div class="destination-footer">
+
+                    <span>
+
+                        18 Experiences
+
+                    </span>
+
+                    <button>
+
+                        Explore
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--==================================
+ALL EXPERIENCES
+===================================-->
+
+<section
+id="allExperiences"
+class="experience-list-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-tag">
+
+                ⭐ Explore Everything
+
+            </span>
+
+            <h2>
+
+                Browse All Experiences
+
+            </h2>
+
+            <p>
+
+                Discover unforgettable adventures across Kenya.
+                Filter, sort and book experiences that match your travel style.
+
+            </p>
+
+        </div>
+
+        <div class="listing-actions">
+
+            <div
+            id="experienceResults"
+            class="results-count">
+
+                Showing 80 Experiences
+
+            </div>
+
+            <select
+            id="sortExperiences"
+            onchange="sortExperiences()">
+
+                <option value="recommended">
+
+                    Recommended
+
+                </option>
+
+                <option value="priceLow">
+
+                    Price: Low to High
+
+                </option>
+
+                <option value="priceHigh">
+
+                    Price: High to Low
+
+                </option>
+
+                <option value="rating">
+
+                    Highest Rated
+
+                </option>
+
+                <option value="duration">
+
+                    Shortest Duration
+
+                </option>
+
+                <option value="reviews">
+
+                    Most Reviewed
+
+                </option>
+
+                <option value="newest">
+
+                    Newest
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!--==============================
+    FILTER CHIPS
+    ==============================-->
+
+    <div class="quick-filters">
+
+        <button
+        onclick="filterCategory('All')">
+
+            All
+
+        </button>
+
+        <button
+        onclick="filterCategory('Safari')">
+
+            Safari
+
+        </button>
+
+        <button
+        onclick="filterCategory('Beach')">
+
+            Beach
+
+        </button>
+
+        <button
+        onclick="filterCategory('Food')">
+
+            Food
+
+        </button>
+
+        <button
+        onclick="filterCategory('Culture')">
+
+            Culture
+
+        </button>
+
+        <button
+        onclick="filterCategory('Adventure')">
+
+            Adventure
+
+        </button>
+
+        <button
+        onclick="filterCategory('Luxury')">
+
+            Luxury
+
+        </button>
+
+        <button
+        onclick="filterCategory('Family')">
+
+            Family
+
+        </button>
+
+    </div>
+
+    <!--==============================
+    EXPERIENCE GRID
+    ==============================-->
+
+    <div
+    id="experienceGrid"
+    class="experience-grid">
+
+        <!-- JavaScript renders all experiences here -->
+
+    </div>
+
+    <!--==============================
+    PAGINATION
+    ==============================-->
+
+    <div class="pagination">
+
+        <button
+        id="prevPage"
+        class="page-btn"
+        onclick="previousPage()">
+
+            <i class="fa-solid fa-chevron-left"></i>
+
+        </button>
+
+        <div
+        id="paginationNumbers">
+
+        </div>
+
+        <button
+        id="nextPage"
+        class="page-btn"
+        onclick="nextPage()">
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+        </button>
+
+    </div>
+
+</section>
+<!--==================================
+SPECIAL DEALS
+===================================-->
+
+<section class="experience-deals">
+
+<div class="deal-overlay"></div>
+
+<div class="deal-content">
+
+<span>
+
+🎉 Limited Time Offer
+
+</span>
+
+<h2>
+
+Save up to 30% on Selected Experiences
+
+</h2>
+
+<p>
+
+Book before the end of the month and enjoy exclusive discounts across Kenya.
+
+</p>
+
+<button
+onclick="viewDeals()">
+
+Explore Deals
+
+</button>
+
+</div>
+
+</section>
+
+<!--==================================
+LOCAL GUIDES
+===================================-->
+
+<section class="guide-section">
+
+<div class="section-header">
+
+<div>
+
+<span class="section-tag">
+
+👨🏽‍✈️ Meet Our Guides
+
+</span>
+
+<h2>
+
+Experienced Local Hosts
+
+</h2>
+
+<p>
+
+Friendly experts ready to make your trip unforgettable.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="guide-grid">
+
+<div class="guide-card">
+
+<img
+src="https://randomuser.me/api/portraits/men/32.jpg"
+alt="Guide">
+
+<h3>
+
+David Otieno
+
+</h3>
+
+<p>
+
+Safari Guide
+
+</p>
+
+<span>
+
+⭐ 4.98 • 420 Tours
+
+</span>
+
+</div>
+
+<div class="guide-card">
+
+<img
+src="https://randomuser.me/api/portraits/women/44.jpg"
+alt="Guide">
+
+<h3>
+
+Grace Wanjiku
+
+</h3>
+
+<p>
+
+Food & Culture
+
+</p>
+
+<span>
+
+⭐ 4.96 • 310 Tours
+
+</span>
+
+</div>
+
+<div class="guide-card">
+
+<img
+src="https://randomuser.me/api/portraits/men/51.jpg"
+alt="Guide">
+
+<h3>
+
+Brian Mwangi
+
+</h3>
+
+<p>
+
+Mountain Guide
+
+</p>
+
+<span>
+
+⭐ 4.99 • 260 Tours
+
+</span>
+
+</div>
+
+<div class="guide-card">
+
+<img
+src="https://randomuser.me/api/portraits/women/65.jpg"
+alt="Guide">
+
+<h3>
+
+Aisha Mohammed
+
+</h3>
+
+<p>
+
+Coastal Experiences
+
+</p>
+
+<span>
+
+⭐ 5.0 • 370 Tours
+
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+TRAVELLER REVIEWS
+===================================-->
+
+<section class="testimonial-section">
+
+<div class="section-header">
+
+<div>
+
+<span class="section-tag">
+
+❤️ Loved by Travellers
+
+</span>
+
+<h2>
+
+What Guests Are Saying
+
+</h2>
+
+</div>
+
+</div>
+
+<div class="testimonial-grid">
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"The Maasai Mara safari exceeded every expectation. The guide was knowledgeable, the accommodation was amazing, and we saw all of the Big Five."
+
+</p>
+
+<h4>
+
+— Sarah M.
+
+</h4>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"Our Watamu snorkeling trip was unforgettable. Crystal-clear water, dolphins, and an amazing crew made it one of our best travel experiences."
+
+</p>
+
+<h4>
+
+— Kevin O.
+
+</h4>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"The Kisumu sunset boat cruise was peaceful and beautifully organized. We can't wait to book another StayHub experience."
+
+</p>
+
+<h4>
+
+— Faith N.
+
+</h4>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+NEWSLETTER
+===================================-->
+
+<section class="newsletter">
+
+<div class="newsletter-content">
+
+<h2>
+
+Travel More. Spend Less.
+
+</h2>
+
+<p>
+
+Subscribe to receive exclusive deals, weekend getaways, hidden gems and travel inspiration across Kenya.
+
+</p>
+
+<div class="newsletter-form">
+
+<input
+id="newsletterEmail"
+type="email"
+placeholder="Enter your email">
+
+<button
+onclick="subscribeNewsletter()">
+
+Subscribe
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+DOWNLOAD APP
+===================================-->
+
+<section class="app-banner">
+
+<div class="app-content">
+
+<div>
+
+<span class="section-tag">
+
+📱 Coming Soon
+
+</span>
+
+<h2>
+
+StayHub Mobile App
+
+</h2>
+
+<p>
+
+Book stays, discover experiences and manage your trips from anywhere.
+
+</p>
+
+</div>
+
+<div class="store-buttons">
+
+<button>
+
+<i class="fa-brands fa-google-play"></i>
+
+Google Play
+
+</button>
+
+<button>
+
+<i class="fa-brands fa-apple"></i>
+
+App Store
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+FAQ
+===================================-->
+
+<section class="faq-section">
+
+<div class="section-header">
+
+<h2>
+
+Frequently Asked Questions
+
+</h2>
+
+<p>
+
+Everything you need to know before booking.
+
+</p>
+
+</div>
+
+<div class="faq-container">
+
+<div class="faq-item">
+
+<h3>
+
+How do I book an experience?
+
+</h3>
+
+<p>
+
+Choose your preferred experience, select your date, complete your booking details and confirm payment.
+
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+Can I cancel my booking?
+
+</h3>
+
+<p>
+
+Yes. Most experiences allow free cancellation up to 24 or 48 hours before departure.
+
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+Are local guides verified?
+
+</h3>
+
+<p>
+
+Yes. Every StayHub guide goes through identity verification and quality checks.
+
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+Can I book for a group?
+
+</h3>
+
+<p>
+
+Absolutely. Many experiences offer discounted group packages.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+<!--==================================
+EXPERIENCE DETAILS MODAL
+===================================-->
+
+<div id="experienceModal" class="modal">
+
+    <div class="modal-content experience-modal">
+
+        <span class="close" onclick="closeExperienceModal()">
+
+            &times;
+
+        </span>
+
+        <div id="experienceDetails">
+
+        </div>
+
+    </div>
+
+</div>
+<!--==================================
+BOOK EXPERIENCE MODAL
+===================================-->
+
+<div id="bookingModal" class="modal">
+
+    <div class="modal-content booking-modal">
+
+        <span
+        class="close"
+        onclick="closeBookingModal()">
+
+            &times;
+
+        </span>
+
+        <h2>
+
+            Complete Your Booking
+
+        </h2>
+
+        <div id="bookingSummary">
+
+        </div>
+
+        <form id="bookingForm">
+
+            <div class="form-grid">
+
+                <input
+                id="guestName"
+                type="text"
+                placeholder="Full Name"
+                required>
+
+                <input
+                id="guestEmail"
+                type="email"
+                placeholder="Email Address"
+                required>
+
+                <input
+                id="guestPhone"
+                type="tel"
+                placeholder="Phone Number"
+                required>
+
+                <input
+                id="bookingDate"
+                type="date"
+                required>
+
+                <input
+                id="guests"
+                type="number"
+                value="1"
+                min="1">
+
+            </div>
+
+            <label>
+
+                Payment Method
+
+            </label>
+
+            <select id="paymentMethod">
+
+                <option>M-Pesa</option>
+
+                <option>Visa</option>
+
+                <option>Mastercard</option>
+
+                <option>PayPal</option>
+
+            </select>
+
+            <input
+            id="promoCode"
+            type="text"
+            placeholder="Promo Code (Optional)">
+
+            <button
+            type="submit"
+            class="confirm-booking">
+
+                Confirm Booking
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<!--==================================
+BOOKING SUCCESS MODAL
+===================================-->
+
+<div id="successModal" class="modal">
+
+    <div class="modal-content success-modal">
+
+        <div class="success-icon">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+        <h2>
+
+            Booking Confirmed!
+
+        </h2>
+
+        <p>
+
+            Your experience has been successfully booked.
+
+        </p>
+
+        <div id="bookingReference"></div>
+
+        <div class="success-buttons">
+
+            <button
+            onclick="downloadReceipt()"
+            class="details-btn">
+
+                Download Receipt
+
+            </button>
+
+            <button
+            onclick="closeSuccessModal()"
+            class="book-btn">
+
+                Continue Exploring
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!--==================================
+FOOTER
+===================================-->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<h3>
+
+StayHub
+
+</h3>
+
+<p>
+
+Discover amazing stays and unforgettable experiences across Kenya.
+
+</p>
+
+<div class="footer-social">
+
+<i class="fab fa-facebook"></i>
+
+<i class="fab fa-instagram"></i>
+
+<i class="fab fa-x-twitter"></i>
+
+<i class="fab fa-linkedin"></i>
+
+<i class="fab fa-youtube"></i>
+
+</div>
+
+</div>
+
+<div>
+
+<h4>
+
+Explore
+
+</h4>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="listings.html">
+
+Stays
+
+</a>
+
+<a href="experiences.html">
+
+Experiences
+
+</a>
+
+<a href="host.html">
+
+Become a Host
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Support
+
+</h4>
+
+<a href="#">
+
+Help Centre
+
+</a>
+
+<a href="#">
+
+Contact
+
+</a>
+
+<a href="#">
+
+Privacy Policy
+
+</a>
+
+<a href="#">
+
+Terms & Conditions
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Follow Us
+
+</h4>
+
+<p>
+
+Stay connected for travel inspiration and exclusive offers.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+<p>
+
+© 2026 StayHub Kenya. All Rights Reserved.
+
+</p>
+
+<p>
+
+Made with ❤️ in Kenya
+
+</p>
+
+</div>
+
+</footer>
+
+
+<!--==================================
+AI ASSISTANT
+===================================-->
+
+<button
+class="assistant-btn"
+onclick="toggleAssistant()">
+
+<i class="fa-solid fa-robot"></i>
+
+</button>
+
+<!--==================================
+BACK TO TOP
+===================================-->
+
+<button
+id="backTop"
+class="back-top"
+onclick="scrollTopPage()">
+
+<i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+<!--==================================
+TOAST MESSAGE
+===================================-->
+
+<div
+id="toast"
+class="toast">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<span id="toastText">
+
+Success
+
+</span>
+
+</div>
+
+<!--==================================
+JAVASCRIPT
+===================================-->
+
+<script src="js/experiences-data.js"></script>
+
+<script src="js/experiences.js"></script>
+
+<script src="js/theme.js"></script>
+
+</body>
+
+</html>

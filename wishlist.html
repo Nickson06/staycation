@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>StayHub | Find Your Perfect Stay</title>
+
+<meta
+name="description"
+content="Book hotels, villas, apartments and unique stays across Kenya.">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet"
+href="css/wishlist.css">
+
+</head>
+
+<body>
+
+<!--==================================
+NAVBAR
+===================================-->
+
+<header class="navbar">
+
+<div class="nav-container">
+
+<a href="index.html" class="logo">
+
+<i class="fa-solid fa-house"></i>
+
+<span>StayHub</span>
+
+</a>
+
+<nav class="nav-links">
+
+<a href="index.html">
+
+Home
+
+</a>
+<a href="listings.html">
+
+Stays
+
+</a>
+
+<a href="experiences.html">
+
+Experiences
+
+</a>
+
+<a href="host.html">
+
+Become a Host
+
+</a>
+
+<a
+href="wishlist.html"
+class="active">
+
+Wishlist
+
+</a>
+
+</nav>
+
+<div class="nav-right">
+
+<button
+id="themeToggle"
+class="theme-btn">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+<a
+href="login.html"
+class="login-btn">
+
+Login
+
+</a>
+
+<div class="mobile-menu" onclick="toggleMobileMenu()">
+    <i class="fa-solid fa-bars"></i>
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!--==================================
+WISHLIST HERO
+===================================-->
+
+<section class="wishlist-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            ❤️ Your Saved Adventures
+
+        </span>
+
+        <h1>
+
+            My Wishlist
+
+        </h1>
+
+        <p>
+
+            Save your favourite stays and unforgettable experiences across Kenya. Compare them, plan your next trip, and book when you're ready.
+
+        </p>
+
+        <div class="wishlist-actions">
+
+            <button
+            class="primary-btn"
+            onclick="exploreListings()">
+
+                <i class="fa-solid fa-house"></i>
+
+                Explore Stays
+
+            </button>
+
+            <button
+            class="secondary-btn"
+            onclick="exploreExperiences()">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Explore Experiences
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+WISHLIST TOOLS
+===================================-->
+
+<section class="wishlist-tools">
+
+<div class="tools-wrapper">
+
+<button
+onclick="selectAllWishlist()">
+
+<i class="fa-solid fa-check-double"></i>
+
+Select All
+
+</button>
+
+<button
+onclick="compareWishlist()">
+
+<i class="fa-solid fa-code-compare"></i>
+
+Compare
+
+</button>
+
+<button
+onclick="downloadWishlist()">
+
+<i class="fa-solid fa-file-pdf"></i>
+
+Export PDF
+
+</button>
+
+</div>
+
+</section>
+
+<!--==================================
+WISHLIST SUMMARY
+===================================-->
+
+<section class="wishlist-summary">
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <h2 id="savedListings">
+
+                0
+
+            </h2>
+
+            <p>
+
+                Saved Stays
+
+            </p>
+
+        </div>
+
+        <div class="summary-card">
+
+            <i class="fa-solid fa-route"></i>
+
+            <h2 id="savedExperiences">
+
+                0
+
+            </h2>
+
+            <p>
+
+                Saved Experiences
+
+            </p>
+
+        </div>
+
+        <div class="summary-card">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <h2 id="savedDestinations">
+
+                0
+
+            </h2>
+
+            <p>
+
+                Destinations
+
+            </p>
+
+        </div>
+
+        <div class="summary-card">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h2 id="wishlistValue">
+
+                KES 0
+
+            </h2>
+
+            <p>
+
+                Total Wishlist Value
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--==================================
+SEARCH & FILTERS
+===================================-->
+
+<section class="wishlist-toolbar">
+
+    <div class="toolbar-left">
+
+        <input
+        id="wishlistSearch"
+        type="text"
+        placeholder="Search your wishlist...">
+
+    </div>
+
+    <div class="toolbar-right">
+
+        <button
+        class="filter-chip active"
+        onclick="filterWishlist('All')">
+
+            All
+
+        </button>
+
+        <button
+        class="filter-chip"
+        onclick="filterWishlist('Stay')">
+
+            Stays
+
+        </button>
+
+        <button
+        class="filter-chip"
+        onclick="filterWishlist('Experience')">
+
+            Experiences
+
+        </button>
+
+        <button
+        class="filter-chip"
+        onclick="sortWishlist()">
+
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+
+            Sort
+
+        </button>
+
+    </div>
+
+</section>
+<!--==================================
+MY WISHLIST
+===================================-->
+
+<section class="wishlist-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            ❤️ My Collection
+
+        </span>
+
+        <h2>
+
+            Saved Stays & Experiences
+
+        </h2>
+
+        <p>
+
+            Everything you've saved in one place.
+
+        </p>
+
+    </div>
+
+    <div id="bulkBar" class="bulk-bar">
+
+<p id="bulkCount">0 selected</p>
+
+<button onclick="bulkDelete()">Delete</button>
+
+<button onclick="downloadWishlist()">Export</button>
+
+</div>
+
+    <div
+    id="wishlistGrid"
+    class="wishlist-grid">
+
+        <!-- JavaScript Loads Cards -->
+
+    </div>
+
+</section>
+<!--==================================
+EMPTY STATE
+===================================-->
+
+<div
+id="emptyWishlist"
+class="empty-state">
+
+    <img
+    src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+    alt="Empty Wishlist">
+
+    <h2>
+
+        Your Wishlist is Empty
+
+    </h2>
+
+    <p>
+
+        Start exploring Kenya and save amazing places you'll love.
+
+    </p>
+
+    <div class="empty-buttons">
+
+        <button
+        class="primary-btn"
+        onclick="location.href='listings.html'">
+
+            Explore Stays
+
+        </button>
+
+        <button
+        class="secondary-btn"
+        onclick="location.href='experiences.html'">
+
+            Explore Experiences
+
+        </button>
+
+    </div>
+
+</div>
+<!--==================================
+RECENTLY VIEWED
+===================================-->
+
+<section class="recent-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            👀 Recently Viewed
+
+        </span>
+
+        <h2>
+
+            Continue Exploring
+
+        </h2>
+
+    </div>
+
+    <div
+    id="recentGrid"
+    class="recent-grid">
+
+        <!-- JavaScript -->
+
+    </div>
+
+</section>
+<!--==================================
+RECOMMENDATIONS
+===================================-->
+
+<section class="recommend-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            ✨ Recommended
+
+        </span>
+
+        <h2>
+
+            You Might Also Like
+
+        </h2>
+
+    </div>
+
+    <div
+    id="recommendationGrid"
+    class="wishlist-grid">
+
+    </div>
+
+</section>
+<!--==================================
+SHARE WISHLIST
+===================================-->
+
+<section class="share-section">
+
+    <div class="share-card">
+
+        <div>
+
+            <span class="section-tag">
+
+                📤 Share
+
+            </span>
+
+            <h2>
+
+                Share Your Wishlist
+
+            </h2>
+
+            <p>
+
+                Let your friends and family help you plan your next adventure.
+
+            </p>
+
+        </div>
+
+        <div class="share-buttons">
+
+            <button onclick="copyWishlist()">
+
+                <i class="fa-solid fa-link"></i>
+
+                Copy Link
+
+            </button>
+
+            <button onclick="shareWhatsApp()">
+
+                <i class="fab fa-whatsapp"></i>
+
+                WhatsApp
+
+            </button>
+
+            <button onclick="shareFacebook()">
+
+                <i class="fab fa-facebook-f"></i>
+
+                Facebook
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==================================
+CLEAR WISHLIST
+===================================-->
+
+<section class="wishlist-actions-section">
+
+    <button
+    class="danger-btn"
+    onclick="clearWishlist()">
+
+        <i class="fa-solid fa-trash"></i>
+
+        Clear Entire Wishlist
+
+    </button>
+
+</section>
+
+<!--==================================
+FOOTER
+===================================-->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<h3>
+
+StayHub
+
+</h3>
+
+<p>
+
+Kenya's trusted marketplace for unique stays and unforgettable experiences.
+
+</p>
+
+<div class="footer-social">
+
+<i class="fab fa-facebook-f"></i>
+
+<i class="fab fa-instagram"></i>
+
+<i class="fab fa-x-twitter"></i>
+
+<i class="fab fa-linkedin"></i>
+
+<i class="fab fa-youtube"></i>
+
+</div>
+
+</div>
+
+<div>
+
+<h4>
+
+Explore
+
+</h4>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="listings.html">
+
+Stays
+
+</a>
+
+<a href="experiences.html">
+
+Experiences
+
+</a>
+
+<a href="host.html">
+
+Become a Host
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Support
+
+</h4>
+
+<a href="#">
+
+Help Centre
+
+</a>
+
+<a href="#">
+
+Contact Us
+
+</a>
+
+<a href="#">
+
+Privacy Policy
+
+</a>
+
+<a href="#">
+
+Terms & Conditions
+
+</a>
+
+</div>
+
+<div>
+
+<h4>
+
+Newsletter
+
+</h4>
+
+<p>
+
+Receive exclusive travel offers and updates.
+
+</p>
+
+<input
+type="email"
+placeholder="Your Email">
+
+<button>
+
+Subscribe
+
+</button>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+<p>
+
+© 2026 StayHub Kenya. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<!--==================================
+AI ASSISTANT
+===================================-->
+
+<button
+class="assistant-btn"
+onclick="toggleAssistant()">
+
+<i class="fa-solid fa-robot"></i>
+
+</button>
+
+<!--==================================
+BACK TO TOP
+===================================-->
+
+<button
+id="backTop"
+class="back-top"
+onclick="scrollTopPage()">
+
+<i class="fa-solid fa-arrow-up"></i>
+
+</button>
+<!--==================================
+TOAST MESSAGE
+===================================-->
+
+<div
+id="toast"
+class="toast">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<span id="toastText">
+
+Success
+
+</span>
+
+</div>
+
+<!--==================================
+JAVASCRIPT
+===================================-->
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/theme.js"></script>
+
+</body>
+
+</html>
