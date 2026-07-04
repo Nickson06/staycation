@@ -1018,11 +1018,21 @@ function initializeApp(){
 
     initializePagination();
 
-    renderProperties();
-
     initializeBookingForm();
 
     initializeMobileMenu();
+
+    initializeBookingDates();
+
+    initializeDateWatcher();
+
+    initializeGlobalEvents();
+
+    initializeScroll();
+
+    renderProperties();
+
+    applicationHealthCheck();
 
 }
 /*==================================================
