@@ -2523,3 +2523,267 @@ function formatDate(date){
     );
 
 }
+/*==================================================
+    MODULE 10 - APPLICATION UTILITIES
+==================================================*/
+
+
+/*==================================================
+    GLOBAL EVENTS
+==================================================*/
+
+function initializeGlobalEvents(){
+
+    /* ESC closes any open modal */
+
+    document.addEventListener("keydown",(event)=>{
+
+        if(event.key !== "Escape") return;
+
+        closeProperty();
+
+        closeBooking();
+
+    });
+
+
+    /* Click outside modal */
+
+    window.addEventListener("click",(event)=>{
+
+        const propertyModal =
+
+        document.getElementById("propertyModal");
+
+        const bookingModal =
+
+        document.getElementById("bookingModal");
+
+
+        if(event.target===propertyModal){
+
+            closeProperty();
+
+        }
+
+
+        if(event.target===bookingModal){
+
+            closeBooking();
+
+        }
+
+    });
+
+}
+
+
+/*==================================================
+    MINIMUM BOOKING DATE
+==================================================*/
+
+function initializeBookingDates(){
+
+    const today =
+
+    new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+    const checkIn =
+
+    document.getElementById("bookingCheckIn");
+
+    const checkOut =
+
+    document.getElementById("bookingCheckOut");
+
+    if(checkIn){
+
+        checkIn.min = today;
+
+    }
+
+    if(checkOut){
+
+        checkOut.min = today;
+
+    }
+
+}
+
+
+/*==================================================
+    AUTO UPDATE CHECKOUT DATE
+==================================================*/
+
+function initializeDateWatcher(){
+
+    const checkIn =
+
+    document.getElementById("bookingCheckIn");
+
+    const checkOut =
+
+    document.getElementById("bookingCheckOut");
+
+    if(!checkIn || !checkOut) return;
+
+    checkIn.addEventListener("change",()=>{
+
+        checkOut.min = checkIn.value;
+
+    });
+
+}
+
+
+/*==================================================
+    DEBOUNCE
+==================================================*/
+
+function debounce(callback,delay=300){
+
+    let timeout;
+
+    return function(){
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(
+
+            ()=>{
+
+                callback.apply(
+
+                    this,
+
+                    arguments
+
+                );
+
+            },
+
+            delay
+
+        );
+
+    };
+
+}
+
+
+/*==================================================
+    EMAIL VALIDATION
+==================================================*/
+
+function isValidEmail(email){
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    .test(email);
+
+}
+
+
+/*==================================================
+    PHONE VALIDATION
+==================================================*/
+
+function isValidPhone(phone){
+
+    return /^[0-9+\-\s]{9,15}$/
+
+    .test(phone);
+
+}
+
+
+/*==================================================
+    SCROLL TO TOP ON LOAD
+==================================================*/
+
+function initializeScroll(){
+
+    window.scrollTo({
+
+        top:0
+
+    });
+
+}
+
+
+/*==================================================
+    APP HEALTH CHECK
+==================================================*/
+
+function applicationHealthCheck(){
+
+    console.log("========== StayHub ==========");
+
+    console.log(
+
+        "Properties:",
+
+        properties.length
+
+    );
+
+    console.log(
+
+        "Wishlist:",
+
+        wishlist.length
+
+    );
+
+    console.log(
+
+        "Theme:",
+
+        document.body.classList.contains("dark")
+
+        ?
+
+        "Dark"
+
+        :
+
+        "Light"
+
+    );
+
+    console.log(
+
+        "Version: 1.0"
+
+    );
+
+    console.log("=============================");
+
+}
+
+
+/*==================================================
+    SAFE QUERY
+==================================================*/
+
+function $(selector){
+
+    return document.querySelector(selector);
+
+}
+
+
+/*==================================================
+    SAFE QUERY ALL
+==================================================*/
+
+function $$(selector){
+
+    return document.querySelectorAll(selector);
+
+}
